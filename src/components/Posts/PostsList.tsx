@@ -58,7 +58,7 @@ export const PostsList: React.FC<PostsListProps> = ({ posts }) => {
   }
 
   return (
-    <div className="max-w-[48rem] mx-auto px-4 py-8">
+    <div className="max-w-[48rem] mx-auto px-4 py-8 bg-red-50">
       <div className="space-y-4">
         {renderPosts()}
       </div>

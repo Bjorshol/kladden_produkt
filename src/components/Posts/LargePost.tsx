@@ -29,7 +29,7 @@ export const LargePost: React.FC<LargePostProps> = ({ post }) => {
       <div className="p-4">
         {stikktittel && <div className="text-sm uppercase tracking-wide text-gray-500 mb-2">{stikktittel}</div>}
 
-        <h2 className="text-2xl md:text-6xl font-bold leading-tight mb-2">{post.title}</h2>
+        <h2 className="text-3xl md:text-5xl font-bold leading-tight mb-2">{post.title}</h2>
 
       </div>
     </div>
