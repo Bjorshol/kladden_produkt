@@ -18,7 +18,7 @@ export const PostsList: React.FC<PostsListProps> = ({ posts }) => {
       if (postSize === 'small' && i + 1 < posts.length && (posts[i + 1].size || 'large') === 'small') {
         // Two small posts side by side on all screen sizes
         elements.push(
-          <div key={`pair-${i}`} className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+          <div key={`pair-${i}`} className="grid grid-cols-2 gap-4 mb-6">
             <SmallCard post={post} />
             <SmallCard post={posts[i + 1]} />
           </div>

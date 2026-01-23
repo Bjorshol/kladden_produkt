@@ -2,8 +2,6 @@ import React from 'react'
 import Link from 'next/link'
 import NextImage from 'next/image'
 import { getMediaUrl } from '@/utilities/getMediaUrl'
-import { formatAuthors } from '@/utilities/formatAuthors'
-import { formatDateTime } from '@/utilities/formatDateTime'
 import type { Post } from '@/payload-types'
 
 interface LargePostProps {
@@ -12,9 +10,7 @@ interface LargePostProps {
 
 export const LargePost: React.FC<LargePostProps> = ({ post }) => {
   const imageUrl = post.heroImage && typeof post.heroImage === 'object' ? getMediaUrl(post.heroImage.url) : null
-  const excerpt = post.ingress || post.meta?.description || ''
   const stikktittel = post.stikktittel || ''
-  const hasAuthors = post.populatedAuthors && post.populatedAuthors.length > 0 && formatAuthors(post.populatedAuthors || []) !== ''
 
   return (
     <Link href={`/posts/${post.slug}`} className="block">
@@ -33,9 +29,8 @@ export const LargePost: React.FC<LargePostProps> = ({ post }) => {
       <div className="p-4">
         {stikktittel && <div className="text-sm uppercase tracking-wide text-gray-500 mb-2">{stikktittel}</div>}
 
-        <h2 className="text-5xl md:text-7xl font-bold leading-tight mb-2">{post.title}</h2>
+        <h2 className="text-4xl md:text-6xl font-bold leading-tight mb-2">{post.title}</h2>
 
-        {excerpt && <p className="text-base leading-relaxed line-clamp-2 mb-3">{excerpt}</p>}
       </div>
     </div>
     </Link>
