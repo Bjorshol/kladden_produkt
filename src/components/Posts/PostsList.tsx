@@ -17,11 +17,19 @@ export const PostsList: React.FC<PostsListProps> = ({ posts }) => {
       const post = posts[i]
       const postSize = post.size || 'large'
       if (postSize === 'small' && i + 1 < posts.length && (posts[i + 1].size || 'large') === 'small') {
-        // Two small posts side by side on all screen sizes
+        // Two small posts - different layouts for mobile and desktop
         elements.push(
-          <div key={`pair-${i}`} className="grid grid-cols-2 gap-4 mb-6">
-            <SmallCard post={post} />
-            <SmallCard post={posts[i + 1]} />
+          <div key={`pair-${i}`} className="mb-6">
+            {/* Mobile: stripes */}
+            <div className="block md:hidden space-y-4">
+              <SmallRow post={post} />
+              <SmallRow post={posts[i + 1]} />
+            </div>
+            {/* Desktop: side by side */}
+            <div className="hidden md:grid md:grid-cols-2 md:gap-4">
+              <SmallCard post={post} />
+              <SmallCard post={posts[i + 1]} />
+            </div>
           </div>
         )
         i += 2
@@ -35,7 +43,7 @@ export const PostsList: React.FC<PostsListProps> = ({ posts }) => {
             </div>
           )
         } else {
-          // Single small post - use SmallRow for stripe layout
+          // Single small post - always use stripe layout
           elements.push(
             <div key={post.id} className="mb-4">
               <SmallRow post={post} />
