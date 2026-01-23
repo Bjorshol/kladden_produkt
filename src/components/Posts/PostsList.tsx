@@ -1,6 +1,5 @@
 import React from 'react'
 import { SmallCard } from './SmallPost'
-import { SmallRow } from './SmallRow'
 import { LargePost } from './LargePost'
 import type { Post } from '@/payload-types'
 
@@ -17,9 +16,9 @@ export const PostsList: React.FC<PostsListProps> = ({ posts }) => {
       const post = posts[i]
       const postSize = post.size || 'large'
       if (postSize === 'small' && i + 1 < posts.length && (posts[i + 1].size || 'large') === 'small') {
-        // Two small posts side by side
+        // Two small posts side by side on all screen sizes
         elements.push(
-          <div key={`pair-${i}`} className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          <div key={`pair-${i}`} className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
             <SmallCard post={post} />
             <SmallCard post={posts[i + 1]} />
           </div>
@@ -35,9 +34,10 @@ export const PostsList: React.FC<PostsListProps> = ({ posts }) => {
             </div>
           )
         } else {
+          // Single small post - use SmallCard for consistency
           elements.push(
             <div key={post.id} className="mb-4">
-              <SmallRow post={post} />
+              <SmallCard post={post} />
             </div>
           )
         }
