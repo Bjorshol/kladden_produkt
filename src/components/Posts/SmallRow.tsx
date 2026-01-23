@@ -2,8 +2,6 @@ import React from 'react'
 import Link from 'next/link'
 import NextImage from 'next/image'
 import { getMediaUrl } from '@/utilities/getMediaUrl'
-import { formatAuthors } from '@/utilities/formatAuthors'
-import { formatDateTime } from '@/utilities/formatDateTime'
 import type { Post } from '@/payload-types'
 
 interface SmallRowProps {
@@ -13,7 +11,6 @@ interface SmallRowProps {
 export const SmallRow: React.FC<SmallRowProps> = ({ post }) => {
   const imageUrl = post.heroImage && typeof post.heroImage === 'object' ? getMediaUrl(post.heroImage.url) : null
   const stikktittel = post.stikktittel || ''
-  const hasAuthors = post.populatedAuthors && post.populatedAuthors.length > 0 && formatAuthors(post.populatedAuthors || []) !== ''
 
   return (
     <Link href={`/posts/${post.slug}`} className="block bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg hover:border-gray-300 transition-all duration-200">
@@ -30,8 +27,8 @@ export const SmallRow: React.FC<SmallRowProps> = ({ post }) => {
           </div>
         )}
         <div className="flex-1 p-4 flex flex-col justify-center">
-          {stikktittel && <div className="text-xs uppercase tracking-wide text-gray-500 mb-1">{stikktittel}</div>}
-          <h2 className="text-lg md:text-xl font-bold leading-tight line-clamp-2 mb-1">{post.title}</h2>
+          {stikktittel && <div className="text-xs md:text-sm uppercase tracking-wide text-gray-500 mb-1">{stikktittel}</div>}
+          <h2 className="text-xl md:text-2xl font-bold leading-tight mb-1">{post.title}</h2>
         </div>
       </div>
     </Link>

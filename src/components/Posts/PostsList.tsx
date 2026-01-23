@@ -1,5 +1,6 @@
 import React from 'react'
 import { SmallCard } from './SmallPost'
+import { SmallRow } from './SmallRow'
 import { LargePost } from './LargePost'
 import type { Post } from '@/payload-types'
 
@@ -34,10 +35,10 @@ export const PostsList: React.FC<PostsListProps> = ({ posts }) => {
             </div>
           )
         } else {
-          // Single small post - use SmallCard for consistency
+          // Single small post - use SmallRow for stripe layout
           elements.push(
             <div key={post.id} className="mb-4">
-              <SmallCard post={post} />
+              <SmallRow post={post} />
             </div>
           )
         }
