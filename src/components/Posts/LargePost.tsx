@@ -36,11 +36,6 @@ export const LargePost: React.FC<LargePostProps> = ({ post }) => {
         <h2 className="text-2xl md:text-4xl font-bold leading-tight mb-2">{post.title}</h2>
 
         {excerpt && <p className="text-base leading-relaxed line-clamp-2 mb-3">{excerpt}</p>}
-        <div className="text-sm text-gray-500">
-          {hasAuthors && <span>Av {formatAuthors(post.populatedAuthors || [])}</span>}
-          {hasAuthors && post.publishedAt && <span> · </span>}
-          {post.publishedAt && <time dateTime={post.publishedAt}>{formatDateTime(post.publishedAt)}</time>}
-        </div>
       </div>
     </div>
     </Link>

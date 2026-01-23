@@ -31,12 +31,7 @@ export const SmallRow: React.FC<SmallRowProps> = ({ post }) => {
         )}
         <div className="flex-1 p-4 flex flex-col justify-center">
           {stikktittel && <div className="text-xs uppercase tracking-wide text-gray-500 mb-1">{stikktittel}</div>}
-          <h3 className="text-lg md:text-xl font-bold leading-tight line-clamp-2 mb-1">{post.title}</h3>
-          <div className="text-xs text-gray-500 mt-1">
-            {hasAuthors && <span>Av {formatAuthors(post.populatedAuthors || [])}</span>}
-            {hasAuthors && post.publishedAt && <span> · </span>}
-            {post.publishedAt && <time dateTime={post.publishedAt}>{formatDateTime(post.publishedAt)}</time>}
-          </div>
+          <h2 className="text-lg md:text-xl font-bold leading-tight line-clamp-2 mb-1">{post.title}</h2>
         </div>
       </div>
     </Link>

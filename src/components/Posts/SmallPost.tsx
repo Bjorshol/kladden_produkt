@@ -34,11 +34,6 @@ export const SmallCard: React.FC<SmallCardProps> = ({ post }) => {
           {stikktittel && <div className="text-xs uppercase tracking-wide text-gray-500 mb-1">{stikktittel}</div>}
           <h3 className="text-lg md:text-xl font-bold leading-tight line-clamp-2 mb-1">{post.title}</h3>
           {excerpt && <p className="text-sm leading-relaxed line-clamp-1 mb-1">{excerpt}</p>}
-          <div className="text-xs text-gray-500">
-            {hasAuthors && <span>Av {formatAuthors(post.populatedAuthors || [])}</span>}
-            {hasAuthors && post.publishedAt && <span> · </span>}
-            {post.publishedAt && <time dateTime={post.publishedAt}>{formatDateTime(post.publishedAt)}</time>}
-          </div>
         </div>
       </div>
     </Link>
