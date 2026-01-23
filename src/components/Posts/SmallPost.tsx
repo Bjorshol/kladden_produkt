@@ -32,7 +32,7 @@ export const SmallCard: React.FC<SmallCardProps> = ({ post }) => {
         )}
         <div className="flex-1 p-3 md:p-3">
           {stikktittel && <div className="text-xs uppercase tracking-wide text-gray-500 mb-1">{stikktittel}</div>}
-          <h3 className="text-4xl md:text-xl font-bold leading-tight line-clamp-2 mb-1">{post.title}</h3>
+          <h3 className="text-5xl md:text-7xl font-bold leading-tight line-clamp-2 mb-1">{post.title}</h3>
           {excerpt && <p className="text-sm leading-relaxed line-clamp-1 mb-1">{excerpt}</p>}
         </div>
       </div>
