@@ -18,7 +18,7 @@ export const PostsList: React.FC<PostsListProps> = ({ posts }) => {
       if (postSize === 'small' && i + 1 < posts.length && (posts[i + 1].size || 'large') === 'small') {
         // Two small posts side by side
         elements.push(
-          <div key={`pair-${i}`} className="col-span-12 grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div key={`pair-${i}`} className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <SmallPost post={post} />
             <SmallPost post={posts[i + 1]} />
           </div>
@@ -29,13 +29,13 @@ export const PostsList: React.FC<PostsListProps> = ({ posts }) => {
         const currentSize = post.size || 'large'
         if (currentSize === 'large') {
           elements.push(
-            <div key={post.id} className="col-span-12 mb-8">
+            <div key={post.id} className="mb-8">
               <LargePost post={post} />
             </div>
           )
         } else {
           elements.push(
-            <div key={post.id} className="col-span-12 md:col-span-6 mb-6">
+            <div key={post.id} className="mb-6">
               <SmallPost post={post} />
             </div>
           )
@@ -47,11 +47,5 @@ export const PostsList: React.FC<PostsListProps> = ({ posts }) => {
     return elements
   }
 
-  return (
-    <div className="max-w-[1200px] mx-auto px-4 py-8">
-      <div className="grid grid-cols-12 gap-6">
-        {renderPosts()}
-      </div>
-    </div>
-  )
+  return <div className="container mx-auto px-4 py-8">{renderPosts()}</div>
 }

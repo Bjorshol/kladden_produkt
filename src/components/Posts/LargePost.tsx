@@ -9,13 +9,12 @@ interface LargePostProps {
 
 export const LargePost: React.FC<LargePostProps> = ({ post }) => {
   const imageUrl = post.heroImage && typeof post.heroImage === 'object' ? getMediaUrl(post.heroImage.url) : null
-  const excerpt = post.meta?.description || ''
-  const category = post.categories && post.categories.length > 0 && typeof post.categories[0] === 'object' ? post.categories[0].title : 'Nyheter'
+  const excerpt = '' // TODO: Extract excerpt from content
 
   return (
-    <Link href={`/posts/${post.slug}`} className="block bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg hover:border-gray-300 transition-all duration-200">
+    <Link href={`/posts/${post.slug}`} className="block bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
       {imageUrl && (
-        <div className="aspect-video max-h-64 overflow-hidden">
+        <div className="w-full h-64">
           <img
             src={imageUrl}
             alt={typeof post.heroImage === 'object' ? post.heroImage?.alt || post.title : post.title}
@@ -24,9 +23,8 @@ export const LargePost: React.FC<LargePostProps> = ({ post }) => {
         </div>
       )}
       <div className="p-6">
-        <div className="text-xs uppercase tracking-wide text-gray-500 mb-2">{category}</div>
-        <h2 className="text-2xl font-bold leading-tight mb-3">{post.title}</h2>
-        {excerpt && <p className="text-gray-700 leading-relaxed line-clamp-3">{excerpt}</p>}
+        <h2 className="text-2xl font-bold mb-4">{post.title}</h2>
+        {excerpt && <p className="text-gray-700">{excerpt}...</p>}
       </div>
     </Link>
   )

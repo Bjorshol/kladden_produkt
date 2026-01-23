@@ -226,6 +226,10 @@ export interface Page {
 export interface Post {
   id: number;
   title: string;
+  /**
+   * Kort sammendrag som vises under tittelen
+   */
+  ingress?: string | null;
   size?: ('large' | 'small') | null;
   heroImage?: (number | null) | Media;
   content: {
@@ -1193,6 +1197,7 @@ export interface FormBlockSelect<T extends boolean = true> {
  */
 export interface PostsSelect<T extends boolean = true> {
   title?: T;
+  ingress?: T;
   size?: T;
   heroImage?: T;
   content?: T;

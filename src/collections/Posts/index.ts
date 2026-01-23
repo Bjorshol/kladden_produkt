@@ -42,6 +42,7 @@ export const Posts: CollectionConfig<'posts'> = {
     title: true,
     slug: true,
     categories: true,
+    ingress: true,
     meta: {
       image: true,
       description: true,
@@ -70,6 +71,14 @@ export const Posts: CollectionConfig<'posts'> = {
       name: 'title',
       type: 'text',
       required: true,
+    },
+    {
+      name: 'ingress',
+      type: 'textarea',
+      label: 'Ingress',
+      admin: {
+        description: 'Kort sammendrag som vises under tittelen',
+      },
     },
     {
       name: 'size',
