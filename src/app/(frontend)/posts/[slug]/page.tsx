@@ -16,6 +16,11 @@ import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 
 export async function generateStaticParams() {
+  // For Vercel deployment, return empty array since we can't connect to DB during build
+  // In production, pages will be generated on-demand
+  return []
+  
+  /*
   const payload = await getPayload({ config: configPromise })
   const posts = await payload.find({
     collection: 'posts',
@@ -33,6 +38,7 @@ export async function generateStaticParams() {
   })
 
   return params
+  */
 }
 
 type Args = {

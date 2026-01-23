@@ -16,6 +16,11 @@ import { PostsList } from '@/components/Posts/PostsList'
 import type { FrontEditor, Post } from '@/payload-types'
 
 export async function generateStaticParams() {
+  // For Vercel deployment, return empty array since we can't connect to DB during build
+  // In production, pages will be generated on-demand
+  return []
+  
+  /*
   const payload = await getPayload({ config: configPromise })
   const pages = await payload.find({
     collection: 'pages',
@@ -37,6 +42,7 @@ export async function generateStaticParams() {
     })
 
   return params
+  */
 }
 
 type Args = {
@@ -99,11 +105,18 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
   const { slug = 'home' } = await paramsPromise
   // Decode to support slugs with special characters
   const decodedSlug = decodeURIComponent(slug)
-  const page = await queryPageBySlug({
-    slug: decodedSlug,
-  })
-
-  return generateMeta({ doc: page })
+  
+  try {
+    const page = await queryPageBySlug({
+      slug: decodedSlug,
+    })
+    return generateMeta({ doc: page })
+  } catch (error) {
+    // Fallback for when DB is not available during build
+    return {
+      title: slug === 'home' ? 'Home' : decodedSlug,
+    }
+  }
 }
 
 const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
@@ -134,27 +147,38 @@ const queryPosts = cache(async (): Promise<Post[]> => {
   const payload = await getPayload({ config: configPromise })
 
   // First, get the front editor settings
-  const frontEditor: FrontEditor = await payload.findGlobal({
-    slug: 'front-editor',
-    draft,
-    overrideAccess: draft,
-  })
+  let frontEditor: FrontEditor | null = null
+  try {
+    frontEditor = await payload.findGlobal({
+      slug: 'front-editor',
+      draft,
+      overrideAccess: draft,
+    })
+  } catch (error) {
+    // If front-editor doesn't exist yet (migration not run), treat as empty
+    frontEditor = { id: 0, featuredPosts: [] }
+  }
 
   let posts: Post[] = []
 
-  if (frontEditor.featuredPosts && frontEditor.featuredPosts.length > 0) {
+  if (frontEditor && frontEditor.featuredPosts && frontEditor.featuredPosts.length > 0) {
     // Get the featured posts with overridden sizes
     const featuredIds = frontEditor.featuredPosts.map((fp) => typeof fp.post === 'number' ? fp.post : fp.post.id)
-    const featuredPostsData = await payload.find({
-      collection: 'posts',
-      draft,
-      overrideAccess: draft,
-      where: {
-        id: {
-          in: featuredIds,
+    let featuredPostsData
+    try {
+      featuredPostsData = await payload.find({
+        collection: 'posts',
+        draft,
+        overrideAccess: draft,
+        where: {
+          id: {
+            in: featuredIds,
+          },
         },
-      },
-    })
+      })
+    } catch (error) {
+      featuredPostsData = { docs: [] }
+    }
 
     // Map to maintain order and apply size overrides
     const featuredPosts: Post[] = frontEditor.featuredPosts.map((fp) => {
@@ -171,33 +195,41 @@ const queryPosts = cache(async (): Promise<Post[]> => {
     posts = [...featuredPosts]
 
     // Get remaining posts, excluding featured ones
-    const remainingPosts = await payload.find({
-      collection: 'posts',
-      draft,
-      limit: 50 - posts.length,
-      pagination: false,
-      overrideAccess: draft,
-      sort: '-publishedAt,-createdAt',
-      where: {
-        id: {
-          not_in: featuredIds,
+    let remainingPosts
+    try {
+      remainingPosts = await payload.find({
+        collection: 'posts',
+        draft,
+        limit: 50 - posts.length,
+        pagination: false,
+        overrideAccess: draft,
+        sort: '-publishedAt,-createdAt',
+        where: {
+          id: {
+            not_in: featuredIds,
+          },
         },
-      },
-    })
+      })
+    } catch (error) {
+      remainingPosts = { docs: [] }
+    }
 
     posts = [...posts, ...remainingPosts.docs]
   } else {
     // No featured posts, get all sorted by publishedAt
-    const result = await payload.find({
-      collection: 'posts',
-      draft,
-      limit: 50,
-      pagination: false,
-      overrideAccess: draft,
-      sort: '-publishedAt,-createdAt',
-    })
-
-    posts = result.docs
+    try {
+      const result = await payload.find({
+        collection: 'posts',
+        draft,
+        limit: 50,
+        pagination: false,
+        overrideAccess: draft,
+        sort: '-publishedAt,-createdAt',
+      })
+      posts = result.docs
+    } catch (error) {
+      posts = []
+    }
   }
 
   return posts

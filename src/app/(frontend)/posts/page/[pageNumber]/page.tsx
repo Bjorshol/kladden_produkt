@@ -70,6 +70,11 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
 }
 
 export async function generateStaticParams() {
+  // For Vercel deployment, return empty array since we can't connect to DB during build
+  // In production, pages will be generated on-demand
+  return []
+  
+  /*
   const payload = await getPayload({ config: configPromise })
   const { totalDocs } = await payload.count({
     collection: 'posts',
@@ -85,4 +90,5 @@ export async function generateStaticParams() {
   }
 
   return pages
+  */
 }

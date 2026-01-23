@@ -241,6 +241,12 @@ export const seed = async ({
         ],
       },
     }),
+    payload.updateGlobal({
+      slug: 'front-editor',
+      data: {
+        featuredPosts: [],
+      },
+    }),
   ])
 
   payload.logger.info('Seeded database successfully!')
