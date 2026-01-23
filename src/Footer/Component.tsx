@@ -6,7 +6,7 @@ import { Logo } from '@/components/Logo/Logo'
 
 export function Footer() {
   return (
-    <footer className="mt-auto border-t border-border bg-red-600 text-white">
+    <footer className="mt-auto border-t border-border gray text-white">
       <div className="container py-8 gap-8 flex flex-col md:flex-row md:justify-between">
         <div className="flex flex-col gap-4">
           <Link className="flex items-center" href="/">
