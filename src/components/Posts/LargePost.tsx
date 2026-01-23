@@ -31,7 +31,7 @@ export const LargePost: React.FC<LargePostProps> = ({ post }) => {
         <h2 className="text-2xl font-bold leading-tight mb-3">{post.title}</h2>
         {excerpt && <p className="text-gray-700 leading-relaxed line-clamp-3 mb-3">{excerpt}</p>}
         <div className="text-sm text-gray-500">
-          {hasAuthors && <span>Av {formatAuthors(post.populatedAuthors)}</span>}
+          {hasAuthors && <span>Av {formatAuthors(post.populatedAuthors || [])}</span>}
           {hasAuthors && post.publishedAt && <span> · </span>}
           {post.publishedAt && <time dateTime={post.publishedAt}>{formatDateTime(post.publishedAt)}</time>}
         </div>

@@ -31,7 +31,7 @@ export const SmallPost: React.FC<SmallPostProps> = ({ post }) => {
         <h3 className="text-lg font-bold leading-tight line-clamp-2 mb-2">{post.title}</h3>
         {excerpt && <p className="text-gray-600 text-sm leading-relaxed line-clamp-2 mb-2">{excerpt}</p>}
         <div className="text-xs text-gray-500">
-          {hasAuthors && <span>Av {formatAuthors(post.populatedAuthors)}</span>}
+          {hasAuthors && <span>Av {formatAuthors(post.populatedAuthors || [])}</span>}
           {hasAuthors && post.publishedAt && <span> · </span>}
           {post.publishedAt && <time dateTime={post.publishedAt}>{formatDateTime(post.publishedAt)}</time>}
         </div>

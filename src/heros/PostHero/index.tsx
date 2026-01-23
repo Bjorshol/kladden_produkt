@@ -49,7 +49,7 @@ export const PostHero: React.FC<{
       </div>
       <div className="container max-w-[48rem] mx-auto px-4 mb-6">
         <div className="text-sm text-gray-500">
-          {hasAuthors && <span>Av {formatAuthors(populatedAuthors)}</span>}
+          {hasAuthors && <span>Av {formatAuthors(populatedAuthors || [])}</span>}
           {hasAuthors && publishedAt && <span> · </span>}
           {publishedAt && <time dateTime={publishedAt}>{formatDateTime(publishedAt)}</time>}
         </div>
