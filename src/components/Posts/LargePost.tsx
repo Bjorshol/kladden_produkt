@@ -31,8 +31,10 @@ export const LargePost: React.FC<LargePostProps> = ({ post }) => {
         </div>
       )}
       <div className="p-4">
-        <div className="text-xs uppercase tracking-wide text-gray-500 mb-2">{category}</div>
-        <h2 className="text-base font-bold leading-tight mb-3">{post.title}</h2>
+        <div className="text-sm uppercase tracking-wide text-gray-500 mb-2">{category}</div>
+
+        <h2 className="text-xl md:text-2xl font-bold leading-tight mb-2">{post.title}</h2>
+
         {excerpt && <p className="text-base leading-relaxed line-clamp-2 mb-3">{excerpt}</p>}
         <div className="text-sm text-gray-500">
           {hasAuthors && <span>Av {formatAuthors(post.populatedAuthors || [])}</span>}
