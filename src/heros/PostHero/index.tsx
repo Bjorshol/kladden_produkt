@@ -26,25 +26,37 @@ export const PostHero: React.FC<{
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-4">
           {title}
         </h1>
-        {ingress && (
-          <p className="text-lg md:text-xl leading-relaxed text-gray-700 mb-6">
+      </div>
+      {heroImage && typeof heroImage !== 'string' && (
+        <div className="mb-6 flex justify-center">
+          <div className="max-w-[56rem] bg-gray-100">
+            <Media
+              imgClassName="max-w-full max-h-[50vh] object-contain"
+              resource={heroImage}
+            />
+          </div>
+        </div>
+      )}
+      {ingress && (
+        <div className="container max-w-[48rem] mx-auto px-4 mb-6">
+          <p className="text-lg md:text-xl leading-relaxed text-gray-700">
             {ingress}
           </p>
-        )}
+        </div>
+      )}
+      <div className="container max-w-[48rem] mx-auto px-4 mb-6">
+        <hr className="border-gray-300" />
+      </div>
+      <div className="container max-w-[48rem] mx-auto px-4 mb-6">
         <div className="text-sm text-gray-500">
           {hasAuthors && <span>Av {formatAuthors(populatedAuthors)}</span>}
           {hasAuthors && publishedAt && <span> · </span>}
           {publishedAt && <time dateTime={publishedAt}>{formatDateTime(publishedAt)}</time>}
         </div>
       </div>
-      {heroImage && typeof heroImage !== 'string' && (
-        <div className="mt-8 max-h-[60vh] bg-gray-100 flex items-center justify-center">
-          <Media
-            imgClassName="max-w-full max-h-full object-contain"
-            resource={heroImage}
-          />
-        </div>
-      )}
+      <div className="container max-w-[48rem] mx-auto px-4 mb-8">
+        <hr className="border-gray-300" />
+      </div>
     </div>
   )
 }
