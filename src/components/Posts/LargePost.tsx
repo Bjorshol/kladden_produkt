@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link'
 import NextImage from 'next/image'
 import { getMediaUrl } from '@/utilities/getMediaUrl'
 import { formatAuthors } from '@/utilities/formatAuthors'
@@ -16,9 +17,10 @@ export const LargePost: React.FC<LargePostProps> = ({ post }) => {
   const hasAuthors = post.populatedAuthors && post.populatedAuthors.length > 0 && formatAuthors(post.populatedAuthors || []) !== ''
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg hover:border-gray-300 transition-all duration-200">
+    <Link href={`/posts/${post.slug}`} className="block">
+      <div className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg hover:border-gray-300 transition-all duration-200">
       {imageUrl && (
-        <div className="relative overflow-hidden rounded-t-lg w-full h-48">
+        <div className="relative overflow-hidden rounded-t-lg w-full h-36">
           <NextImage
             src={imageUrl}
             alt={typeof post.heroImage === 'object' ? post.heroImage?.alt || post.title : post.title}
@@ -39,5 +41,6 @@ export const LargePost: React.FC<LargePostProps> = ({ post }) => {
         </div>
       </div>
     </div>
+    </Link>
   )
 }
