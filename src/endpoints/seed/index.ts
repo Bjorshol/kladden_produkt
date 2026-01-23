@@ -20,7 +20,7 @@ const collections: CollectionSlug[] = [
   'search',
 ]
 
-const globals: GlobalSlug[] = ['header']
+const globals: GlobalSlug[] = ['header', 'front-editor']
 
 const categories = ['Technology', 'News', 'Finance', 'Design', 'Software', 'Engineering']
 
@@ -45,18 +45,17 @@ export const seed = async ({
 
   // clear the database
   await Promise.all(
-    globals.map((global) =>
-      payload.updateGlobal({
+    globals.map((global) => {
+      const data: any = global === 'header' ? { navItems: [] } : { featuredPosts: [] }
+      return payload.updateGlobal({
         slug: global,
-        data: {
-          navItems: [],
-        },
+        data,
         depth: 0,
         context: {
           disableRevalidate: true,
         },
-      }),
-    ),
+      })
+    }),
   )
 
   await Promise.all(

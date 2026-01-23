@@ -10,6 +10,7 @@ import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
 import { Users } from './collections/Users'
 import { Header } from './Header/config'
+import { FrontEditor } from './globals/FrontEditor'
 import { plugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
@@ -73,7 +74,7 @@ export default buildConfig({
       token: process.env.BLOB_READ_WRITE_TOKEN || '',
     }),
   ],
-  globals: [Header],
+  globals: [Header, FrontEditor],
   secret: process.env.PAYLOAD_SECRET,
   sharp,
   typescript: {

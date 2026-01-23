@@ -111,9 +111,11 @@ export interface Config {
   fallbackLocale: null;
   globals: {
     header: Header;
+    'front-editor': FrontEditor;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
+    'front-editor': FrontEditorSelect<false> | FrontEditorSelect<true>;
   };
   locale: null;
   user: User & {
@@ -1670,6 +1672,28 @@ export interface Header {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "front-editor".
+ */
+export interface FrontEditor {
+  id: number;
+  /**
+   * Velg opp til 10 saker som skal vises øverst på forsiden. Rekkefølgen her bestemmer rekkefølgen på siden.
+   */
+  featuredPosts?:
+    | {
+        post: number | Post;
+        /**
+         * Overstyr størrelsen for denne saken på forsiden.
+         */
+        size?: ('large' | 'small') | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -1685,6 +1709,22 @@ export interface HeaderSelect<T extends boolean = true> {
               url?: T;
               label?: T;
             };
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "front-editor_select".
+ */
+export interface FrontEditorSelect<T extends boolean = true> {
+  featuredPosts?:
+    | T
+    | {
+        post?: T;
+        size?: T;
         id?: T;
       };
   updatedAt?: T;

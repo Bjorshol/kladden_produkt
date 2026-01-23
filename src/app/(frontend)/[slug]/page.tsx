@@ -13,6 +13,7 @@ import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { PostsList } from '@/components/Posts/PostsList'
+import type { FrontEditor, Post } from '@/payload-types'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -126,19 +127,78 @@ const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
   return result.docs?.[0] || null
 })
 
-const queryPosts = cache(async () => {
+const queryPosts = cache(async (): Promise<Post[]> => {
+
   const { isEnabled: draft } = await draftMode()
 
   const payload = await getPayload({ config: configPromise })
 
-  const result = await payload.find({
-    collection: 'posts',
+  // First, get the front editor settings
+  const frontEditor: FrontEditor = await payload.findGlobal({
+    slug: 'front-editor',
     draft,
-    limit: 50,
-    pagination: false,
     overrideAccess: draft,
-    sort: '-publishedAt,-createdAt', // Newest first, fallback to createdAt
   })
 
-  return result.docs
+  let posts: Post[] = []
+
+  if (frontEditor.featuredPosts && frontEditor.featuredPosts.length > 0) {
+    // Get the featured posts with overridden sizes
+    const featuredIds = frontEditor.featuredPosts.map((fp) => typeof fp.post === 'number' ? fp.post : fp.post.id)
+    const featuredPostsData = await payload.find({
+      collection: 'posts',
+      draft,
+      overrideAccess: draft,
+      where: {
+        id: {
+          in: featuredIds,
+        },
+      },
+    })
+
+    // Map to maintain order and apply size overrides
+    const featuredPosts: Post[] = frontEditor.featuredPosts.map((fp) => {
+      const post = featuredPostsData.docs.find((p) => p.id === (typeof fp.post === 'number' ? fp.post : fp.post.id))
+      if (post) {
+        return {
+          ...post,
+          size: fp.size || post.size, // Override size if set
+        } as Post
+      }
+      return null
+    }).filter((p): p is Post => p !== null)
+
+    posts = [...featuredPosts]
+
+    // Get remaining posts, excluding featured ones
+    const remainingPosts = await payload.find({
+      collection: 'posts',
+      draft,
+      limit: 50 - posts.length,
+      pagination: false,
+      overrideAccess: draft,
+      sort: '-publishedAt,-createdAt',
+      where: {
+        id: {
+          not_in: featuredIds,
+        },
+      },
+    })
+
+    posts = [...posts, ...remainingPosts.docs]
+  } else {
+    // No featured posts, get all sorted by publishedAt
+    const result = await payload.find({
+      collection: 'posts',
+      draft,
+      limit: 50,
+      pagination: false,
+      overrideAccess: draft,
+      sort: '-publishedAt,-createdAt',
+    })
+
+    posts = result.docs
+  }
+
+  return posts
 })
