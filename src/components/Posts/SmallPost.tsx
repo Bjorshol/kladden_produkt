@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import NextImage from 'next/image'
 import { getMediaUrl } from '@/utilities/getMediaUrl'
 import { formatAuthors } from '@/utilities/formatAuthors'
 import { formatDateTime } from '@/utilities/formatDateTime'
@@ -13,23 +14,25 @@ export const SmallPost: React.FC<SmallPostProps> = ({ post }) => {
   const imageUrl = post.heroImage && typeof post.heroImage === 'object' ? getMediaUrl(post.heroImage.url) : null
   const excerpt = post.ingress || post.meta?.description || ''
   const category = post.categories && post.categories.length > 0 && typeof post.categories[0] === 'object' ? post.categories[0].title : 'Nyheter'
-  const hasAuthors = post.populatedAuthors && post.populatedAuthors.length > 0 && formatAuthors(post.populatedAuthors) !== ''
+  const hasAuthors = post.populatedAuthors && post.populatedAuthors.length > 0 && formatAuthors(post.populatedAuthors || []) !== ''
 
   return (
     <Link href={`/posts/${post.slug}`} className="block bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg hover:border-gray-300 transition-all duration-200">
       {imageUrl && (
-        <div className="aspect-[4/3] overflow-hidden">
-          <img
+        <div className="aspect-[4/3] relative">
+          <NextImage
             src={imageUrl}
             alt={typeof post.heroImage === 'object' ? post.heroImage?.alt || post.title : post.title}
-            className="w-full h-full object-contain"
+            fill
+            className="object-cover object-center"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         </div>
       )}
       <div className="p-4">
         <div className="text-xs uppercase tracking-wide text-gray-500 mb-1">{category}</div>
-        <h3 className="text-lg font-bold leading-tight line-clamp-2 mb-2">{post.title}</h3>
-        {excerpt && <p className="text-gray-600 text-sm leading-relaxed line-clamp-2 mb-2">{excerpt}</p>}
+        <h3 className="text-xl font-bold leading-tight line-clamp-2 mb-2">{post.title}</h3>
+        {excerpt && <p className="text-base leading-relaxed line-clamp-2 mb-2">{excerpt}</p>}
         <div className="text-xs text-gray-500">
           {hasAuthors && <span>Av {formatAuthors(post.populatedAuthors || [])}</span>}
           {hasAuthors && post.publishedAt && <span> · </span>}
