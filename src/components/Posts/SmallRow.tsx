@@ -12,7 +12,7 @@ interface SmallRowProps {
 
 export const SmallRow: React.FC<SmallRowProps> = ({ post }) => {
   const imageUrl = post.heroImage && typeof post.heroImage === 'object' ? getMediaUrl(post.heroImage.url) : null
-  const category = post.categories && post.categories.length > 0 && typeof post.categories[0] === 'object' ? post.categories[0].title : 'Nyheter'
+  const stikktittel = post.stikktittel || ''
   const hasAuthors = post.populatedAuthors && post.populatedAuthors.length > 0 && formatAuthors(post.populatedAuthors || []) !== ''
 
   return (
@@ -30,8 +30,8 @@ export const SmallRow: React.FC<SmallRowProps> = ({ post }) => {
           </div>
         )}
         <div className="flex-1 p-4 flex flex-col justify-center">
-          <div className="text-xs uppercase tracking-wide text-gray-500 mb-1">{category}</div>
-          <h3 className="text-base font-bold leading-tight line-clamp-2 mb-1">{post.title}</h3>
+          {stikktittel && <div className="text-xs uppercase tracking-wide text-gray-500 mb-1">{stikktittel}</div>}
+          <h3 className="text-lg md:text-xl font-bold leading-tight line-clamp-2 mb-1">{post.title}</h3>
           <div className="text-xs text-gray-500 mt-1">
             {hasAuthors && <span>Av {formatAuthors(post.populatedAuthors || [])}</span>}
             {hasAuthors && post.publishedAt && <span> · </span>}

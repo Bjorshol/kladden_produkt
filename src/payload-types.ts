@@ -225,6 +225,10 @@ export interface Post {
   id: number;
   title: string;
   /**
+   * Kort stikktittel som vises øverst på kortet (valgfritt)
+   */
+  stikktittel?: string | null;
+  /**
    * Kort sammendrag som vises under tittelen
    */
   ingress?: string | null;
@@ -1195,6 +1199,7 @@ export interface FormBlockSelect<T extends boolean = true> {
  */
 export interface PostsSelect<T extends boolean = true> {
   title?: T;
+  stikktittel?: T;
   ingress?: T;
   size?: T;
   heroImage?: T;

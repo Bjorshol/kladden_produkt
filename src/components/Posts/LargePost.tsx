@@ -13,7 +13,7 @@ interface LargePostProps {
 export const LargePost: React.FC<LargePostProps> = ({ post }) => {
   const imageUrl = post.heroImage && typeof post.heroImage === 'object' ? getMediaUrl(post.heroImage.url) : null
   const excerpt = post.ingress || post.meta?.description || ''
-  const category = post.categories && post.categories.length > 0 && typeof post.categories[0] === 'object' ? post.categories[0].title : 'Nyheter'
+  const stikktittel = post.stikktittel || ''
   const hasAuthors = post.populatedAuthors && post.populatedAuthors.length > 0 && formatAuthors(post.populatedAuthors || []) !== ''
 
   return (
@@ -31,9 +31,9 @@ export const LargePost: React.FC<LargePostProps> = ({ post }) => {
         </div>
       )}
       <div className="p-4">
-        <div className="text-sm uppercase tracking-wide text-gray-500 mb-2">{category}</div>
+        {stikktittel && <div className="text-sm uppercase tracking-wide text-gray-500 mb-2">{stikktittel}</div>}
 
-        <h2 className="text-xl md:text-2xl font-bold leading-tight mb-2">{post.title}</h2>
+        <h2 className="text-2xl md:text-4xl font-bold leading-tight mb-2">{post.title}</h2>
 
         {excerpt && <p className="text-base leading-relaxed line-clamp-2 mb-3">{excerpt}</p>}
         <div className="text-sm text-gray-500">

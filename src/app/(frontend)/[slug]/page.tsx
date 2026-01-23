@@ -138,14 +138,6 @@ const queryPosts = cache(async () => {
     pagination: false,
     overrideAccess: draft,
     sort: '-publishedAt,-createdAt', // Newest first, fallback to createdAt
-    select: {
-      id: true,
-      title: true,
-      slug: true,
-      size: true,
-      heroImage: true,
-      content: true,
-    },
   })
 
   return result.docs

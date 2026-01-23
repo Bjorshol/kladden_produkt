@@ -73,6 +73,14 @@ export const Posts: CollectionConfig<'posts'> = {
       required: true,
     },
     {
+      name: 'stikktittel',
+      type: 'text',
+      label: 'Stikktittel',
+      admin: {
+        description: 'Kort stikktittel som vises øverst på kortet (valgfritt)',
+      },
+    },
+    {
       name: 'ingress',
       type: 'textarea',
       label: 'Ingress',
