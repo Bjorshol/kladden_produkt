@@ -1,5 +1,6 @@
 import React from 'react'
-import { SmallPost } from './SmallPost'
+import { SmallCard } from './SmallPost'
+import { SmallRow } from './SmallRow'
 import { LargePost } from './LargePost'
 import type { Post } from '@/payload-types'
 
@@ -18,9 +19,9 @@ export const PostsList: React.FC<PostsListProps> = ({ posts }) => {
       if (postSize === 'small' && i + 1 < posts.length && (posts[i + 1].size || 'large') === 'small') {
         // Two small posts side by side
         elements.push(
-          <div key={`pair-${i}`} className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <SmallPost post={post} />
-            <SmallPost post={posts[i + 1]} />
+          <div key={`pair-${i}`} className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <SmallCard post={post} />
+            <SmallCard post={posts[i + 1]} />
           </div>
         )
         i += 2
@@ -29,14 +30,14 @@ export const PostsList: React.FC<PostsListProps> = ({ posts }) => {
         const currentSize = post.size || 'large'
         if (currentSize === 'large') {
           elements.push(
-            <div key={post.id} className="mb-8">
+            <div key={post.id} className="mb-6">
               <LargePost post={post} />
             </div>
           )
         } else {
           elements.push(
-            <div key={post.id} className="mb-6">
-              <SmallPost post={post} />
+            <div key={post.id} className="mb-4">
+              <SmallRow post={post} />
             </div>
           )
         }
@@ -47,5 +48,11 @@ export const PostsList: React.FC<PostsListProps> = ({ posts }) => {
     return elements
   }
 
-  return <div className="container mx-auto px-4 py-8">{renderPosts()}</div>
+  return (
+    <div className="max-w-[48rem] mx-auto px-4 py-8">
+      <div className="space-y-4">
+        {renderPosts()}
+      </div>
+    </div>
+  )
 }

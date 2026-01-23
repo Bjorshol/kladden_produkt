@@ -6,11 +6,11 @@ import { formatAuthors } from '@/utilities/formatAuthors'
 import { formatDateTime } from '@/utilities/formatDateTime'
 import type { Post } from '@/payload-types'
 
-interface SmallPostProps {
+interface SmallCardProps {
   post: Post
 }
 
-export const SmallPost: React.FC<SmallPostProps> = ({ post }) => {
+export const SmallCard: React.FC<SmallCardProps> = ({ post }) => {
   const imageUrl = post.heroImage && typeof post.heroImage === 'object' ? getMediaUrl(post.heroImage.url) : null
   const excerpt = post.ingress || post.meta?.description || ''
   const category = post.categories && post.categories.length > 0 && typeof post.categories[0] === 'object' ? post.categories[0].title : 'Nyheter'
@@ -25,14 +25,14 @@ export const SmallPost: React.FC<SmallPostProps> = ({ post }) => {
             alt={typeof post.heroImage === 'object' ? post.heroImage?.alt || post.title : post.title}
             fill
             className="object-cover object-center"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            sizes="(max-width: 768px) 100vw, 50vw"
           />
         </div>
       )}
-      <div className="p-4">
+      <div className="p-3">
         <div className="text-xs uppercase tracking-wide text-gray-500 mb-1">{category}</div>
-        <h3 className="text-xl font-bold leading-tight line-clamp-2 mb-2">{post.title}</h3>
-        {excerpt && <p className="text-base leading-relaxed line-clamp-2 mb-2">{excerpt}</p>}
+        <h3 className="text-base font-bold leading-tight line-clamp-2 mb-1">{post.title}</h3>
+        {excerpt && <p className="text-sm leading-relaxed line-clamp-1 mb-1">{excerpt}</p>}
         <div className="text-xs text-gray-500">
           {hasAuthors && <span>Av {formatAuthors(post.populatedAuthors || [])}</span>}
           {hasAuthors && post.publishedAt && <span> · </span>}

@@ -19,7 +19,7 @@ export const LargePost: React.FC<LargePostProps> = ({ post }) => {
   return (
     <Link href={`/posts/${post.slug}`} className="block bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg hover:border-gray-300 transition-all duration-200">
       {imageUrl && (
-        <div className="aspect-[16/9] max-h-[360px] relative">
+        <div className="aspect-[16/9] max-h-[300px] relative">
           <NextImage
             src={imageUrl}
             alt={typeof post.heroImage === 'object' ? post.heroImage?.alt || post.title : post.title}
@@ -29,10 +29,10 @@ export const LargePost: React.FC<LargePostProps> = ({ post }) => {
           />
         </div>
       )}
-      <div className="p-6">
+      <div className="p-4">
         <div className="text-xs uppercase tracking-wide text-gray-500 mb-2">{category}</div>
-        <h2 className="text-3xl font-bold leading-tight mb-3">{post.title}</h2>
-        {excerpt && <p className="text-lg leading-relaxed line-clamp-3 mb-3">{excerpt}</p>}
+        <h2 className="text-2xl font-bold leading-tight mb-3">{post.title}</h2>
+        {excerpt && <p className="text-base leading-relaxed line-clamp-2 mb-3">{excerpt}</p>}
         <div className="text-sm text-gray-500">
           {hasAuthors && <span>Av {formatAuthors(post.populatedAuthors || [])}</span>}
           {hasAuthors && post.publishedAt && <span> · </span>}
