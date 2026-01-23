@@ -18,25 +18,27 @@ export const SmallCard: React.FC<SmallCardProps> = ({ post }) => {
 
   return (
     <Link href={`/posts/${post.slug}`} className="block bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg hover:border-gray-300 transition-all duration-200">
-      {imageUrl && (
-        <div className="aspect-[4/3] relative">
-          <NextImage
-            src={imageUrl}
-            alt={typeof post.heroImage === 'object' ? post.heroImage?.alt || post.title : post.title}
-            fill
-            className="object-cover object-center"
-            sizes="(max-width: 768px) 100vw, 50vw"
-          />
-        </div>
-      )}
-      <div className="p-3">
-        <div className="text-xs uppercase tracking-wide text-gray-500 mb-1">{category}</div>
-        <h3 className="text-base font-bold leading-tight line-clamp-2 mb-1">{post.title}</h3>
-        {excerpt && <p className="text-sm leading-relaxed line-clamp-1 mb-1">{excerpt}</p>}
-        <div className="text-xs text-gray-500">
-          {hasAuthors && <span>Av {formatAuthors(post.populatedAuthors || [])}</span>}
-          {hasAuthors && post.publishedAt && <span> · </span>}
-          {post.publishedAt && <time dateTime={post.publishedAt}>{formatDateTime(post.publishedAt)}</time>}
+      <div className="flex flex-row md:flex-col h-24 md:h-auto">
+        {imageUrl && (
+          <div className="w-28 md:w-full aspect-[4/3] relative flex-shrink-0 overflow-hidden rounded-t-lg md:rounded-t-lg">
+            <NextImage
+              src={imageUrl}
+              alt={typeof post.heroImage === 'object' ? post.heroImage?.alt || post.title : post.title}
+              fill
+              className="object-cover object-center"
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
+          </div>
+        )}
+        <div className="flex-1 p-3 md:p-3">
+          <div className="text-xs uppercase tracking-wide text-gray-500 mb-1">{category}</div>
+          <h3 className="text-base font-bold leading-tight line-clamp-2 mb-1">{post.title}</h3>
+          {excerpt && <p className="text-sm leading-relaxed line-clamp-1 mb-1">{excerpt}</p>}
+          <div className="text-xs text-gray-500">
+            {hasAuthors && <span>Av {formatAuthors(post.populatedAuthors || [])}</span>}
+            {hasAuthors && post.publishedAt && <span> · </span>}
+            {post.publishedAt && <time dateTime={post.publishedAt}>{formatDateTime(post.publishedAt)}</time>}
+          </div>
         </div>
       </div>
     </Link>

@@ -31,7 +31,7 @@ export const SmallRow: React.FC<SmallRowProps> = ({ post }) => {
         )}
         <div className="flex-1 p-4 flex flex-col justify-center">
           <div className="text-xs uppercase tracking-wide text-gray-500 mb-1">{category}</div>
-          <h3 className="text-lg font-bold leading-tight line-clamp-2 mb-1">{post.title}</h3>
+          <h3 className="text-base font-bold leading-tight line-clamp-2 mb-1">{post.title}</h3>
           <div className="text-xs text-gray-500 mt-1">
             {hasAuthors && <span>Av {formatAuthors(post.populatedAuthors || [])}</span>}
             {hasAuthors && post.publishedAt && <span> · </span>}
