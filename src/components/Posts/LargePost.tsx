@@ -20,13 +20,13 @@ export const LargePost: React.FC<LargePostProps> = ({ post }) => {
     <Link href={`/posts/${post.slug}`} className="block">
       <div className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg hover:border-gray-300 transition-all duration-200">
       {imageUrl && (
-        <div className="relative overflow-hidden rounded-t-lg w-full h-36">
+        <div className="relative w-full overflow-hidden rounded-t-lg aspect-[16/9] max-h-[340px]">
           <NextImage
             src={imageUrl}
             alt={typeof post.heroImage === 'object' ? post.heroImage?.alt || post.title : post.title}
             fill
             className="object-cover object-center"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            sizes="(max-width: 768px) 120vw, (max-width: 1200px) 50vw, 33vw"
           />
         </div>
       )}
