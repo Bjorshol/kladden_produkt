@@ -12,6 +12,8 @@ import { RenderHero } from '@/heros/RenderHero'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
+import { PostsList } from '@/components/Posts/PostsList'
+import type { Post } from '@/payload-types'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -50,6 +52,19 @@ export default async function Page({ params: paramsPromise }: Args) {
   const decodedSlug = decodeURIComponent(slug)
   const url = '/' + decodedSlug
   let page: RequiredDataFromCollectionSlug<'pages'> | null
+
+  if (slug === 'home') {
+    // For home page, render posts list instead
+    const posts = await queryPosts()
+    return (
+      <>
+        <PageClient />
+        <PayloadRedirects disableNotFound url={url} />
+        {draft && <LivePreviewListener />}
+        <PostsList posts={posts} />
+      </>
+    )
+  }
 
   page = await queryPageBySlug({
     slug: decodedSlug,
@@ -110,4 +125,29 @@ const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
   })
 
   return result.docs?.[0] || null
+})
+
+const queryPosts = cache(async () => {
+  const { isEnabled: draft } = await draftMode()
+
+  const payload = await getPayload({ config: configPromise })
+
+  const result = await payload.find({
+    collection: 'posts',
+    draft,
+    limit: 50,
+    pagination: false,
+    overrideAccess: draft,
+    sort: '-publishedAt,-createdAt', // Newest first, fallback to createdAt
+    select: {
+      id: true,
+      title: true,
+      slug: true,
+      size: true,
+      heroImage: true,
+      content: true,
+    },
+  })
+
+  return result.docs
 })

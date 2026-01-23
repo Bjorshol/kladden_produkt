@@ -72,6 +72,19 @@ export const Posts: CollectionConfig<'posts'> = {
       required: true,
     },
     {
+      name: 'size',
+      type: 'select',
+      label: 'Størrelse på sak',
+      options: [
+        { label: 'Stor', value: 'large' },
+        { label: 'Liten', value: 'small' },
+      ],
+      defaultValue: 'large',
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
       type: 'tabs',
       tabs: [
         {
