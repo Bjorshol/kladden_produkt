@@ -1,3 +1,4 @@
+
 import type { TextFieldSingleValidation } from 'payload'
 import React from 'react'
 import {
@@ -9,6 +10,24 @@ import {
   UnderlineFeature,
   type LinkFields,
 } from '@payloadcms/richtext-lexical'
+
+// Character counter plugin for Lexical editor
+const CharacterCounterPlugin = () => {
+  const [charCount, setCharCount] = React.useState(0)
+  // TODO: Connect to Lexical editor state to update charCount
+  return (
+    <div style={{
+      padding: '8px 12px',
+      borderTop: '1px solid #ddd',
+      fontSize: '12px',
+      color: '#666',
+      textAlign: 'right',
+      backgroundColor: '#f9f9f9',
+    }}>
+      Tegn (inkl. mellomrom): {charCount}
+    </div>
+  )
+}
 
 export const defaultLexical = lexicalEditor({
   features: [
@@ -47,26 +66,7 @@ export const defaultLexical = lexicalEditor({
   ],
   plugins: [
     {
-      Component: () => {
-        // Simple character counter plugin for Lexical editor
-        const CharacterCounter = () => {
-          const [charCount, setCharCount] = React.useState(0)
-          
-          return (
-            <div style={{
-              padding: '8px 12px',
-              borderTop: '1px solid #ddd',
-              fontSize: '12px',
-              color: '#666',
-              textAlign: 'right',
-              backgroundColor: '#f9f9f9',
-            }}>
-              Tegn (inkl. mellomrom): {charCount}
-            </div>
-          )
-        }
-        return <CharacterCounter />
-      },
+      Component: CharacterCounterPlugin,
     },
   ],
 })
