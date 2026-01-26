@@ -14,9 +14,9 @@ export const SmallRow: React.FC<SmallRowProps> = ({ post }) => {
 
   return (
     <Link href={`/posts/${post.slug}`} className="block bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg hover:border-gray-300 transition-all duration-200">
-      <div className="flex h-24">
+      <div className="flex h-16 md:h-24">
         {imageUrl && (
-          <div className="w-28 md:w-36 flex-shrink-0 relative">
+          <div className="w-16 md:w-28 flex-shrink-0 relative">
             <NextImage
               src={imageUrl}
               alt={typeof post.heroImage === 'object' ? post.heroImage?.alt || post.title : post.title}
@@ -26,9 +26,9 @@ export const SmallRow: React.FC<SmallRowProps> = ({ post }) => {
             />
           </div>
         )}
-        <div className="flex-1 p-4 flex flex-col justify-center min-w-0">
+        <div className="flex-1 p-2 md:p-4 flex flex-col justify-center min-w-0">
           {stikktittel && <div className="text-xs md:text-sm uppercase tracking-wide text-gray-500 mb-1 truncate">{stikktittel}</div>}
-          <h2 className="text-xl md:text-2xl font-bold leading-tight mb-1 break-words truncate" title={post.title}>{post.title}</h2>
+          <h2 className="text-base md:text-xl font-bold leading-tight mb-1 break-words truncate" title={post.title}>{post.title}</h2>
         </div>
       </div>
     </Link>
