@@ -70,8 +70,22 @@ export const Card: React.FC<{
         )}
         {titleToUse && (
           <div className="prose">
-            <h3 className="break-words truncate text-base md:text-xl font-bold leading-tight" title={titleToUse}>
-              <Link className="not-prose" href={href} ref={link.ref}>
+            <h3
+              className="font-bold leading-tight break-words text-neutral-900"
+              style={{
+                fontSize: 'clamp(1.15rem, 5vw, 1.5rem)', // 18.4px-24px
+                lineHeight: 1.18,
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: 'vertical',
+                display: '-webkit-box',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                marginBottom: 0,
+              }}
+              title={titleToUse}
+              tabIndex={-1}
+            >
+              <Link className="not-prose" href={href} ref={link.ref} tabIndex={-1}>
                 {titleToUse}
               </Link>
             </h3>
