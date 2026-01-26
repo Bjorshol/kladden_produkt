@@ -26,9 +26,9 @@ export const SmallRow: React.FC<SmallRowProps> = ({ post }) => {
             />
           </div>
         )}
-        <div className="flex-1 p-4 flex flex-col justify-center">
-          {stikktittel && <div className="text-xs md:text-sm uppercase tracking-wide text-gray-500 mb-1">{stikktittel}</div>}
-          <h2 className="text-3xl md:text-5xl font-bold leading-tight mb-1">{post.title}</h2>
+        <div className="flex-1 p-4 flex flex-col justify-center min-w-0">
+          {stikktittel && <div className="text-xs md:text-sm uppercase tracking-wide text-gray-500 mb-1 truncate">{stikktittel}</div>}
+          <h2 className="text-xl md:text-2xl font-bold leading-tight mb-1 break-words truncate" title={post.title}>{post.title}</h2>
         </div>
       </div>
     </Link>

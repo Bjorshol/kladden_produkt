@@ -70,7 +70,7 @@ export const Card: React.FC<{
         )}
         {titleToUse && (
           <div className="prose">
-            <h3>
+            <h3 className="break-words truncate" title={titleToUse}>
               <Link className="not-prose" href={href} ref={link.ref}>
                 {titleToUse}
               </Link>
