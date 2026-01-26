@@ -60,9 +60,17 @@ export default buildConfig({
   // This config helps us configure global or default features that the other editors can inherit
   editor: defaultLexical,
   email: nodemailerAdapter({
-    defaultFromAddress: 'noreply@example.com',
-    defaultFromName: 'Payload CMS',
-    transportOptions: {
+    defaultFromAddress: process.env.FROM_EMAIL || 'noreply@example.com',
+    defaultFromName: process.env.FROM_NAME || 'Payload CMS',
+    transportOptions: process.env.SMTP_HOST ? {
+      host: process.env.SMTP_HOST,
+      port: parseInt(process.env.SMTP_PORT || '587'),
+      secure: process.env.SMTP_SECURE === 'true',
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+    } : {
       streamTransport: true,
       newline: 'unix',
     },
