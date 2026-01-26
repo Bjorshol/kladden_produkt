@@ -16,7 +16,7 @@ import { getServerSideURL } from '@/utilities/getURL'
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html className={cn(GeistSans.variable, GeistMono.variable)} lang="en" data-theme="light" suppressHydrationWarning>
-      <body>
+      <body className="bg-white">
         <Providers>
           <Topbar />
           {children}
