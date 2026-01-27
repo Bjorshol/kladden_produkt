@@ -106,16 +106,18 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
   const { slug = 'home' } = await paramsPromise
   // Decode to support slugs with special characters
   const decodedSlug = decodeURIComponent(slug)
+  const isHome = decodedSlug === 'home'
   
   try {
     const page = await queryPageBySlug({
       slug: decodedSlug,
     })
-    return generateMeta({ doc: page })
+    const meta = await generateMeta({ doc: page })
+    return isHome ? { ...meta, title: 'Kladden - studentavis fra Innlandet' } : meta
   } catch (error) {
     // Fallback for when DB is not available during build
     return {
-      title: slug === 'home' ? 'Home' : decodedSlug,
+      title: isHome ? 'Kladden - studentavis fra Innlandet' : decodedSlug,
     }
   }
 }

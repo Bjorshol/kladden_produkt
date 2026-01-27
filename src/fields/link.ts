@@ -107,8 +107,44 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
           type: 'text',
           admin: {
             width: '50%',
+            placeholder: 'Standard: tittel på valgt dokument',
           },
           label: 'Label',
+          hooks: {
+            beforeValidate: [
+              async ({ value, siblingData, req }) => {
+                const trimmed = typeof value === 'string' ? value.trim() : ''
+                if (trimmed) return value
+
+                if (siblingData?.type !== 'reference') return value
+
+                const reference = siblingData?.reference
+                if (!reference || typeof reference !== 'object') return value
+
+                const relationTo = (reference as { relationTo?: unknown }).relationTo
+                const id = (reference as { value?: unknown }).value
+
+                if ((relationTo !== 'posts' && relationTo !== 'pages') || (typeof id !== 'string' && typeof id !== 'number')) {
+                  return value
+                }
+
+                try {
+                  const doc = await req.payload.findByID({
+                    collection: relationTo,
+                    id,
+                    depth: 0,
+                  })
+
+                  const title = (doc as { title?: unknown })?.title
+                  if (typeof title === 'string' && title.trim()) return title
+                } catch {
+                  // Ignore lookup failures; user can still enter a label manually
+                }
+
+                return value
+              },
+            ],
+          },
           required: true,
         },
       ],

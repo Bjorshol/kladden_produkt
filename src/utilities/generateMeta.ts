@@ -8,7 +8,7 @@ import { getServerSideURL } from './getURL'
 const getImageURL = (image?: Media | Config['db']['defaultIDType'] | null) => {
   const serverUrl = getServerSideURL()
 
-  let url = serverUrl + '/website-template-OG.webp'
+  let url = serverUrl + '/opengraph-image'
 
   if (image && typeof image === 'object' && 'url' in image) {
     const ogUrl = image.sizes?.og?.url
@@ -26,14 +26,13 @@ export const generateMeta = async (args: {
 
   const ogImage = getImageURL(doc?.meta?.image)
 
-  const title = doc?.meta?.title
-    ? doc?.meta?.title + ' | Payload Website Template'
-    : 'Payload Website Template'
+  const defaultTitle = 'Kladden - studentavis fra Innlandet'
+  const title = doc?.meta?.title ? `${doc.meta.title} | Kladden` : defaultTitle
 
   return {
-    description: doc?.meta?.description,
+    description: doc?.meta?.description || 'Kladden - studentavis fra Innlandet.',
     openGraph: mergeOpenGraph({
-      description: doc?.meta?.description || '',
+      description: doc?.meta?.description || undefined,
       images: ogImage
         ? [
             {

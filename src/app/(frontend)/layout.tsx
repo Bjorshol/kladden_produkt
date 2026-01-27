@@ -15,7 +15,7 @@ import { getServerSideURL } from '@/utilities/getURL'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html className={cn(GeistSans.variable, GeistMono.variable)} lang="en" data-theme="light" suppressHydrationWarning>
+    <html className={cn(GeistSans.variable, GeistMono.variable)} lang="nb" data-theme="light" suppressHydrationWarning>
       <body className="bg-white">
         <Providers>
           <Topbar />
@@ -29,9 +29,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
 export const metadata: Metadata = {
   metadataBase: new URL(getServerSideURL()),
+  title: {
+    default: 'Kladden - studentavis fra Innlandet',
+    template: '%s | Kladden',
+  },
+  description: 'Kladden - studentavis fra Innlandet.',
   openGraph: mergeOpenGraph(),
   twitter: {
     card: 'summary_large_image',
-    creator: '@payloadcms',
   },
 }

@@ -10,7 +10,7 @@ export function Footer() {
             <h1 className="text-2xl font-bold text-red-600">KLADDEN</h1>
           </Link>
           <div className="text-sm">
-            <p><strong>Kladden</strong> - Studentavis fra Innlandet</p>
+            <p><strong>Kladden</strong> - studentavis fra Innlandet</p>
             <p>Redaktør: [Navn]</p>
             <p>Styreleder: [Navn]</p>
             <p>Ansvarlig redaktør: [Navn]</p>
