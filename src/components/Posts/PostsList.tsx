@@ -19,14 +19,14 @@ export const PostsList: React.FC<PostsListProps> = ({ posts }) => {
       if (postSize === 'small' && i + 1 < posts.length && (posts[i + 1].size || 'large') === 'small') {
         // Two small posts - different layouts for mobile and desktop
         elements.push(
-          <div key={`pair-${i}`} className="mb-6">
+          <div key={`pair-${i}`}>
             {/* Mobile: stripes */}
-            <div className="block md:hidden space-y-4">
+            <div className="block md:hidden space-y-3">
               <SmallRow post={post} />
               <SmallRow post={posts[i + 1]} />
             </div>
             {/* Desktop: side by side */}
-            <div className="hidden md:grid md:grid-cols-2 md:gap-4">
+            <div className="hidden md:grid md:grid-cols-2 md:gap-3">
               <SmallCard post={post} />
               <SmallCard post={posts[i + 1]} />
             </div>
@@ -37,18 +37,10 @@ export const PostsList: React.FC<PostsListProps> = ({ posts }) => {
         // Single post full width
         const currentSize = post.size || 'large'
         if (currentSize === 'large') {
-          elements.push(
-            <div key={post.id} className="mb-6">
-              <LargePost post={post} />
-            </div>
-          )
+          elements.push(<LargePost key={post.id} post={post} />)
         } else {
           // Single small post - always use stripe layout
-          elements.push(
-            <div key={post.id} className="mb-4">
-              <SmallRow post={post} />
-            </div>
-          )
+          elements.push(<SmallRow key={post.id} post={post} />)
         }
         i += 1
       }
@@ -58,10 +50,8 @@ export const PostsList: React.FC<PostsListProps> = ({ posts }) => {
   }
 
   return (
-    <div className="max-w-[48rem] mx-auto px-4 py-8 bg-red-50">
-      <div className="space-y-4">
-        {renderPosts()}
-      </div>
+    <div className="max-w-[48rem] mx-auto px-4 py-6 md:py-8">
+      <div className="flex flex-col gap-3 md:gap-6">{renderPosts()}</div>
     </div>
   )
 }

@@ -3,6 +3,8 @@ import Link from 'next/link'
 import NextImage from 'next/image'
 import { getMediaUrl } from '@/utilities/getMediaUrl'
 import type { Post } from '@/payload-types'
+import type { PostThemeColor } from '@/theme/postColorMap'
+import { postColorMap } from '@/theme/postColorMap'
 
 interface SmallRowProps {
   post: Post
@@ -12,8 +14,19 @@ export const SmallRow: React.FC<SmallRowProps> = ({ post }) => {
   const imageUrl = post.heroImage && typeof post.heroImage === 'object' ? getMediaUrl(post.heroImage.url) : null
   const stikktittel = post.stikktittel || ''
 
+  const themeColor = (post as unknown as { themeColor?: PostThemeColor }).themeColor
+  const isDefaultTheme = !themeColor || themeColor === 'default'
+  const theme = themeColor ? postColorMap[themeColor] ?? postColorMap.default : postColorMap.default
+  const themedStyle = isDefaultTheme
+    ? undefined
+    : ({ backgroundColor: theme.bg, color: theme.text } satisfies React.CSSProperties)
+
   return (
-    <Link href={`/posts/${post.slug}`} className="block bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg hover:border-gray-300 transition-all duration-200 w-full focus:outline-none focus:ring-2 focus:ring-red-600">
+    <Link
+      href={`/posts/${post.slug}`}
+      className="block bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg hover:border-gray-300 transition-all duration-200 w-full focus:outline-none focus:ring-2 focus:ring-red-600"
+      style={themedStyle}
+    >
       <div className="flex h-20 md:h-24">
         {imageUrl && (
           <div className="w-20 md:w-28 flex-shrink-0 relative">
@@ -29,12 +42,12 @@ export const SmallRow: React.FC<SmallRowProps> = ({ post }) => {
         )}
         <div className="flex-1 px-3 py-2 md:p-4 flex flex-col justify-center min-w-0">
           {stikktittel && (
-            <div className="text-xs md:text-sm uppercase tracking-wide text-gray-500 mb-1 truncate">
+            <div className={isDefaultTheme ? 'text-xs md:text-sm uppercase tracking-wide text-gray-500 mb-1 truncate' : 'text-xs md:text-sm uppercase tracking-wide mb-1 truncate opacity-80'}>
               {stikktittel}
             </div>
           )}
           <h2
-            className="font-bold leading-tight break-words text-neutral-900"
+            className={isDefaultTheme ? 'font-bold leading-tight break-words text-neutral-900' : 'font-bold leading-tight break-words'}
             style={{
               fontSize: 'clamp(1.1rem, 4vw, 1.5rem)', // 17.6px-24px
               lineHeight: 1.18,

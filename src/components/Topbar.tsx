@@ -5,12 +5,14 @@ import React from 'react'
 export const Topbar: React.FC = () => {
   return (
     <header
-      className="text-white sticky top-0 z-50 h-16 flex items-center px-8"
+      className="text-white sticky top-0 z-50 h-16"
       style={{ backgroundColor: 'var(--color-brand-red, #c9252c)' }}
     >
-      <Link href="/" className="text-2xl font-bold uppercase tracking-wide">
-        KLADDEN
-      </Link>
+      <div className="max-w-[48rem] mx-auto w-full px-4 h-full flex items-center justify-center md:justify-start">
+        <Link href="/" className="text-2xl font-bold uppercase tracking-wide text-white">
+          KLADDEN
+        </Link>
+      </div>
     </header>
   )
 }
