@@ -3,6 +3,7 @@ import * as migration_20260123_005652_add_size_field from './20260123_005652_add
 import * as migration_20260123_014835 from './20260123_014835';
 import * as migration_20260123_020000_add_stikktittel_field from './20260123_020000_add_stikktittel_field';
 import * as migration_20260123_021000_add_front_editor from './20260123_021000_add_front_editor';
+import * as migration_20260127_120000_add_theme_color_field from './20260127_120000_add_theme_color_field';
 
 export const migrations = [
   {
@@ -29,5 +30,10 @@ export const migrations = [
     up: migration_20260123_021000_add_front_editor.up,
     down: migration_20260123_021000_add_front_editor.down,
     name: '20260123_021000_add_front_editor',
+  },
+  {
+    up: migration_20260127_120000_add_theme_color_field.up,
+    down: migration_20260127_120000_add_theme_color_field.down,
+    name: '20260127_120000_add_theme_color_field',
   },
 ];
