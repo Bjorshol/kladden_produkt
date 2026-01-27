@@ -217,11 +217,12 @@
   }
   a {
     color: #0e6799;
-    text-decoration: underline;
+    text-decoration: none;
   }
   a:hover, a:focus {
     color: #c9252c;
     text-decoration: underline;
+    text-decoration-color: currentColor;
   }
 }
 
