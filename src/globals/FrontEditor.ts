@@ -27,6 +27,24 @@ export const FrontEditor: GlobalConfig = {
           label: 'Sak',
         },
         {
+          name: 'themeColorOverride',
+          type: 'select',
+          label: 'Farge på kort (override)',
+          options: [
+            { label: 'Default', value: 'default' },
+            { label: 'Beige', value: 'beige' },
+            { label: 'Blå', value: 'blue' },
+            { label: 'Grå', value: 'gray' },
+            { label: 'Gul', value: 'yellow' },
+            { label: 'Sort', value: 'black' },
+          ],
+          defaultValue: 'default',
+          admin: {
+            description:
+              'Valgfritt: Overstyr fargen på kortet på forsiden. Default = bruk sakens egen farge.',
+          },
+        },
+        {
           name: 'size',
           type: 'select',
           label: 'Størrelse',

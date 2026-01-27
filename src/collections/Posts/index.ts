@@ -43,11 +43,13 @@ export const Posts: CollectionConfig<'posts'> = {
     slug: true,
     categories: true,
     ingress: true,
+    // payload-types er ikke regenerert i repo'et enda, så vi caster for å unngå build-feil
+    themeColor: true,
     meta: {
       image: true,
       description: true,
     },
-  },
+  } as any,
   admin: {
     defaultColumns: ['title', 'slug', 'updatedAt'],
     livePreview: {

@@ -14,6 +14,7 @@ import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { PostsList } from '@/components/Posts/PostsList'
 import type { FrontEditor, Post } from '@/payload-types'
+import type { PostThemeColor } from '@/theme/postColorMap'
 
 export async function generateStaticParams() {
   // For Vercel deployment, return empty array since we can't connect to DB during build
@@ -181,12 +182,21 @@ const queryPosts = cache(async (): Promise<Post[]> => {
     }
 
     // Map to maintain order and apply size overrides
-    const featuredPosts: Post[] = frontEditor.featuredPosts.map((fp) => {
+    type FeaturedPostItem = NonNullable<FrontEditor['featuredPosts']>[number] & {
+      themeColorOverride?: PostThemeColor
+    }
+
+    const featuredPosts: Post[] = (frontEditor.featuredPosts as FeaturedPostItem[]).map((fp) => {
       const post = featuredPostsData.docs.find((p) => p.id === (typeof fp.post === 'number' ? fp.post : fp.post.id))
       if (post) {
+        const override = fp.themeColorOverride
+        const postThemeColor = (post as unknown as { themeColor?: PostThemeColor }).themeColor
+        const resolvedThemeColor = override && override !== 'default' ? override : postThemeColor
+
         return {
           ...post,
           size: fp.size || post.size, // Override size if set
+          themeColor: resolvedThemeColor,
         } as Post
       }
       return null

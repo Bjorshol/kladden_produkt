@@ -2,6 +2,7 @@ import { formatDateTime } from 'src/utilities/formatDateTime'
 import React from 'react'
 
 import type { Post } from '@/payload-types'
+import { postColorMap } from '@/theme/postColorMap'
 
 import { Media } from '@/components/Media'
 import { formatAuthors } from '@/utilities/formatAuthors'
@@ -17,10 +18,23 @@ export const PostHero: React.FC<{
   const categoryTitle = categories && categories.length > 0 && typeof categories[0] === 'object' ? categories[0].title : 'Nyheter'
   const ingress = post.ingress || meta?.description || ''
 
+  const themeColor = (post as unknown as { themeColor?: keyof typeof postColorMap }).themeColor
+  const colorKey = themeColor && postColorMap[themeColor] ? themeColor : 'default'
+  const { bg, text } = postColorMap[colorKey]
+  const style =
+    colorKey === 'default'
+      ? undefined
+      : ({
+          '--post-bg': bg,
+          '--post-fg': text,
+          backgroundColor: 'var(--post-bg)',
+          color: 'var(--post-fg)',
+        } as React.CSSProperties)
+
   return (
-    <div className="pt-16 pb-8">
+    <div className="pt-16 pb-8" style={style}>
       <div className="container max-w-[48rem] mx-auto px-4">
-        <div className="text-sm uppercase tracking-wide text-gray-500 mb-2">
+        <div className="text-sm uppercase tracking-wide mb-2" style={{ color: 'inherit', opacity: 0.7 }}>
           {categoryTitle}
         </div>
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-4">
@@ -39,23 +53,23 @@ export const PostHero: React.FC<{
       )}
       {ingress && (
         <div className="container max-w-[48rem] mx-auto px-4 mb-6">
-          <p className="text-lg md:text-xl leading-relaxed text-gray-700">
+          <p className="text-lg md:text-xl leading-relaxed" style={{ color: 'inherit', opacity: 0.9 }}>
             {ingress}
           </p>
         </div>
       )}
       <div className="container max-w-[48rem] mx-auto px-4 mb-6">
-        <hr className="border-gray-300" />
+        <hr className="border-gray-300" style={{ opacity: 0.4 }} />
       </div>
       <div className="container max-w-[48rem] mx-auto px-4 mb-6">
-        <div className="text-sm text-gray-500">
+        <div className="text-sm" style={{ color: 'inherit', opacity: 0.7 }}>
           {hasAuthors && <span>Av {formatAuthors(populatedAuthors || [])}</span>}
           {hasAuthors && publishedAt && <span> · </span>}
           {publishedAt && <time dateTime={publishedAt}>{formatDateTime(publishedAt)}</time>}
         </div>
       </div>
       <div className="container max-w-[48rem] mx-auto px-4 mb-8">
-        <hr className="border-gray-300" />
+        <hr className="border-gray-300" style={{ opacity: 0.4 }} />
       </div>
     </div>
   )

@@ -40,17 +40,20 @@ export const Card: React.FC<{
   const colorKey = themeColor && postColorMap[themeColor] ? themeColor : 'default'
   const { bg, text } = postColorMap[colorKey]
 
-  const style: CardStyleVars = {
-    '--post-bg': bg,
-    '--post-fg': text,
-    backgroundColor: 'var(--post-bg, #fff)',
-    color: 'var(--post-fg, #2a2a2a)',
-  }
+  const style: CardStyleVars =
+    colorKey === 'default'
+      ? {}
+      : {
+          '--post-bg': bg,
+          '--post-fg': text,
+          backgroundColor: 'var(--post-bg)',
+          color: 'var(--post-fg)',
+        }
 
   return (
     <article
       className={cn(
-        'border border-border rounded-lg overflow-hidden hover:cursor-pointer',
+        'border border-border rounded-lg overflow-hidden bg-white hover:cursor-pointer',
         className,
       )}
       ref={card.ref}
