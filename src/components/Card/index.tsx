@@ -5,17 +5,16 @@ import Link from 'next/link'
 import React, { Fragment } from 'react'
 
 
-import type { Post } from '@/payload-types'
 import { postColorMap } from '@/theme/postColorMap'
+import type { CardPostDataPatched } from './CardPostDataPatched'
 
 import { Media } from '@/components/Media'
 
-export type CardPostData = Pick<Post, 'slug' | 'categories' | 'meta' | 'title'>
 
-export const Card: React.FC<{
+
   alignItems?: 'center'
   className?: string
-  doc?: CardPostData
+  doc?: CardPostDataPatched
   relationTo?: 'posts'
   showCategories?: boolean
   title?: string
