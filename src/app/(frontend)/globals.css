@@ -86,7 +86,7 @@
   }
 }
 
-:root {
+ :root {
   --background: oklch(100% 0 0deg);
   --foreground: oklch(14.5% 0 0deg);
   --card: oklch(96.5% 0.005 265deg);
@@ -123,6 +123,7 @@
   --success: oklch(78% 0.08 200deg);
   --warning: oklch(89% 0.1 75deg);
   --error: oklch(75% 0.15 25deg);
+  --color-brand-red: #c9252c;
 }
 
 [data-theme='dark'] {
@@ -203,6 +204,7 @@
   --color-success: var(--success);
   --color-warning: var(--warning);
   --color-error: var(--error);
+  --color-brand-red: #c9252c;
 }
 
 @layer base {
@@ -210,7 +212,16 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground min-h-[100vh] flex flex-col;
+    @apply bg-background min-h-[100vh] flex flex-col;
+    color: #2a2a2a;
+  }
+  a {
+    color: #0e6799;
+    text-decoration: underline;
+  }
+  a:hover, a:focus {
+    color: #c9252c;
+    text-decoration: underline;
   }
 }
 

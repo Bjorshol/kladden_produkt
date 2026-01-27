@@ -68,6 +68,23 @@ export const Posts: CollectionConfig<'posts'> = {
   },
   fields: [
     {
+      name: 'themeColor',
+      type: 'select',
+      label: 'Farge på sak',
+      options: [
+        { label: 'Default', value: 'default' },
+        { label: 'Beige', value: 'beige' },
+        { label: 'Blå', value: 'blue' },
+        { label: 'Grå', value: 'gray' },
+        { label: 'Gul', value: 'yellow' },
+        { label: 'Sort', value: 'black' },
+      ],
+      defaultValue: 'default',
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
       name: 'title',
       type: 'text',
       required: true,
