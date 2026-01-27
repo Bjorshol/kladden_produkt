@@ -9,7 +9,7 @@ interface PostsListProps {
 }
 
 export const PostsList: React.FC<PostsListProps> = ({ posts }) => {
-  const renderPosts = () => {
+  const renderDesktopPosts = () => {
     const elements: React.ReactElement[] = []
     let i = 0
 
@@ -49,9 +49,19 @@ export const PostsList: React.FC<PostsListProps> = ({ posts }) => {
     return elements
   }
 
+  const renderMobilePosts = () => {
+    return posts.map((post) => {
+      const size = post.size || 'large'
+      return size === 'small' ? <SmallRow key={post.id} post={post} /> : <LargePost key={post.id} post={post} />
+    })
+  }
+
   return (
     <div className="max-w-[48rem] mx-auto px-4 py-6 md:py-8">
-      <div className="flex flex-col gap-3 md:gap-6">{renderPosts()}</div>
+      <div className="flex flex-col gap-3 md:gap-6">
+        <div className="flex flex-col gap-3 md:hidden">{renderMobilePosts()}</div>
+        <div className="hidden md:flex md:flex-col md:gap-6">{renderDesktopPosts()}</div>
+      </div>
     </div>
   )
 }
