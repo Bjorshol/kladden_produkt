@@ -29,7 +29,7 @@ export const FrontEditor: GlobalConfig = {
         {
           name: 'themeColorOverride',
           type: 'select',
-          label: 'Farge på kort (override)',
+          label: 'Farge på kort',
           options: [
             { label: 'Default', value: 'default' },
             { label: 'Beige', value: 'beige' },
