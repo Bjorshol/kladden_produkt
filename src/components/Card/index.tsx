@@ -4,14 +4,20 @@ import useClickableCard from '@/utilities/useClickableCard'
 import Link from 'next/link'
 import React, { Fragment } from 'react'
 
-
 import { postColorMap } from '@/theme/postColorMap'
 import type { CardPostDataPatched } from './CardPostDataPatched'
 
 import { Media } from '@/components/Media'
 
+// Bakoverkompatibilitet: andre steder importerer fortsatt CardPostData fra denne modulen
+export type CardPostData = CardPostDataPatched
 
+type CardStyleVars = React.CSSProperties & {
+  '--post-bg'?: string
+  '--post-fg'?: string
+}
 
+export const Card: React.FC<{
   alignItems?: 'center'
   className?: string
   doc?: CardPostDataPatched
@@ -34,6 +40,13 @@ import { Media } from '@/components/Media'
   const colorKey = themeColor && postColorMap[themeColor] ? themeColor : 'default'
   const { bg, text } = postColorMap[colorKey]
 
+  const style: CardStyleVars = {
+    '--post-bg': bg,
+    '--post-fg': text,
+    backgroundColor: 'var(--post-bg, #fff)',
+    color: 'var(--post-fg, #2a2a2a)',
+  }
+
   return (
     <article
       className={cn(
@@ -41,13 +54,7 @@ import { Media } from '@/components/Media'
         className,
       )}
       ref={card.ref}
-      style={{
-        // Sett CSS-variabler for bakgrunn og tekstfarge
-        ['--post-bg' as any]: bg,
-        ['--post-fg' as any]: text,
-        backgroundColor: 'var(--post-bg, #fff)',
-        color: 'var(--post-fg, #2a2a2a)',
-      }}
+      style={style}
     >
       <div className="relative w-full ">
         {!metaImage && <div className="">No image</div>}

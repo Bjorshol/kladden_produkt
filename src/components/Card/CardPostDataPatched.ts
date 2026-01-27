@@ -1,5 +1,8 @@
-// Patch for CardPostData type to inkludere themeColor midlertidig til Payload types er regenerert
+// Type for Card-data som støtter themeColor selv før payload-types er regenerert
 
 import type { Post } from '@/payload-types'
+import type { PostThemeColor } from '@/theme/postColorMap'
 
-export type CardPostDataPatched = Pick<Post, 'slug' | 'categories' | 'meta' | 'title' | 'themeColor'>
+export type CardPostDataPatched = Pick<Post, 'slug' | 'categories' | 'meta' | 'title'> & {
+	themeColor?: PostThemeColor
+}

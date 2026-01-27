@@ -27,3 +27,5 @@ export const postColorMap = {
     text: '#ffffff',
   },
 } as const;
+
+export type PostThemeColor = keyof typeof postColorMap
