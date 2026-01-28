@@ -4,7 +4,7 @@ import { PayloadRedirects } from '@/components/PayloadRedirects'
 import configPromise from '@payload-config'
 import { getPayload, type RequiredDataFromCollectionSlug } from 'payload'
 import { draftMode } from 'next/headers'
-import React, { cache } from 'react'
+import React from 'react'
 import { homeStatic } from '@/endpoints/seed/home-static'
 
 import { RenderBlocks } from '@/blocks/RenderBlocks'
@@ -122,7 +122,7 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
   }
 }
 
-const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
+const queryPageBySlug = async ({ slug }: { slug: string }) => {
   const { isEnabled: draft } = await draftMode()
 
   const payload = await getPayload({ config: configPromise })
@@ -141,9 +141,9 @@ const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
   })
 
   return result.docs?.[0] || null
-})
+}
 
-const queryPosts = cache(async (): Promise<Post[]> => {
+const queryPosts = async (): Promise<Post[]> => {
 
   const { isEnabled: draft } = await draftMode()
 
@@ -245,4 +245,4 @@ const queryPosts = cache(async (): Promise<Post[]> => {
   }
 
   return posts
-})
+}
