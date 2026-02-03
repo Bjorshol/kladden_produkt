@@ -1,13 +1,15 @@
 import Link from 'next/link'
 import React from 'react'
 
+import { LogoText } from '@/components/Logo/LogoText'
+
 export function Footer() {
   return (
     <footer className="mt-auto border-t border-gray-300 bg-gray-100 text-black">
       <div className="container py-8 gap-8 flex flex-col md:flex-row md:justify-between">
         <div className="flex flex-col gap-4">
           <Link className="flex items-center" href="/">
-            <h1 className="text-2xl font-bold text-red-600">KLADDEN</h1>
+            <LogoText variant="footer" className="text-red-600" />
           </Link>
           <div className="text-sm">
             <p><strong>Kladden</strong> - studentavis fra Innlandet</p>

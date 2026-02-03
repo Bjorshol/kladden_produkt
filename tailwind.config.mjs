@@ -2,6 +2,15 @@
 const config = {
   theme: {
     extend: {
+      fontFamily: {
+        logo: [
+          '"Antarctican Headline"',
+          'var(--font-sans)',
+          'ui-sans-serif',
+          'system-ui',
+          'sans-serif',
+        ],
+      },
       typography: () => ({
         DEFAULT: {
           css: [

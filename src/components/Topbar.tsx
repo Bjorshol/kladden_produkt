@@ -2,6 +2,8 @@
 import Link from 'next/link'
 import React from 'react'
 
+import { LogoText } from '@/components/Logo/LogoText'
+
 export const Topbar: React.FC = () => {
   return (
     <header
@@ -9,8 +11,12 @@ export const Topbar: React.FC = () => {
       style={{ backgroundColor: 'var(--color-brand-red, #c9252c)' }}
     >
       <div className="max-w-[48rem] mx-auto w-full px-4 h-full flex items-center justify-center md:justify-start">
-        <Link href="/" className="text-2xl font-bold uppercase tracking-wide text-white">
-          KLADDEN
+        <Link
+          href="/"
+          className="inline-flex h-full items-center text-white hover:text-white hover:no-underline"
+          aria-label="Kladden"
+        >
+          <LogoText variant="topbar" />
         </Link>
       </div>
     </header>

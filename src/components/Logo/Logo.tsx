@@ -14,7 +14,7 @@ export const Logo = (props: Props) => {
     <span
       aria-label="Kladden"
       className={clsx(
-        'inline-flex items-center justify-center font-extrabold leading-none',
+        'inline-flex items-center justify-center font-logo font-extrabold leading-none',
         className,
       )}
       style={{ color: 'var(--color-brand-red, #c9252c)' }}

@@ -3,6 +3,14 @@
 
 @config '../../../tailwind.config.mjs';
 
+@font-face {
+  font-family: 'Antarctican Headline';
+  src: url('/fonts/antarctican-headline.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+}
+
 @custom-variant dark (&:is([data-theme='dark'] *));
 @custom-variant sm (@media (width >= theme(--breakpoint-sm)));
 @custom-variant md (@media (width >= theme(--breakpoint-md)));
