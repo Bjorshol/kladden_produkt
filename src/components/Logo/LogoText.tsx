@@ -4,9 +4,9 @@ import React from 'react'
 type LogoTextVariant = 'topbar' | 'footer' | 'default'
 
 const variantClasses: Record<LogoTextVariant, string> = {
-  default: 'text-2xl tracking-[-0.02em]',
-  topbar: 'text-[32px] tracking-[-0.02em] md:text-2xl',
-  footer: 'text-2xl tracking-[-0.02em]',
+  default: 'text-2xl tracking-[0.02em]',
+  topbar: 'text-[34px] tracking-[0.03em] md:text-2xl md:tracking-[0.02em]',
+  footer: 'text-2xl tracking-[0.02em]',
 }
 
 interface Props {
