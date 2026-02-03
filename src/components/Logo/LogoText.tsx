@@ -4,9 +4,9 @@ import React from 'react'
 type LogoTextVariant = 'topbar' | 'footer' | 'default'
 
 const variantClasses: Record<LogoTextVariant, string> = {
-  default: 'text-2xl tracking-[0.12em]',
-  topbar: 'text-[30px] tracking-[0.14em] md:text-2xl',
-  footer: 'text-2xl tracking-[0.12em]',
+  default: 'text-2xl tracking-[-0.02em]',
+  topbar: 'text-[32px] tracking-[-0.02em] md:text-2xl',
+  footer: 'text-2xl tracking-[-0.02em]',
 }
 
 interface Props {
@@ -23,7 +23,7 @@ export const LogoText: React.FC<Props> = ({
   return (
     <span
       className={clsx(
-        'font-logo uppercase leading-[1.05] whitespace-nowrap',
+        'font-logo font-extrabold uppercase leading-[1.02] whitespace-nowrap antialiased',
         variantClasses[variant],
         className,
       )}

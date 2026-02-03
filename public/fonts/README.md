@@ -1,6 +1,7 @@
-Legg fontfilen(e) for Antarctican Headline her.
+Denne mappen brukes kun hvis vi self-hoster fontfiler.
 
-Forventet filnavn brukt av CSS:
-- `public/fonts/antarctican-headline.woff2`
+Akkurat nå lastes Antarctican Headline via Adobe Typekit (ekstern stylesheet i `src/app/(frontend)/layout.tsx`).
 
-`@font-face` er definert i `src/app/(frontend)/globals.css` og peker til `/fonts/antarctican-headline.woff2`.
+Hvis du senere vil bytte tilbake til self-hosting:
+- Legg `public/fonts/antarctican-headline.woff2` her
+- Sett opp `@font-face` i `src/app/(frontend)/globals.css`

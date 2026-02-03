@@ -4,6 +4,7 @@ const config = {
     extend: {
       fontFamily: {
         logo: [
+          '"antarctican-headline"',
           '"Antarctican Headline"',
           'var(--font-sans)',
           'ui-sans-serif',
