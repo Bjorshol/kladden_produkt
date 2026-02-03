@@ -5,7 +5,7 @@ type LogoTextVariant = 'topbar' | 'footer' | 'default'
 
 const variantClasses: Record<LogoTextVariant, string> = {
   default: 'text-2xl tracking-[0.02em]',
-  topbar: 'text-[34px] tracking-[0.03em] md:text-2xl md:tracking-[0.02em]',
+  topbar: 'text-[38px] tracking-[0.035em] md:text-[34px] md:tracking-[0.03em]',
   footer: 'text-2xl tracking-[0.02em]',
 }
 
