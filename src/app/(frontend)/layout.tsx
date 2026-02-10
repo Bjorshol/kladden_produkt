@@ -6,6 +6,7 @@ import { GeistSans } from 'geist/font/sans'
 import React from 'react'
 
 import { Footer } from '@/Footer/Component'
+import { GoogleAnalytics } from '@/app/components/GoogleAnalytics'
 import { Topbar } from '@/components/Topbar'
 import { Providers } from '@/providers'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
@@ -18,6 +19,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html className={cn(GeistSans.variable, GeistMono.variable)} lang="nb" data-theme="light" suppressHydrationWarning>
       <head>
         <link rel="stylesheet" href="https://use.typekit.net/tqh0ecm.css" />
+        <GoogleAnalytics />
       </head>
       <body className="bg-white">
         <Providers>
