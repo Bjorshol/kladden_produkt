@@ -7,6 +7,7 @@ import React from 'react'
 
 import { Footer } from '@/Footer/Component'
 import { GoogleAnalytics } from '@/app/components/GoogleAnalytics'
+import { GoogleAnalyticsPageView } from '@/app/components/GoogleAnalyticsPageView'
 import { Topbar } from '@/components/Topbar'
 import { Providers } from '@/providers'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
@@ -22,6 +23,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <GoogleAnalytics />
       </head>
       <body className="bg-white">
+        <GoogleAnalyticsPageView />
         <Providers>
           <Topbar />
           {children}

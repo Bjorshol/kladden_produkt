@@ -4,7 +4,7 @@ const FALLBACK_GA_ID = 'G-72DTHTKDPY'
 
 export function GoogleAnalytics() {
   // Endre GA-ID ved å sette `NEXT_PUBLIC_GA_ID` i miljøvariabler (.env). Fallback er verdien under.
-  const gaId = process.env.NEXT_PUBLIC_GA_ID ?? FALLBACK_GA_ID
+  const gaId = (process.env.NEXT_PUBLIC_GA_ID ?? '').trim() || FALLBACK_GA_ID
 
   return (
     <>
@@ -18,7 +18,7 @@ export function GoogleAnalytics() {
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-gtag('config', '${gaId}');
+gtag('config', '${gaId}', { send_page_view: false });
         `}
       </Script>
     </>
