@@ -15,6 +15,14 @@ export const PostHero: React.FC<{
     populatedAuthors && populatedAuthors.length > 0 && formatAuthors(populatedAuthors) !== ''
 
   const categoryTitle = categories && categories.length > 0 && typeof categories[0] === 'object' ? categories[0].title : 'Nyheter'
+  const hasItalicCategory =
+    Array.isArray(categories) &&
+    categories.some((category) => {
+      if (typeof category !== 'object' || !category?.title) return false
+
+      const normalized = category.title.trim().toLowerCase()
+      return normalized === 'debatt' || normalized === 'leder'
+    })
   const ingress = post.ingress || meta?.description || ''
 
   return (
@@ -23,7 +31,9 @@ export const PostHero: React.FC<{
         <div className="text-sm uppercase tracking-wide text-gray-500 mb-2">
           {categoryTitle}
         </div>
-        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-4">
+        <h1
+          className={`text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-4 ${hasItalicCategory ? 'italic' : ''}`}
+        >
           {title}
         </h1>
       </div>

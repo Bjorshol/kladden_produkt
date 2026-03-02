@@ -32,6 +32,14 @@ export const Card: React.FC<{
   const { description, image: metaImage } = meta || {}
 
   const hasCategories = categories && Array.isArray(categories) && categories.length > 0
+  const hasItalicCategory =
+    Array.isArray(categories) &&
+    categories.some((category) => {
+      if (typeof category !== 'object' || !category?.title) return false
+
+      const normalized = category.title.trim().toLowerCase()
+      return normalized === 'debatt' || normalized === 'leder'
+    })
   const titleToUse = titleFromProps || title
   const sanitizedDescription = description?.replace(/\s/g, ' ') // replace non-breaking space with white space
   const href = `/${relationTo}/${slug}`
@@ -93,7 +101,9 @@ export const Card: React.FC<{
         {titleToUse && (
           <div className="prose">
             <h3
-              className="font-bold leading-tight break-words"
+              className={cn('font-bold leading-tight break-words', {
+                italic: hasItalicCategory,
+              })}
               style={{
                 fontSize: 'clamp(1.15rem, 5vw, 1.5rem)',
                 lineHeight: 1.18,

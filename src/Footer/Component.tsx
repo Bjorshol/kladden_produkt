@@ -13,6 +13,7 @@ export function Footer() {
           </Link>
           <div className="text-sm">
             <p>Avis av og for studenter i Innlandet.</p>
+            <br />
             <p>Ansvarlig redaktør: Eirik Reinaas Bjørshol</p>
             <p>Styreleder: Asgeir Holmseth Snerten</p>
             <p>Telefon: +47 454 87 884</p>
@@ -22,9 +23,9 @@ export function Footer() {
 
         <div className="flex flex-col-reverse items-start md:flex-row gap-4 md:items-center">
           <nav className="flex flex-col md:flex-row gap-4">
-            <Link href="/om-oss" className="text-black hover:underline">Om oss</Link>
-            <Link href="/kontakt" className="text-black hover:underline">Kontakt</Link>
-            <Link href="/arkiv" className="text-black hover:underline">Arkiv</Link>
+            <Link href="/om-oss" className="text-current hover:underline hover:decoration-current">Om oss</Link>
+            <Link href="/kontakt" className="text-current hover:underline hover:decoration-current">Kontakt</Link>
+            <Link href="/arkiv" className="text-current hover:underline hover:decoration-current">Arkiv</Link>
           </nav>
         </div>
       </div>
