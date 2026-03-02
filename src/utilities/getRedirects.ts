@@ -14,7 +14,7 @@ export async function getRedirects(depth = 1) {
     })
 
     return redirects
-  } catch (error) {
+  } catch (_error) {
     // Return empty array if database is not available (e.g., during build)
     return []
   }

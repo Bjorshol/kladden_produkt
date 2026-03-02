@@ -114,7 +114,7 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
     })
     const meta = await generateMeta({ doc: page })
     return isHome ? { ...meta, title: 'Innsikt - studentavis fra Innlandet' } : meta
-  } catch (error) {
+  } catch (_error) {
     // Fallback for when DB is not available during build
     return {
       title: isHome ? 'Innsikt - studentavis fra Innlandet' : decodedSlug,
@@ -157,7 +157,7 @@ const queryPosts = async (): Promise<Post[]> => {
       draft,
       overrideAccess: draft,
     })
-  } catch (error) {
+  } catch (_error) {
     // If front-editor doesn't exist yet (migration not run), treat as empty
     frontEditor = { id: 0, featuredPosts: [] }
   }
@@ -179,7 +179,7 @@ const queryPosts = async (): Promise<Post[]> => {
           },
         },
       })
-    } catch (error) {
+    } catch (_error) {
       featuredPostsData = { docs: [] }
     }
 
@@ -222,7 +222,7 @@ const queryPosts = async (): Promise<Post[]> => {
           },
         },
       })
-    } catch (error) {
+    } catch (_error) {
       remainingPosts = { docs: [] }
     }
 
@@ -239,7 +239,7 @@ const queryPosts = async (): Promise<Post[]> => {
         sort: '-publishedAt,-createdAt',
       })
       posts = result.docs
-    } catch (error) {
+    } catch (_error) {
       posts = []
     }
   }

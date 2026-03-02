@@ -1,6 +1,5 @@
 
 import type { TextFieldSingleValidation } from 'payload'
-import React from 'react'
 import {
   BoldFeature,
   ItalicFeature,

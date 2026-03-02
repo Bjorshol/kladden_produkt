@@ -49,7 +49,7 @@ export const Posts: CollectionConfig<'posts'> = {
       image: true,
       description: true,
     },
-  } as any,
+  } as unknown as CollectionConfig<'posts'>['defaultPopulate'],
   admin: {
     defaultColumns: ['title', 'slug', 'updatedAt'],
     livePreview: {

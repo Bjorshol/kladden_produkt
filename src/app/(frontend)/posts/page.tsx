@@ -27,7 +27,7 @@ export default async function Page() {
         meta: true,
       },
     })
-  } catch (error) {
+  } catch (_error) {
     // Fallback for when DB is not available during build
     posts = {
       docs: [],

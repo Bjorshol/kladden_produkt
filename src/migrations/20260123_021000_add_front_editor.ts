@@ -1,6 +1,6 @@
 import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-vercel-postgres'
 
-export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
+export async function up({ db, payload: _payload, req: _req }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
 CREATE TYPE "enum_front_editor_featured_posts_size" AS ENUM('large', 'small');
 CREATE TABLE "front_editor" (
@@ -21,7 +21,7 @@ ALTER TABLE "front_editor_featured_posts" ADD CONSTRAINT "front_editor_featured_
 ALTER TABLE "front_editor_featured_posts" ADD CONSTRAINT "front_editor_featured_posts_post_id_fk" FOREIGN KEY ("post_id") REFERENCES "public"."posts"("id") ON DELETE set null ON UPDATE no action;`)
 }
 
-export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
+export async function down({ db, payload: _payload, req: _req }: MigrateDownArgs): Promise<void> {
   await db.execute(sql`
 DROP TABLE "front_editor_featured_posts";
 DROP TABLE "front_editor";

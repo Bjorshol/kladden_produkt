@@ -21,7 +21,7 @@ async function getDocument(collection: Collection, slug: string, depth = 0) {
     })
 
     return page.docs[0]
-  } catch (error) {
+  } catch (_error) {
     // Return undefined if database is not available (e.g., during build)
     return undefined
   }
