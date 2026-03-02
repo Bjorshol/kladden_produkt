@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og'
 
-export const runtime = 'edge'
+export const runtime = 'nodejs'
 
 export const size = {
   width: 64,
@@ -31,7 +31,7 @@ export default function Icon() {
             lineHeight: 1,
           }}
         >
-          K
+          I
         </div>
       </div>
     ),

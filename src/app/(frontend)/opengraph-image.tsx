@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og'
 
-export const runtime = 'edge'
+export const runtime = 'nodejs'
 
 export const alt = 'Innsikt - studentavis fra Innlandet'
 export const size = {
