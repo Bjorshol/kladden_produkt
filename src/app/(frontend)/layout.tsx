@@ -35,10 +35,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 export const metadata: Metadata = {
   metadataBase: new URL(getServerSideURL()),
   title: {
-    default: 'Kladden - studentavis fra Innlandet',
-    template: '%s | Kladden',
+    default: 'Innsikt - studentavis fra Innlandet',
+    template: '%s | Innsikt',
   },
-  description: 'Kladden - studentavis fra Innlandet.',
+  description: 'Innsikt - studentavis fra Innlandet.',
   openGraph: mergeOpenGraph(),
   twitter: {
     card: 'summary_large_image',

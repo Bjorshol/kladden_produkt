@@ -2,7 +2,7 @@ import { ImageResponse } from 'next/og'
 
 export const runtime = 'edge'
 
-export const alt = 'Kladden - studentavis fra Innlandet'
+export const alt = 'Innsikt - studentavis fra Innlandet'
 export const size = {
   width: 1200,
   height: 630,
@@ -34,9 +34,9 @@ export default function OpenGraphImage() {
             marginBottom: 30,
           }}
         >
-          K
+          I
         </div>
-        <div style={{ fontSize: 72, fontWeight: 800, textAlign: 'center' }}>Kladden</div>
+        <div style={{ fontSize: 72, fontWeight: 800, textAlign: 'center' }}>Innsikt</div>
         <div style={{ fontSize: 40, fontWeight: 500, textAlign: 'center', marginTop: 14 }}>
           studentavis fra Innlandet
         </div>

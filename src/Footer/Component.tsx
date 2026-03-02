@@ -12,7 +12,9 @@ export function Footer() {
             <LogoText variant="footer" className="text-red-600" />
           </Link>
           <div className="text-sm">
-            <p><strong>Kladden</strong> - studentavis fra Innlandet</p>
+            <p>
+              <strong className="font-logo font-extrabold uppercase">Innsikt</strong> - studentavis fra Innlandet
+            </p>
             <p>Redaktør: [Navn]</p>
             <p>Styreleder: [Navn]</p>
             <p>Ansvarlig redaktør: [Navn]</p>

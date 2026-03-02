@@ -14,7 +14,7 @@ export const Topbar: React.FC = () => {
         <Link
           href="/"
           className="inline-flex h-full items-center text-white hover:text-white hover:no-underline"
-          aria-label="Kladden"
+          aria-label="Innsikt"
         >
           <LogoText variant="topbar" />
         </Link>

@@ -26,11 +26,11 @@ export const generateMeta = async (args: {
 
   const ogImage = getImageURL(doc?.meta?.image)
 
-  const defaultTitle = 'Kladden - studentavis fra Innlandet'
-  const title = doc?.meta?.title ? `${doc.meta.title} | Kladden` : defaultTitle
+  const defaultTitle = 'Innsikt - studentavis fra Innlandet'
+  const title = doc?.meta?.title ? `${doc.meta.title} | Innsikt` : defaultTitle
 
   return {
-    description: doc?.meta?.description || 'Kladden - studentavis fra Innlandet.',
+    description: doc?.meta?.description || 'Innsikt - studentavis fra Innlandet.',
     openGraph: mergeOpenGraph({
       description: doc?.meta?.description || undefined,
       images: ogImage

@@ -17,7 +17,7 @@ interface Props {
 
 export const LogoText: React.FC<Props> = ({
   className,
-  children = 'KLADDEN',
+  children = 'INNSIKT',
   variant = 'default',
 }) => {
   return (

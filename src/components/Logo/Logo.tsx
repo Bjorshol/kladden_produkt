@@ -12,14 +12,14 @@ export const Logo = (props: Props) => {
 
   return (
     <span
-      aria-label="Kladden"
+      aria-label="Innsikt"
       className={clsx(
         'inline-flex items-center justify-center font-logo font-extrabold leading-none',
         className,
       )}
       style={{ color: 'var(--color-brand-red, #c9252c)' }}
     >
-      <span className="text-[34px]">K</span>
+      <span className="text-[34px]">I</span>
     </span>
   )
 }

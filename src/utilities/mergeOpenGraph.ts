@@ -3,14 +3,14 @@ import { getServerSideURL } from './getURL'
 
 const defaultOpenGraph: Metadata['openGraph'] = {
   type: 'website',
-  description: 'Kladden - studentavis fra Innlandet.',
+  description: 'Innsikt - studentavis fra Innlandet.',
   images: [
     {
       url: `${getServerSideURL()}/opengraph-image`,
     },
   ],
-  siteName: 'Kladden',
-  title: 'Kladden - studentavis fra Innlandet',
+  siteName: 'Innsikt',
+  title: 'Innsikt - studentavis fra Innlandet',
 }
 
 export const mergeOpenGraph = (og?: Metadata['openGraph']): Metadata['openGraph'] => {

@@ -113,11 +113,11 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
       slug: decodedSlug,
     })
     const meta = await generateMeta({ doc: page })
-    return isHome ? { ...meta, title: 'Kladden - studentavis fra Innlandet' } : meta
+    return isHome ? { ...meta, title: 'Innsikt - studentavis fra Innlandet' } : meta
   } catch (error) {
     // Fallback for when DB is not available during build
     return {
-      title: isHome ? 'Kladden - studentavis fra Innlandet' : decodedSlug,
+      title: isHome ? 'Innsikt - studentavis fra Innlandet' : decodedSlug,
     }
   }
 }
