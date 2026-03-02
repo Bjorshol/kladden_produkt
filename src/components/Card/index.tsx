@@ -118,7 +118,13 @@ export const Card: React.FC<{
               title={titleToUse}
               tabIndex={-1}
             >
-              <Link className="not-prose" href={href} ref={link.ref} tabIndex={-1} style={{ color: 'inherit' }}>
+              <Link
+                className="not-prose [text-decoration-color:currentColor] hover:[text-decoration-color:currentColor] hover:[color:inherit]"
+                href={href}
+                ref={link.ref}
+                tabIndex={-1}
+                style={{ color: 'inherit' }}
+              >
                 {titleToUse}
               </Link>
             </h3>
