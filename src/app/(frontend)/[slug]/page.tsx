@@ -10,6 +10,7 @@ import { homeStatic } from '@/endpoints/seed/home-static'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { RenderHero } from '@/heros/RenderHero'
 import { generateMeta } from '@/utilities/generateMeta'
+import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { PostsList } from '@/components/Posts/PostsList'
@@ -131,18 +132,49 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
   // Decode to support slugs with special characters
   const decodedSlug = decodeURIComponent(slug)
   const isHome = decodedSlug === 'home'
+
+  if (isHome) {
+    const siteUrl = getServerSideURL()
+    const homeTitle = 'Innsikt - avis av og for studenter i Innlandet'
+    const homeDescription = 'Innsikt - avis av og for studenter i Innlandet.'
+    const homeOgImage = `${siteUrl}/opengraph-image`
+
+    return {
+      title: homeTitle,
+      description: homeDescription,
+      alternates: {
+        canonical: '/',
+      },
+      openGraph: mergeOpenGraph({
+        title: homeTitle,
+        description: homeDescription,
+        url: `${siteUrl}/`,
+        images: [
+          {
+            url: homeOgImage,
+          },
+        ],
+      }),
+      twitter: {
+        card: 'summary_large_image',
+        title: homeTitle,
+        description: homeDescription,
+        images: [homeOgImage],
+      },
+    }
+  }
   
   try {
     const page = await queryPageBySlug({
       slug: decodedSlug,
     })
-    const metadataPathname = isHome ? '/' : `/${decodedSlug}`
+    const metadataPathname = `/${decodedSlug}`
     const meta = await generateMeta({ doc: page, pathname: metadataPathname })
-    return isHome ? { ...meta, title: 'Innsikt - avis av og for studenter i Innlandet' } : meta
+    return meta
   } catch (_error) {
     // Fallback for when DB is not available during build
     return {
-      title: isHome ? 'Innsikt - avis av og for studenter i Innlandet' : decodedSlug,
+      title: decodedSlug,
     }
   }
 }
