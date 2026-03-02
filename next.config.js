@@ -11,6 +11,35 @@ const nextConfig = {
   experimental: {
     useCache: true,
   },
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'Strict-Transport-Security',
+            value: 'max-age=31536000; includeSubDomains; preload',
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+          {
+            key: 'X-Frame-Options',
+            value: 'SAMEORIGIN',
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'strict-origin-when-cross-origin',
+          },
+          {
+            key: 'Permissions-Policy',
+            value: 'camera=(), microphone=(), geolocation=()'
+          },
+        ],
+      },
+    ]
+  },
   images: {
     remotePatterns: [
       ...[NEXT_PUBLIC_SERVER_URL /* 'https://example.com' */].map((item) => {
@@ -33,7 +62,29 @@ const nextConfig = {
     return webpackConfig
   },
   reactStrictMode: true,
-  redirects,
+  async redirects() {
+    const appRedirects = await redirects()
+
+    return [
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: '(?<host>.*)',
+          },
+          {
+            type: 'header',
+            key: 'x-forwarded-proto',
+            value: 'http',
+          },
+        ],
+        destination: 'https://:host/:path*',
+        permanent: true,
+      },
+      ...appRedirects,
+    ]
+  },
 }
 
 export default withPayload(nextConfig, { devBundleServerPackages: false })

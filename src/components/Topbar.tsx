@@ -1,6 +1,7 @@
 'use client'
 import Link from 'next/link'
 import React from 'react'
+import { Menu, Search } from 'lucide-react'
 
 import { LogoText } from '@/components/Logo/LogoText'
 
@@ -25,12 +26,17 @@ export const Topbar: React.FC = () => {
             className="inline-flex items-center rounded-md border border-white/60 px-3 py-1.5 text-sm font-medium text-white hover:bg-white/10 hover:no-underline"
             aria-label="Søk"
           >
-            Søk
+            <Search className="size-4" aria-hidden="true" />
+            <span className="sr-only">Søk</span>
           </Link>
 
           <details className="relative">
-            <summary className="list-none cursor-pointer inline-flex items-center rounded-md border border-white/60 px-3 py-1.5 text-sm font-medium text-white hover:bg-white/10">
-              Meny
+            <summary
+              className="list-none cursor-pointer inline-flex items-center rounded-md border border-white/60 px-3 py-1.5 text-sm font-medium text-white hover:bg-white/10 [&::-webkit-details-marker]:hidden"
+              aria-label="Meny"
+            >
+              <Menu className="size-4" aria-hidden="true" />
+              <span className="sr-only">Meny</span>
             </summary>
             <nav className="absolute right-0 mt-2 w-44 overflow-hidden rounded-md border border-gray-200 bg-white shadow-md">
               <Link href="/om-oss" className="block px-4 py-2 text-sm text-black hover:bg-gray-100 hover:no-underline">

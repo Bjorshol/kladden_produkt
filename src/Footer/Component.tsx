@@ -13,8 +13,10 @@ export function Footer() {
           </Link>
           <div className="text-sm">
             <p>Avis av og for studenter i Innlandet.</p>
-            <p>Ansvarlig redaktør: EiriK Reinaas Bjørshol</p>
+            <p>Ansvarlig redaktør: Eirik Reinaas Bjørshol</p>
             <p>Styreleder: Asgeir Holmseth Snerten</p>
+            <p>Telefon: +47 454 87 884</p>
+            <p>E-post: redaksjonen@avisainnsikt.no</p>
           </div>
         </div>
 
