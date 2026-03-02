@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import React from 'react'
+import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Om oss',
@@ -23,7 +24,7 @@ export default function OmOssPage() {
 
         <h2>Kontakt</h2>
         <p>
-          Har du spørsmål? Se <a href="/kontakt">kontaktsiden</a> for informasjon.
+          Har du spørsmål? Se <Link href="/kontakt">kontaktsiden</Link> for informasjon.
         </p>
       </article>
     </main>
