@@ -12,13 +12,9 @@ export function Footer() {
             <LogoText variant="footer" className="text-red-600" />
           </Link>
           <div className="text-sm">
-            <p>
-              <strong className="font-logo font-extrabold uppercase">Innsikt</strong> - studentavis fra Innlandet
-            </p>
-            <p>Redaktør: [Navn]</p>
-            <p>Styreleder: [Navn]</p>
-            <p>Ansvarlig redaktør: [Navn]</p>
-            <p>Kontakt: [E-post eller telefon]</p>
+            <p>Avis av og for studenter i Innlandet.</p>
+            <p>Ansvarlig redaktør: EiriK Reinaas Bjørshol</p>
+            <p>Styreleder: Asgeir Holmseth Snerten</p>
           </div>
         </div>
 
