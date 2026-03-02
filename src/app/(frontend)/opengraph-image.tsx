@@ -2,7 +2,7 @@ import { ImageResponse } from 'next/og'
 
 export const runtime = 'nodejs'
 
-export const alt = 'Innsikt - studentavis fra Innlandet'
+export const alt = 'Innsikt - avis av og for studenter i Innlandet'
 export const size = {
   width: 1200,
   height: 630,
@@ -38,7 +38,7 @@ export default function OpenGraphImage() {
         </div>
         <div style={{ fontSize: 72, fontWeight: 800, textAlign: 'center' }}>Innsikt</div>
         <div style={{ fontSize: 40, fontWeight: 500, textAlign: 'center', marginTop: 14 }}>
-          studentavis fra Innlandet
+          avis av og for studenter i Innlandet
         </div>
       </div>
     ),

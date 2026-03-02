@@ -14,13 +14,17 @@ import { Page, Post } from '@/payload-types'
 import { getServerSideURL } from '@/utilities/getURL'
 
 const generateTitle: GenerateTitle<Post | Page> = ({ doc }) => {
-  return doc?.title ? `${doc.title} | Innsikt` : 'Innsikt - studentavis fra Innlandet'
+  return doc?.title ? `${doc.title} | Innsikt` : 'Innsikt - avis av og for studenter i Innlandet'
 }
 
 const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
   const url = getServerSideURL()
 
-  return doc?.slug ? `${url}/${doc.slug}` : url
+  const isPost = typeof doc === 'object' && doc !== null && 'publishedAt' in doc
+
+  if (!doc?.slug) return url
+
+  return isPost ? `${url}/posts/${doc.slug}` : `${url}/${doc.slug}`
 }
 
 export const plugins: Plugin[] = [

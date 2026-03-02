@@ -69,5 +69,9 @@ export default async function Page() {
 export function generateMetadata(): Metadata {
   return {
     title: 'Arkiv',
+    description: 'Arkiv over publiserte saker fra Innsikt.',
+    alternates: {
+      canonical: '/posts',
+    },
   }
 }

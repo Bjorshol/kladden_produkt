@@ -5,6 +5,17 @@ import type { Media, Page, Post, Config } from '../payload-types'
 import { mergeOpenGraph } from './mergeOpenGraph'
 import { getServerSideURL } from './getURL'
 
+const BRAND_TITLE = 'Innsikt - avis av og for studenter i Innlandet'
+const BRAND_DESCRIPTION = 'Innsikt - avis av og for studenter i Innlandet.'
+
+const sanitizeBrandText = (value?: string | null): string | undefined => {
+  if (!value) return undefined
+
+  return value
+    .replace(/payload\s*cms/gi, 'Innsikt')
+    .replace(/payload/gi, 'Innsikt')
+}
+
 const getImageURL = (image?: Media | Config['db']['defaultIDType'] | null) => {
   const serverUrl = getServerSideURL()
 
@@ -21,18 +32,26 @@ const getImageURL = (image?: Media | Config['db']['defaultIDType'] | null) => {
 
 export const generateMeta = async (args: {
   doc: Partial<Page> | Partial<Post> | null
+  pathname?: string
 }): Promise<Metadata> => {
-  const { doc } = args
+  const { doc, pathname } = args
 
+  const serverUrl = getServerSideURL()
   const ogImage = getImageURL(doc?.meta?.image)
+  const normalizedPath = pathname?.startsWith('/') ? pathname : pathname ? `/${pathname}` : '/'
+  const canonicalUrl = `${serverUrl}${normalizedPath}`
 
-  const defaultTitle = 'Innsikt - studentavis fra Innlandet'
-  const title = doc?.meta?.title ? `${doc.meta.title} | Innsikt` : defaultTitle
+  const metaTitle = sanitizeBrandText(doc?.meta?.title)
+  const metaDescription = sanitizeBrandText(doc?.meta?.description)
+  const title = metaTitle ? `${metaTitle} | Innsikt` : BRAND_TITLE
 
   return {
-    description: doc?.meta?.description || 'Innsikt - studentavis fra Innlandet.',
+    description: metaDescription || BRAND_DESCRIPTION,
+    alternates: {
+      canonical: normalizedPath,
+    },
     openGraph: mergeOpenGraph({
-      description: doc?.meta?.description || undefined,
+      description: metaDescription || undefined,
       images: ogImage
         ? [
             {
@@ -41,8 +60,14 @@ export const generateMeta = async (args: {
           ]
         : undefined,
       title,
-      url: Array.isArray(doc?.slug) ? doc?.slug.join('/') : '/',
+      url: canonicalUrl,
     }),
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description: metaDescription || BRAND_DESCRIPTION,
+      images: ogImage ? [ogImage] : undefined,
+    },
     title,
   }
 }

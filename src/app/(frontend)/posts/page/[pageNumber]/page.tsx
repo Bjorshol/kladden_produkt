@@ -66,6 +66,10 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
   const { pageNumber } = await paramsPromise
   return {
     title: `Arkiv – side ${pageNumber || ''}`,
+    description: `Arkivside ${pageNumber || ''} med publiserte saker fra Innsikt.`,
+    alternates: {
+      canonical: `/posts/page/${pageNumber || ''}`,
+    },
   }
 }
 

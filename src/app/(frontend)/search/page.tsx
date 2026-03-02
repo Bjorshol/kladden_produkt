@@ -84,5 +84,13 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
 export function generateMetadata(): Metadata {
   return {
     title: 'Søk',
+    description: 'Søk i saker og innhold fra Innsikt.',
+    alternates: {
+      canonical: '/search',
+    },
+    robots: {
+      index: false,
+      follow: true,
+    },
   }
 }

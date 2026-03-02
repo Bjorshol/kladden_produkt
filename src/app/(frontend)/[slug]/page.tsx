@@ -15,6 +15,7 @@ import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { PostsList } from '@/components/Posts/PostsList'
 import type { FrontEditor, Post } from '@/payload-types'
 import type { PostThemeColor } from '@/theme/postColorMap'
+import { getServerSideURL } from '@/utilities/getURL'
 
 export async function generateStaticParams() {
   // For Vercel deployment, return empty array since we can't connect to DB during build
@@ -63,9 +64,32 @@ export default async function Page({ params: paramsPromise }: Args) {
   if (slug === 'home') {
     // For home page, render posts list instead
     const posts = await queryPosts()
+    const siteUrl = getServerSideURL()
+    const homeJsonLd = {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: 'Innsikt',
+      url: siteUrl,
+      description: 'Innsikt - avis av og for studenter i Innlandet.',
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: `${siteUrl}/search?q={search_term_string}`,
+        'query-input': 'required name=search_term_string',
+      },
+      publisher: {
+        '@type': 'Organization',
+        name: 'Innsikt',
+        url: siteUrl,
+      },
+    }
+
     return (
       <>
         <PageClient />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(homeJsonLd) }}
+        />
         <PayloadRedirects disableNotFound url={url} />
         {draft && <LivePreviewListener />}
         <PostsList posts={posts} />
@@ -112,12 +136,13 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
     const page = await queryPageBySlug({
       slug: decodedSlug,
     })
-    const meta = await generateMeta({ doc: page })
-    return isHome ? { ...meta, title: 'Innsikt - studentavis fra Innlandet' } : meta
+    const metadataPathname = isHome ? '/' : `/${decodedSlug}`
+    const meta = await generateMeta({ doc: page, pathname: metadataPathname })
+    return isHome ? { ...meta, title: 'Innsikt - avis av og for studenter i Innlandet' } : meta
   } catch (_error) {
     // Fallback for when DB is not available during build
     return {
-      title: isHome ? 'Innsikt - studentavis fra Innlandet' : decodedSlug,
+      title: isHome ? 'Innsikt - avis av og for studenter i Innlandet' : decodedSlug,
     }
   }
 }

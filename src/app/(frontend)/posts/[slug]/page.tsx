@@ -12,6 +12,7 @@ import type { Post } from '@/payload-types'
 
 import { PostHero } from '@/heros/PostHero'
 import { generateMeta } from '@/utilities/generateMeta'
+import { getServerSideURL } from '@/utilities/getURL'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 
@@ -57,9 +58,44 @@ export default async function Post({ params: paramsPromise }: Args) {
 
   if (!post) return <PayloadRedirects url={url} />
 
+  const siteUrl = getServerSideURL()
+  const authorNames = (post.populatedAuthors || [])
+    .map((author) => {
+      if (typeof author === 'object' && author?.name) return author.name
+      return null
+    })
+    .filter((name): name is string => Boolean(name))
+
+  const articleJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'NewsArticle',
+    headline: post.title,
+    description: post.meta?.description || post.ingress || undefined,
+    image:
+      post.meta?.image && typeof post.meta.image === 'object' && post.meta.image.url
+        ? [`${siteUrl}${post.meta.image.url}`]
+        : [`${siteUrl}/opengraph-image`],
+    datePublished: post.publishedAt || undefined,
+    dateModified: post.updatedAt || post.publishedAt || undefined,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `${siteUrl}${url}`,
+    },
+    author: authorNames.length > 0 ? authorNames.map((name) => ({ '@type': 'Person', name })) : undefined,
+    publisher: {
+      '@type': 'Organization',
+      name: 'Innsikt',
+      url: siteUrl,
+    },
+  }
+
   return (
     <article className="pt-16 pb-16">
       <PageClient />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
 
       {/* Allows redirects for valid pages too */}
       <PayloadRedirects disableNotFound url={url} />
@@ -89,7 +125,7 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
   const decodedSlug = decodeURIComponent(slug)
   const post = await queryPostBySlug({ slug: decodedSlug })
 
-  return generateMeta({ doc: post })
+  return generateMeta({ doc: post, pathname: `/posts/${decodedSlug}` })
 }
 
 const queryPostBySlug = async ({ slug }: { slug: string }) => {
