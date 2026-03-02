@@ -46,10 +46,24 @@ export const seed = async ({
   // clear the database
   await Promise.all(
     globals.map((global) => {
-      const data = global === 'header' ? { navItems: [] } : { featuredPosts: [] }
+      if (global === 'header') {
+        return payload.updateGlobal({
+          slug: 'header',
+          data: {
+            navItems: [],
+          },
+          depth: 0,
+          context: {
+            disableRevalidate: true,
+          },
+        })
+      }
+
       return payload.updateGlobal({
-        slug: global,
-        data,
+        slug: 'front-editor',
+        data: {
+          featuredPosts: [],
+        },
         depth: 0,
         context: {
           disableRevalidate: true,
