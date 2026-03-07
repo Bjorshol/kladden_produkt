@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 
 import Link from 'next/link'
 import React from 'react'
-import { draftMode } from 'next/headers'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import {
@@ -307,11 +306,9 @@ export default async function StudentportalenPage({ searchParams: searchParamsPr
 
 async function queryStudentActivities(): Promise<PortalActivity[]> {
   try {
-    const { isEnabled: draft } = await draftMode()
     const payload = await getPayload({ config: configPromise })
     const payloadFind = payload.find as unknown as (args: {
       collection: string
-      draft: boolean
       limit: number
       pagination: boolean
       overrideAccess: boolean
@@ -320,10 +317,9 @@ async function queryStudentActivities(): Promise<PortalActivity[]> {
 
     const result = await payloadFind({
       collection: 'student-activities',
-      draft,
       limit: 200,
       pagination: false,
-      overrideAccess: draft,
+      overrideAccess: false,
       sort: 'startAt',
     })
 

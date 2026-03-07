@@ -2,8 +2,8 @@ import type { CollectionConfig } from 'payload'
 
 import { slugField } from 'payload'
 
+import { anyone } from '@/access/anyone'
 import { authenticated } from '@/access/authenticated'
-import { authenticatedOrPublished } from '@/access/authenticatedOrPublished'
 
 import {
   studentActivityCampusOptions,
@@ -23,7 +23,7 @@ export const StudentActivities: CollectionConfig = {
   access: {
     create: authenticated,
     delete: authenticated,
-    read: authenticatedOrPublished,
+    read: anyone,
     update: authenticated,
   },
   defaultPopulate: {
@@ -82,19 +82,6 @@ export const StudentActivities: CollectionConfig = {
           name: 'endAt',
           type: 'date',
           label: 'Slutter',
-          validate: (value, { siblingData }) => {
-            const startAt = (siblingData as { startAt?: string | null } | undefined)?.startAt
-
-            if (!value || !startAt) {
-              return true
-            }
-
-            if (new Date(value).getTime() < new Date(startAt).getTime()) {
-              return 'Sluttid må være etter starttid.'
-            }
-
-            return true
-          },
           admin: {
             date: {
               pickerAppearance: 'dayAndTime',
@@ -216,41 +203,10 @@ export const StudentActivities: CollectionConfig = {
         },
       ],
     },
-    {
-      name: 'publishedAt',
-      type: 'date',
-      label: 'Publisert',
-      admin: {
-        date: {
-          pickerAppearance: 'dayAndTime',
-        },
-        position: 'sidebar',
-      },
-      hooks: {
-        beforeChange: [
-          ({ siblingData, value }) => {
-            if (siblingData._status === 'published' && !value) {
-              return new Date()
-            }
-
-            return value
-          },
-        ],
-      },
-    },
     slugField(),
   ],
   hooks: {
     afterChange: [revalidateStudentActivity],
     afterDelete: [revalidateStudentActivityDelete],
-  },
-  versions: {
-    drafts: {
-      autosave: {
-        interval: 300,
-      },
-      schedulePublish: true,
-    },
-    maxPerDoc: 50,
   },
 }

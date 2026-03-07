@@ -824,7 +824,6 @@ export interface StudentActivity {
    */
   signupUrl?: string | null;
   signupLabel?: string | null;
-  publishedAt?: string | null;
   /**
    * When enabled, the slug will auto-generate from the title field on save and autosave.
    */
@@ -832,7 +831,6 @@ export interface StudentActivity {
   slug: string;
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * Tips som kommer inn fra Studentportalen. Disse opprettes ikke som publiserte aktiviteter automatisk.
@@ -1325,12 +1323,10 @@ export interface StudentActivitiesSelect<T extends boolean = true> {
   locationDetails?: T;
   signupUrl?: T;
   signupLabel?: T;
-  publishedAt?: T;
   generateSlug?: T;
   slug?: T;
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1874,10 +1870,6 @@ export interface TaskSchedulePublish {
       | ({
           relationTo: 'posts';
           value: number | Post;
-        } | null)
-      | ({
-          relationTo: 'student-activities';
-          value: number | StudentActivity;
         } | null);
     global?: string | null;
     user?: (number | null) | User;
