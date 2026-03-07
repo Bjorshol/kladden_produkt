@@ -1,7 +1,5 @@
 import type { CollectionConfig } from 'payload'
 
-import { slugField } from 'payload'
-
 import { anyone } from '@/access/anyone'
 import { authenticated } from '@/access/authenticated'
 
@@ -132,8 +130,51 @@ export const StudentActivities: CollectionConfig = {
       label: 'Tekst på lenke',
       defaultValue: 'Les mer / meld deg på',
     },
-    slugField({
-      position: undefined,
-    }),
+    {
+      name: 'slug',
+      type: 'text',
+      label: 'Slug',
+      required: true,
+      unique: true,
+      index: true,
+      admin: {
+        description: 'URL-slug for aktiviteten. Fylles automatisk fra tittel hvis tom.',
+      },
+      hooks: {
+        beforeValidate: [
+          ({ value, data, siblingData }) => {
+            const currentValue = typeof value === 'string' ? value.trim() : ''
+
+            if (currentValue) {
+              return formatSlug(currentValue)
+            }
+
+            const titleFromData = (data as { title?: unknown } | undefined)?.title
+            const titleFromSibling = (siblingData as { title?: unknown } | undefined)?.title
+            const title = typeof titleFromData === 'string'
+              ? titleFromData
+              : typeof titleFromSibling === 'string'
+                ? titleFromSibling
+                : ''
+
+            if (!title.trim()) {
+              return value
+            }
+
+            return formatSlug(title)
+          },
+        ],
+      },
+    },
   ],
+}
+
+function formatSlug(input: string) {
+  return input
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9æøå\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '')
 }

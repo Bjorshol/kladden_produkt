@@ -825,9 +825,8 @@ export interface StudentActivity {
   signupUrl?: string | null;
   signupLabel?: string | null;
   /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   * URL-slug for aktiviteten. Fylles automatisk fra tittel hvis tom.
    */
-  generateSlug?: boolean | null;
   slug: string;
   updatedAt: string;
   createdAt: string;
@@ -1323,7 +1322,6 @@ export interface StudentActivitiesSelect<T extends boolean = true> {
   requiresSignup?: T;
   signupUrl?: T;
   signupLabel?: T;
-  generateSlug?: T;
   slug?: T;
   updatedAt?: T;
   createdAt?: T;
