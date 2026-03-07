@@ -9,10 +9,6 @@ import {
   studentActivityCampusOptions,
   studentActivityCategoryOptions,
 } from './shared'
-import {
-  revalidateStudentActivity,
-  revalidateStudentActivityDelete,
-} from './hooks/revalidateStudentActivity'
 
 export const StudentActivities: CollectionConfig = {
   slug: 'student-activities',
@@ -25,20 +21,6 @@ export const StudentActivities: CollectionConfig = {
     delete: authenticated,
     read: anyone,
     update: authenticated,
-  },
-  defaultPopulate: {
-    title: true,
-    slug: true,
-    summary: true,
-    startAt: true,
-    endAt: true,
-    allDay: true,
-    category: true,
-    campus: true,
-    featured: true,
-    organizer: true,
-    locationName: true,
-    signupUrl: true,
   },
   admin: {
     defaultColumns: ['title', 'startAt', 'category', 'campus', 'featured'],
@@ -64,112 +46,51 @@ export const StudentActivities: CollectionConfig = {
       },
     },
     {
-      type: 'row',
-      fields: [
-        {
-          name: 'startAt',
-          type: 'date',
-          label: 'Starter',
-          required: true,
-          admin: {
-            date: {
-              pickerAppearance: 'dayAndTime',
-            },
-            width: '50%',
-          },
+      name: 'startAt',
+      type: 'date',
+      label: 'Starter',
+      required: true,
+      admin: {
+        date: {
+          pickerAppearance: 'dayAndTime',
         },
-        {
-          name: 'endAt',
-          type: 'date',
-          label: 'Slutter',
-          admin: {
-            date: {
-              pickerAppearance: 'dayAndTime',
-            },
-            width: '50%',
-          },
-        },
-      ],
+      },
     },
     {
-      type: 'row',
-      fields: [
-        {
-          name: 'allDay',
-          type: 'checkbox',
-          label: 'Hele dagen',
-          defaultValue: false,
-          admin: {
-            width: '33%',
-          },
+      name: 'endAt',
+      type: 'date',
+      label: 'Slutter',
+      admin: {
+        date: {
+          pickerAppearance: 'dayAndTime',
         },
-        {
-          name: 'featured',
-          type: 'checkbox',
-          label: 'Fremhev aktivitet',
-          defaultValue: false,
-          admin: {
-            width: '33%',
-          },
-        },
-        {
-          name: 'requiresSignup',
-          type: 'checkbox',
-          label: 'Krever påmelding',
-          defaultValue: false,
-          admin: {
-            width: '33%',
-          },
-        },
-      ],
+      },
     },
     {
-      type: 'row',
-      fields: [
-        {
-          name: 'category',
-          type: 'select',
-          label: 'Kategori',
-          options: [...studentActivityCategoryOptions],
-          required: true,
-          admin: {
-            width: '50%',
-          },
-        },
-        {
-          name: 'campus',
-          type: 'select',
-          label: 'Campus',
-          options: [...studentActivityCampusOptions],
-          defaultValue: 'all',
-          required: true,
-          admin: {
-            width: '50%',
-          },
-        },
-      ],
+      name: 'category',
+      type: 'select',
+      label: 'Kategori',
+      options: [...studentActivityCategoryOptions],
+      required: true,
     },
     {
-      type: 'row',
-      fields: [
-        {
-          name: 'locationName',
-          type: 'text',
-          label: 'Sted',
-          required: true,
-          admin: {
-            width: '50%',
-          },
-        },
-        {
-          name: 'organizer',
-          type: 'text',
-          label: 'Arrangør',
-          admin: {
-            width: '50%',
-          },
-        },
-      ],
+      name: 'campus',
+      type: 'select',
+      label: 'Campus',
+      options: [...studentActivityCampusOptions],
+      defaultValue: 'all',
+      required: true,
+    },
+    {
+      name: 'locationName',
+      type: 'text',
+      label: 'Sted',
+      required: true,
+    },
+    {
+      name: 'organizer',
+      type: 'text',
+      label: 'Arrangør',
     },
     {
       name: 'locationDetails',
@@ -180,33 +101,39 @@ export const StudentActivities: CollectionConfig = {
       },
     },
     {
-      type: 'row',
-      fields: [
-        {
-          name: 'signupUrl',
-          type: 'text',
-          label: 'Påmeldingslenke',
-          admin: {
-            description: 'Valgfritt. Bruk full URL hvis aktiviteten har en ekstern lenke.',
-            width: '70%',
-          },
-        },
-        {
-          name: 'signupLabel',
-          type: 'text',
-          label: 'Tekst på lenke',
-          defaultValue: 'Les mer / meld deg på',
-          admin: {
-            condition: (_, siblingData) => Boolean(siblingData?.signupUrl),
-            width: '30%',
-          },
-        },
-      ],
+      name: 'allDay',
+      type: 'checkbox',
+      label: 'Hele dagen',
+      defaultValue: false,
     },
-    slugField(),
+    {
+      name: 'featured',
+      type: 'checkbox',
+      label: 'Fremhev aktivitet',
+      defaultValue: false,
+    },
+    {
+      name: 'requiresSignup',
+      type: 'checkbox',
+      label: 'Krever påmelding',
+      defaultValue: false,
+    },
+    {
+      name: 'signupUrl',
+      type: 'text',
+      label: 'Påmeldingslenke',
+      admin: {
+        description: 'Valgfritt. Bruk full URL hvis aktiviteten har en ekstern lenke.',
+      },
+    },
+    {
+      name: 'signupLabel',
+      type: 'text',
+      label: 'Tekst på lenke',
+      defaultValue: 'Les mer / meld deg på',
+    },
+    slugField({
+      position: undefined,
+    }),
   ],
-  hooks: {
-    afterChange: [revalidateStudentActivity],
-    afterDelete: [revalidateStudentActivityDelete],
-  },
 }

@@ -808,9 +808,6 @@ export interface StudentActivity {
   summary: string;
   startAt: string;
   endAt?: string | null;
-  allDay?: boolean | null;
-  featured?: boolean | null;
-  requiresSignup?: boolean | null;
   category: 'social' | 'academic' | 'career' | 'volunteer' | 'sports' | 'wellbeing';
   campus: 'all' | 'lillehammer' | 'hamar' | 'elverum' | 'rena' | 'gjovik' | 'digital';
   locationName: string;
@@ -819,6 +816,9 @@ export interface StudentActivity {
    * Valgfritt. For eksempel romnavn, bygg eller digital møteinfo.
    */
   locationDetails?: string | null;
+  allDay?: boolean | null;
+  featured?: boolean | null;
+  requiresSignup?: boolean | null;
   /**
    * Valgfritt. Bruk full URL hvis aktiviteten har en ekstern lenke.
    */
@@ -1313,14 +1313,14 @@ export interface StudentActivitiesSelect<T extends boolean = true> {
   summary?: T;
   startAt?: T;
   endAt?: T;
-  allDay?: T;
-  featured?: T;
-  requiresSignup?: T;
   category?: T;
   campus?: T;
   locationName?: T;
   organizer?: T;
   locationDetails?: T;
+  allDay?: T;
+  featured?: T;
+  requiresSignup?: T;
   signupUrl?: T;
   signupLabel?: T;
   generateSlug?: T;
