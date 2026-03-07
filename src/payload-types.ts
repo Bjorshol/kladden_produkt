@@ -830,6 +830,7 @@ export interface StudentActivity {
   slug: string;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * Tips som kommer inn fra Studentportalen. Disse opprettes ikke som publiserte aktiviteter automatisk.
@@ -1325,6 +1326,7 @@ export interface StudentActivitiesSelect<T extends boolean = true> {
   slug?: T;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

@@ -27,6 +27,9 @@ export const StudentActivities: CollectionConfig = {
     group: 'Studentportalen',
     useAsTitle: 'title',
   },
+  versions: {
+    drafts: true,
+  },
   fields: [
     {
       name: 'title',
