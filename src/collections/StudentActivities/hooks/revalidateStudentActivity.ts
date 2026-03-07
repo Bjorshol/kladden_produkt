@@ -11,11 +11,17 @@ export const revalidateStudentActivity: CollectionAfterChangeHook = ({
     if (doc?._status === 'published') {
       payload.logger.info('Revalidating student portal page')
       revalidatePath('/studentportalen')
+      if (doc?.slug) {
+        revalidatePath(`/studentportalen/${doc.slug}`)
+      }
     }
 
     if (previousDoc?._status === 'published' && doc?._status !== 'published') {
       payload.logger.info('Revalidating student portal page after unpublish')
       revalidatePath('/studentportalen')
+      if (previousDoc?.slug) {
+        revalidatePath(`/studentportalen/${previousDoc.slug}`)
+      }
     }
   }
 

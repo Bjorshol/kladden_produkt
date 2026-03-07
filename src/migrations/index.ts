@@ -7,6 +7,7 @@ import * as migration_20260127_120000_add_theme_color_field from './20260127_120
 import * as migration_20260127_121000_add_front_editor_theme_color_override from './20260127_121000_add_front_editor_theme_color_override';
 import * as migration_20260307_173000_add_student_activities from './20260307_173000_add_student_activities';
 import * as migration_20260307_183000_add_student_activity_tips from './20260307_183000_add_student_activity_tips';
+import * as migration_20260307_193000_add_student_activity_content from './20260307_193000_add_student_activity_content';
 
 export const migrations = [
   {
@@ -53,5 +54,10 @@ export const migrations = [
     up: migration_20260307_183000_add_student_activity_tips.up,
     down: migration_20260307_183000_add_student_activity_tips.down,
     name: '20260307_183000_add_student_activity_tips',
+  },
+  {
+    up: migration_20260307_193000_add_student_activity_content.up,
+    down: migration_20260307_193000_add_student_activity_content.down,
+    name: '20260307_193000_add_student_activity_content',
   },
 ];

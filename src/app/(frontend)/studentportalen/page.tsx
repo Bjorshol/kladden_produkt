@@ -186,14 +186,14 @@ export default async function StudentportalenPage({ searchParams: searchParamsPr
 
                   <div className="space-y-2">
                     {dayActivities.slice(0, 2).map((activity) => (
-                      <a
+                      <Link
                         key={`${activity.id}-${dayKey}`}
-                        href={`#activity-${activity.slug}`}
+                        href={`/studentportalen/${activity.slug}`}
                         className="block rounded-xl bg-gray-50 p-2 text-xs text-gray-700 transition hover:bg-red-50 hover:no-underline"
                       >
                         <span className="block font-medium text-gray-900">{activity.title}</span>
                         <span className="mt-1 block">{activity.allDay ? 'Hele dagen' : formatShortTime(activity.startAt)}</span>
-                      </a>
+                      </Link>
                     ))}
 
                     {dayActivities.length > 2 ? (
@@ -217,11 +217,7 @@ export default async function StudentportalenPage({ searchParams: searchParamsPr
           {upcomingActivities.length > 0 ? (
             <div className="space-y-3">
               {upcomingActivities.map((activity) => (
-                <article
-                  id={`activity-${activity.slug}`}
-                  key={activity.id}
-                  className="rounded-2xl border border-gray-200 p-4"
-                >
+                <article key={activity.id} className="rounded-2xl border border-gray-200 p-4">
                   <div className="flex flex-wrap gap-2">
                     <span className="rounded-full bg-red-50 px-2.5 py-1 text-xs font-medium text-red-700">
                       {studentActivityCategoryLabels[activity.category]}
@@ -236,7 +232,11 @@ export default async function StudentportalenPage({ searchParams: searchParamsPr
                     ) : null}
                   </div>
 
-                  <h3 className="mt-3 text-lg font-semibold text-gray-950">{activity.title}</h3>
+                  <h3 className="mt-3 text-lg font-semibold text-gray-950">
+                    <Link href={`/studentportalen/${activity.slug}`} className="hover:underline">
+                      {activity.title}
+                    </Link>
+                  </h3>
                   <p className="mt-2 text-sm text-gray-600">{activity.summary}</p>
 
                   <dl className="mt-4 space-y-2 text-sm text-gray-700">

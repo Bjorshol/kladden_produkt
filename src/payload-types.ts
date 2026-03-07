@@ -806,6 +806,28 @@ export interface StudentActivity {
    * Kort tekst som skal brukes i kalenderen og aktivitetslisten.
    */
   summary: string;
+  /**
+   * Valgfritt bilde som vises øverst på aktivitetsiden.
+   */
+  heroImage?: (number | null) | Media;
+  /**
+   * Hovedinnhold for aktiviteten. Dette vises på detaljsiden.
+   */
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   startAt: string;
   endAt?: string | null;
   allDay?: boolean | null;
@@ -1320,6 +1342,8 @@ export interface PostsSelect<T extends boolean = true> {
 export interface StudentActivitiesSelect<T extends boolean = true> {
   title?: T;
   summary?: T;
+  heroImage?: T;
+  content?: T;
   startAt?: T;
   endAt?: T;
   allDay?: T;
