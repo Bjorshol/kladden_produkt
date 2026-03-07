@@ -2,10 +2,16 @@ import type { Metadata } from 'next'
 
 import Link from 'next/link'
 import React from 'react'
+import { draftMode } from 'next/headers'
+import { getPayload } from 'payload'
+
+import configPromise from '@payload-config'
 import {
   studentActivityCampusLabels,
   studentActivityCategoryLabels,
 } from '@/collections/StudentActivities/shared'
+import type { StudentActivity } from '@/payload-types'
+import { SubmitTipForm } from './SubmitTipForm'
 
 export const metadata: Metadata = {
   title: 'Studentportalen',
@@ -62,7 +68,7 @@ const weekdayLabels = buildWeekdayLabels()
 export default async function StudentportalenPage({ searchParams: searchParamsPromise }: PageProps) {
   const searchParams = await searchParamsPromise
   const selectedMonth = parseMonth(searchParams.month)
-  const activities = demoActivities
+  const activities = await queryStudentActivities()
   const currentMonthActivities = activities.filter((activity) => overlapsMonth(activity, selectedMonth))
   const upcomingActivities = activities.filter(isUpcomingActivity).slice(0, 8)
   const highlightedActivities = currentMonthActivities.filter((activity) => activity.featured).slice(0, 3)
@@ -273,73 +279,82 @@ export default async function StudentportalenPage({ searchParams: searchParamsPr
           )}
         </aside>
       </section>
+
+      <section className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
+        <SubmitTipForm />
+
+        <aside className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
+          <p className="text-sm font-medium uppercase tracking-wide text-gray-500">Redaksjonell flyt</p>
+          <h2 className="mt-2 text-2xl font-semibold text-gray-950">Slik fungerer det i CMS</h2>
+          <ol className="mt-4 space-y-4 text-sm text-gray-700">
+            <li>
+              <span className="font-semibold text-gray-900">1.</span> Tips sendes inn fra skjemaet og lagres i CMS under
+              {' '}
+              <span className="font-semibold text-gray-900">Studentportalen → Studentportal-tips</span>.
+            </li>
+            <li>
+              <span className="font-semibold text-gray-900">2.</span> Redaksjonen vurderer tipset, legger inn interne notater og kan koble det til en faktisk aktivitet.
+            </li>
+            <li>
+              <span className="font-semibold text-gray-900">3.</span> Når dere er klare, oppretter dere en post i
+              {' '}
+              <span className="font-semibold text-gray-900">Studentportalen → Studentaktiviteter</span>
+              {' '}
+              og publiserer den manuelt.
+            </li>
+          </ol>
+        </aside>
+      </section>
     </main>
   )
 }
 
-const demoActivities: PortalActivity[] = [
-  {
-    id: '1',
-    title: 'Fadderkickoff på Lillehammer',
-    summary: 'Møt nye studenter, linjeforeninger og frivillige grupper i en uformell oppstartskveld.',
-    startAt: '2026-03-11T17:00:00+01:00',
-    endAt: '2026-03-11T20:00:00+01:00',
-    category: 'social',
-    campus: 'lillehammer',
-    featured: true,
-    organizer: 'Studentutvalget',
-    locationName: 'Studentsamfunnet',
-    locationDetails: 'Hovedsalen',
-    requiresSignup: false,
-    slug: 'fadderkickoff-lillehammer',
-  },
-  {
-    id: '2',
-    title: 'Karrierekveld med lokale arbeidsgivere',
-    summary: 'Bedrifter fra regionen presenterer internship, deltidsjobber og sommerjobber.',
-    startAt: '2026-03-14T18:00:00+01:00',
-    endAt: '2026-03-14T20:30:00+01:00',
-    category: 'career',
-    campus: 'hamar',
-    featured: true,
-    organizer: 'Karrieresenteret',
-    locationName: 'Campus Hamar',
-    locationDetails: 'Auditorium A',
-    requiresSignup: true,
-    signupUrl: '#',
-    signupLabel: 'Meld interesse',
-    slug: 'karrierekveld-hamar',
-  },
-  {
-    id: '3',
-    title: 'Åpen treningsøkt for studenter',
-    summary: 'Gratis fellesøkt med fokus på lavterskel aktivitet og sosialt fellesskap.',
-    startAt: '2026-03-18T16:30:00+01:00',
-    endAt: '2026-03-18T17:30:00+01:00',
-    category: 'sports',
-    campus: 'gjovik',
-    organizer: 'Studentsamskipnaden',
-    locationName: 'Idrettshallen',
-    requiresSignup: false,
-    slug: 'apen-treningsokt',
-  },
-  {
-    id: '4',
-    title: 'Studieteknikk og eksamensmestring',
-    summary: 'Workshop med tips til planlegging, notatteknikk og stressmestring før eksamen.',
-    startAt: '2026-03-21T12:00:00+01:00',
-    endAt: '2026-03-21T14:00:00+01:00',
-    category: 'academic',
-    campus: 'digital',
-    featured: true,
-    organizer: 'Biblioteket',
-    locationName: 'Digitalt arrangement',
-    locationDetails: 'Teams-lenke publiseres senere',
-    requiresSignup: true,
-    signupUrl: '#',
-    slug: 'studieteknikk-eksamensmestring',
-  },
-]
+async function queryStudentActivities(): Promise<PortalActivity[]> {
+  try {
+    const { isEnabled: draft } = await draftMode()
+    const payload = await getPayload({ config: configPromise })
+
+    const result = await payload.find({
+      collection: 'student-activities',
+      draft,
+      limit: 200,
+      pagination: false,
+      overrideAccess: draft,
+      sort: 'startAt',
+    })
+
+    return result.docs.flatMap(mapActivityDoc)
+  } catch {
+    return []
+  }
+}
+
+function mapActivityDoc(doc: StudentActivity): PortalActivity[] {
+  if (!doc.startAt || !doc.title || !doc.summary || !doc.locationName || !doc.slug || !doc.category || !doc.campus) {
+    return []
+  }
+
+  return [
+    {
+      id: String(doc.id),
+      title: doc.title,
+      summary: doc.summary,
+      startAt: doc.startAt,
+      endAt: doc.endAt || undefined,
+      allDay: doc.allDay || false,
+      category: doc.category,
+      campus: doc.campus,
+      featured: doc.featured || false,
+      organizer: doc.organizer || undefined,
+      locationName: doc.locationName,
+      locationDetails: doc.locationDetails || undefined,
+      requiresSignup: doc.requiresSignup || false,
+      signupUrl: doc.signupUrl || undefined,
+      signupLabel: doc.signupLabel || undefined,
+      slug: doc.slug,
+    },
+  ]
+}
 
 function buildWeekdayLabels() {
   const monday = new Date(Date.UTC(2024, 0, 1))

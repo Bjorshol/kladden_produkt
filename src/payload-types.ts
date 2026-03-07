@@ -69,6 +69,8 @@ export interface Config {
   collections: {
     pages: Page;
     posts: Post;
+    'student-activities': StudentActivity;
+    'student-activity-tips': StudentActivityTip;
     media: Media;
     categories: Category;
     users: User;
@@ -91,6 +93,8 @@ export interface Config {
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
+    'student-activities': StudentActivitiesSelect<false> | StudentActivitiesSelect<true>;
+    'student-activity-tips': StudentActivityTipsSelect<false> | StudentActivityTipsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
@@ -790,6 +794,76 @@ export interface Form {
   createdAt: string;
 }
 /**
+ * Et strukturert format for arrangementer, frister og studentaktiviteter. Dette er separat fra vanlige saker.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "student-activities".
+ */
+export interface StudentActivity {
+  id: number;
+  title: string;
+  /**
+   * Kort tekst som skal brukes i kalenderen og aktivitetslisten.
+   */
+  summary: string;
+  startAt: string;
+  endAt?: string | null;
+  allDay?: boolean | null;
+  featured?: boolean | null;
+  requiresSignup?: boolean | null;
+  category: 'social' | 'academic' | 'career' | 'volunteer' | 'sports' | 'wellbeing';
+  campus: 'all' | 'lillehammer' | 'hamar' | 'elverum' | 'rena' | 'gjovik' | 'digital';
+  locationName: string;
+  organizer?: string | null;
+  /**
+   * Valgfritt. For eksempel romnavn, bygg eller digital møteinfo.
+   */
+  locationDetails?: string | null;
+  /**
+   * Valgfritt. Bruk full URL hvis aktiviteten har en ekstern lenke.
+   */
+  signupUrl?: string | null;
+  signupLabel?: string | null;
+  publishedAt?: string | null;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * Tips som kommer inn fra Studentportalen. Disse opprettes ikke som publiserte aktiviteter automatisk.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "student-activity-tips".
+ */
+export interface StudentActivityTip {
+  id: number;
+  status?: ('new' | 'reviewing' | 'converted' | 'rejected') | null;
+  title: string;
+  description: string;
+  proposedStartAt?: string | null;
+  campus: 'all' | 'lillehammer' | 'hamar' | 'elverum' | 'rena' | 'gjovik' | 'digital';
+  locationName?: string | null;
+  organizer?: string | null;
+  tipsterName: string;
+  tipsterEmail: string;
+  tipsterPhone?: string | null;
+  /**
+   * Sett denne når tipset er gjort om til en publisert eller planlagt aktivitet.
+   */
+  linkedActivity?: (number | null) | StudentActivity;
+  /**
+   * Kun for redaksjonell oppfølging.
+   */
+  editorNotes?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
@@ -986,6 +1060,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'posts';
         value: number | Post;
+      } | null)
+    | ({
+        relationTo: 'student-activities';
+        value: number | StudentActivity;
+      } | null)
+    | ({
+        relationTo: 'student-activity-tips';
+        value: number | StudentActivityTip;
       } | null)
     | ({
         relationTo: 'media';
@@ -1230,6 +1312,52 @@ export interface PostsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "student-activities_select".
+ */
+export interface StudentActivitiesSelect<T extends boolean = true> {
+  title?: T;
+  summary?: T;
+  startAt?: T;
+  endAt?: T;
+  allDay?: T;
+  featured?: T;
+  requiresSignup?: T;
+  category?: T;
+  campus?: T;
+  locationName?: T;
+  organizer?: T;
+  locationDetails?: T;
+  signupUrl?: T;
+  signupLabel?: T;
+  publishedAt?: T;
+  generateSlug?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "student-activity-tips_select".
+ */
+export interface StudentActivityTipsSelect<T extends boolean = true> {
+  status?: T;
+  title?: T;
+  description?: T;
+  proposedStartAt?: T;
+  campus?: T;
+  locationName?: T;
+  organizer?: T;
+  tipsterName?: T;
+  tipsterEmail?: T;
+  tipsterPhone?: T;
+  linkedActivity?: T;
+  editorNotes?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1754,6 +1882,10 @@ export interface TaskSchedulePublish {
       | ({
           relationTo: 'posts';
           value: number | Post;
+        } | null)
+      | ({
+          relationTo: 'student-activities';
+          value: number | StudentActivity;
         } | null);
     global?: string | null;
     user?: (number | null) | User;
