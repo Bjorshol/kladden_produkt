@@ -22,7 +22,6 @@ type PortalActivity = {
   id: string
   title: string
   summary: string
-  details?: string
   startAt: string
   endAt?: string
   allDay?: boolean
@@ -267,12 +266,6 @@ export default async function StudentportalenPage({ searchParams: searchParamsPr
                     </Link>
                   ) : null}
 
-                  {activity.details ? (
-                    <details className="mt-4 rounded-2xl bg-gray-50 p-4">
-                      <summary className="cursor-pointer text-sm font-medium text-gray-900">Les mer om aktiviteten</summary>
-                      <div className="mt-3 whitespace-pre-line text-sm text-gray-700">{activity.details}</div>
-                    </details>
-                  ) : null}
                 </article>
               ))}
             </div>
@@ -343,7 +336,6 @@ function mapActivityDoc(doc: StudentActivity): PortalActivity[] {
       id: String(doc.id),
       title: doc.title,
       summary: doc.summary,
-      details: doc.details || undefined,
       startAt: doc.startAt,
       endAt: doc.endAt || undefined,
       allDay: doc.allDay || false,

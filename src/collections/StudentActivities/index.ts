@@ -30,7 +30,6 @@ export const StudentActivities: CollectionConfig = {
     title: true,
     slug: true,
     summary: true,
-    details: true,
     startAt: true,
     endAt: true,
     allDay: true,
@@ -62,14 +61,6 @@ export const StudentActivities: CollectionConfig = {
       required: true,
       admin: {
         description: 'Kort tekst som skal brukes i kalenderen og aktivitetslisten.',
-      },
-    },
-    {
-      name: 'details',
-      type: 'textarea',
-      label: 'Utfyllende informasjon',
-      admin: {
-        description: 'Bruk dette feltet til hele teksten om aktiviteten, praktisk info og annen relevant informasjon.',
       },
     },
     {

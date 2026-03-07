@@ -806,10 +806,6 @@ export interface StudentActivity {
    * Kort tekst som skal brukes i kalenderen og aktivitetslisten.
    */
   summary: string;
-  /**
-   * Bruk dette feltet til hele teksten om aktiviteten, praktisk info og annen relevant informasjon.
-   */
-  details?: string | null;
   startAt: string;
   endAt?: string | null;
   allDay?: boolean | null;
@@ -1324,7 +1320,6 @@ export interface PostsSelect<T extends boolean = true> {
 export interface StudentActivitiesSelect<T extends boolean = true> {
   title?: T;
   summary?: T;
-  details?: T;
   startAt?: T;
   endAt?: T;
   allDay?: T;
