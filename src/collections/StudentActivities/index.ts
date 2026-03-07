@@ -4,7 +4,6 @@ import { slugField } from 'payload'
 
 import { authenticated } from '@/access/authenticated'
 import { authenticatedOrPublished } from '@/access/authenticatedOrPublished'
-import { generatePreviewPath } from '@/utilities/generatePreviewPath'
 
 import {
   studentActivityCampusOptions,
@@ -31,14 +30,13 @@ export const StudentActivities: CollectionConfig = {
     title: true,
     slug: true,
     summary: true,
-    content: true,
+    details: true,
     startAt: true,
     endAt: true,
     allDay: true,
     category: true,
     campus: true,
     featured: true,
-    heroImage: true,
     organizer: true,
     locationName: true,
     signupUrl: true,
@@ -48,20 +46,6 @@ export const StudentActivities: CollectionConfig = {
     description:
       'Et strukturert format for arrangementer, frister og studentaktiviteter. Dette er separat fra vanlige saker.',
     group: 'Studentportalen',
-    livePreview: {
-      url: ({ data, req }) =>
-        generatePreviewPath({
-          slug: data?.slug,
-          collection: 'student-activities',
-          req,
-        }),
-    },
-    preview: (data, { req }) =>
-      generatePreviewPath({
-        slug: data?.slug as string,
-        collection: 'student-activities',
-        req,
-      }),
     useAsTitle: 'title',
   },
   fields: [
@@ -81,21 +65,11 @@ export const StudentActivities: CollectionConfig = {
       },
     },
     {
-      name: 'heroImage',
-      type: 'upload',
-      relationTo: 'media',
-      label: 'Forsidebilde',
+      name: 'details',
+      type: 'textarea',
+      label: 'Utfyllende informasjon',
       admin: {
-        description: 'Valgfritt bilde som vises øverst på aktivitetsiden.',
-      },
-    },
-    {
-      name: 'content',
-      type: 'richText',
-      label: 'Innhold',
-      required: true,
-      admin: {
-        description: 'Hovedinnhold for aktiviteten. Dette vises på detaljsiden.',
+        description: 'Bruk dette feltet til hele teksten om aktiviteten, praktisk info og annen relevant informasjon.',
       },
     },
     {

@@ -807,27 +807,9 @@ export interface StudentActivity {
    */
   summary: string;
   /**
-   * Valgfritt bilde som vises øverst på aktivitetsiden.
+   * Bruk dette feltet til hele teksten om aktiviteten, praktisk info og annen relevant informasjon.
    */
-  heroImage?: (number | null) | Media;
-  /**
-   * Hovedinnhold for aktiviteten. Dette vises på detaljsiden.
-   */
-  content: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
+  details?: string | null;
   startAt: string;
   endAt?: string | null;
   allDay?: boolean | null;
@@ -1342,8 +1324,7 @@ export interface PostsSelect<T extends boolean = true> {
 export interface StudentActivitiesSelect<T extends boolean = true> {
   title?: T;
   summary?: T;
-  heroImage?: T;
-  content?: T;
+  details?: T;
   startAt?: T;
   endAt?: T;
   allDay?: T;

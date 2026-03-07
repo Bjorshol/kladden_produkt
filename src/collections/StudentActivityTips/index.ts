@@ -20,7 +20,6 @@ export const StudentActivityTips: CollectionConfig = {
   },
   admin: {
     defaultColumns: ['title', 'status', 'campus', 'tipsterName', 'createdAt'],
-    defaultSort: '-createdAt',
     description:
       'Tips som kommer inn fra Studentportalen. Disse opprettes ikke som publiserte aktiviteter automatisk.',
     group: 'Studentportalen',

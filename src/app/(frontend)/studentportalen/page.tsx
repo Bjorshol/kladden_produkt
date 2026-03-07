@@ -22,6 +22,7 @@ type PortalActivity = {
   id: string
   title: string
   summary: string
+  details?: string
   startAt: string
   endAt?: string
   allDay?: boolean
@@ -186,14 +187,14 @@ export default async function StudentportalenPage({ searchParams: searchParamsPr
 
                   <div className="space-y-2">
                     {dayActivities.slice(0, 2).map((activity) => (
-                      <Link
+                      <a
                         key={`${activity.id}-${dayKey}`}
-                        href={`/studentportalen/${activity.slug}`}
+                        href={`#activity-${activity.slug}`}
                         className="block rounded-xl bg-gray-50 p-2 text-xs text-gray-700 transition hover:bg-red-50 hover:no-underline"
                       >
                         <span className="block font-medium text-gray-900">{activity.title}</span>
                         <span className="mt-1 block">{activity.allDay ? 'Hele dagen' : formatShortTime(activity.startAt)}</span>
-                      </Link>
+                      </a>
                     ))}
 
                     {dayActivities.length > 2 ? (
@@ -217,7 +218,7 @@ export default async function StudentportalenPage({ searchParams: searchParamsPr
           {upcomingActivities.length > 0 ? (
             <div className="space-y-3">
               {upcomingActivities.map((activity) => (
-                <article key={activity.id} className="rounded-2xl border border-gray-200 p-4">
+                <article id={`activity-${activity.slug}`} key={activity.id} className="rounded-2xl border border-gray-200 p-4">
                   <div className="flex flex-wrap gap-2">
                     <span className="rounded-full bg-red-50 px-2.5 py-1 text-xs font-medium text-red-700">
                       {studentActivityCategoryLabels[activity.category]}
@@ -232,11 +233,7 @@ export default async function StudentportalenPage({ searchParams: searchParamsPr
                     ) : null}
                   </div>
 
-                  <h3 className="mt-3 text-lg font-semibold text-gray-950">
-                    <Link href={`/studentportalen/${activity.slug}`} className="hover:underline">
-                      {activity.title}
-                    </Link>
-                  </h3>
+                  <h3 className="mt-3 text-lg font-semibold text-gray-950">{activity.title}</h3>
                   <p className="mt-2 text-sm text-gray-600">{activity.summary}</p>
 
                   <dl className="mt-4 space-y-2 text-sm text-gray-700">
@@ -268,6 +265,13 @@ export default async function StudentportalenPage({ searchParams: searchParamsPr
                     >
                       {activity.signupLabel || 'Les mer / meld deg på'}
                     </Link>
+                  ) : null}
+
+                  {activity.details ? (
+                    <details className="mt-4 rounded-2xl bg-gray-50 p-4">
+                      <summary className="cursor-pointer text-sm font-medium text-gray-900">Les mer om aktiviteten</summary>
+                      <div className="mt-3 whitespace-pre-line text-sm text-gray-700">{activity.details}</div>
+                    </details>
                   ) : null}
                 </article>
               ))}
@@ -339,6 +343,7 @@ function mapActivityDoc(doc: StudentActivity): PortalActivity[] {
       id: String(doc.id),
       title: doc.title,
       summary: doc.summary,
+      details: doc.details || undefined,
       startAt: doc.startAt,
       endAt: doc.endAt || undefined,
       allDay: doc.allDay || false,
