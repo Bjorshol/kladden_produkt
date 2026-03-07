@@ -9,7 +9,6 @@ import { Categories } from './collections/Categories'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
-import { StudentActivities } from './collections/StudentActivities'
 import { Users } from './collections/Users'
 import { Header } from './Header/config'
 import { FrontEditor } from './globals/FrontEditor'
@@ -81,7 +80,7 @@ export default buildConfig({
       connectionString: process.env.POSTGRES_URL || '',
     },
   }),
-  collections: [Pages, Posts, StudentActivities, Media, Categories, Users],
+  collections: [Pages, Posts, Media, Categories, Users],
   cors: [getServerSideURL()].filter(Boolean),
   plugins: [
     ...plugins,

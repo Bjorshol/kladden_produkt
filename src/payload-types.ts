@@ -69,7 +69,6 @@ export interface Config {
   collections: {
     pages: Page;
     posts: Post;
-    'student-activities': StudentActivity;
     media: Media;
     categories: Category;
     users: User;
@@ -92,7 +91,6 @@ export interface Config {
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
-    'student-activities': StudentActivitiesSelect<false> | StudentActivitiesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
@@ -792,47 +790,6 @@ export interface Form {
   createdAt: string;
 }
 /**
- * Et strukturert format for arrangementer, frister og studentaktiviteter. Dette er separat fra vanlige saker.
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "student-activities".
- */
-export interface StudentActivity {
-  id: number;
-  title: string;
-  /**
-   * Kort tekst som skal brukes i kalenderen og aktivitetslisten.
-   */
-  summary: string;
-  startAt: string;
-  endAt?: string | null;
-  allDay?: boolean | null;
-  featured?: boolean | null;
-  requiresSignup?: boolean | null;
-  category: 'social' | 'academic' | 'career' | 'volunteer' | 'sports' | 'wellbeing';
-  campus: 'all' | 'lillehammer' | 'hamar' | 'elverum' | 'rena' | 'gjovik' | 'digital';
-  locationName: string;
-  organizer?: string | null;
-  /**
-   * Valgfritt. For eksempel romnavn, bygg eller digital møteinfo.
-   */
-  locationDetails?: string | null;
-  /**
-   * Valgfritt. Bruk full URL hvis aktiviteten har en ekstern lenke.
-   */
-  signupUrl?: string | null;
-  signupLabel?: string | null;
-  publishedAt?: string | null;
-  /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
-   */
-  generateSlug?: boolean | null;
-  slug: string;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
@@ -1029,10 +986,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'posts';
         value: number | Post;
-      } | null)
-    | ({
-        relationTo: 'student-activities';
-        value: number | StudentActivity;
       } | null)
     | ({
         relationTo: 'media';
@@ -1272,32 +1225,6 @@ export interface PostsSelect<T extends boolean = true> {
         id?: T;
         name?: T;
       };
-  generateSlug?: T;
-  slug?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "student-activities_select".
- */
-export interface StudentActivitiesSelect<T extends boolean = true> {
-  title?: T;
-  summary?: T;
-  startAt?: T;
-  endAt?: T;
-  allDay?: T;
-  featured?: T;
-  requiresSignup?: T;
-  category?: T;
-  campus?: T;
-  locationName?: T;
-  organizer?: T;
-  locationDetails?: T;
-  signupUrl?: T;
-  signupLabel?: T;
-  publishedAt?: T;
   generateSlug?: T;
   slug?: T;
   updatedAt?: T;
@@ -1827,10 +1754,6 @@ export interface TaskSchedulePublish {
       | ({
           relationTo: 'posts';
           value: number | Post;
-        } | null)
-      | ({
-          relationTo: 'student-activities';
-          value: number | StudentActivity;
         } | null);
     global?: string | null;
     user?: (number | null) | User;

@@ -2,11 +2,6 @@ import type { Metadata } from 'next'
 
 import Link from 'next/link'
 import React from 'react'
-import { draftMode } from 'next/headers'
-import { getPayload } from 'payload'
-
-import configPromise from '@payload-config'
-import type { StudentActivity } from '@/payload-types'
 import {
   studentActivityCampusLabels,
   studentActivityCategoryLabels,
@@ -15,6 +10,25 @@ import {
 export const metadata: Metadata = {
   title: 'Studentportalen',
   description: 'Kalender og oversikt over studentaktiviteter i Innlandet.',
+}
+
+type PortalActivity = {
+  id: string
+  title: string
+  summary: string
+  startAt: string
+  endAt?: string
+  allDay?: boolean
+  category: keyof typeof studentActivityCategoryLabels
+  campus: keyof typeof studentActivityCampusLabels
+  featured?: boolean
+  organizer?: string
+  locationName: string
+  locationDetails?: string
+  requiresSignup?: boolean
+  signupUrl?: string
+  signupLabel?: string
+  slug: string
 }
 
 type PageProps = {
@@ -48,19 +62,7 @@ const weekdayLabels = buildWeekdayLabels()
 export default async function StudentportalenPage({ searchParams: searchParamsPromise }: PageProps) {
   const searchParams = await searchParamsPromise
   const selectedMonth = parseMonth(searchParams.month)
-  const { isEnabled: draft } = await draftMode()
-
-  const payload = await getPayload({ config: configPromise })
-  const activitiesResult = await payload.find({
-    collection: 'student-activities',
-    draft,
-    limit: 200,
-    pagination: false,
-    overrideAccess: draft,
-    sort: 'startAt',
-  })
-
-  const activities = activitiesResult.docs
+  const activities = demoActivities
   const currentMonthActivities = activities.filter((activity) => overlapsMonth(activity, selectedMonth))
   const upcomingActivities = activities.filter(isUpcomingActivity).slice(0, 8)
   const highlightedActivities = currentMonthActivities.filter((activity) => activity.featured).slice(0, 3)
@@ -266,7 +268,7 @@ export default async function StudentportalenPage({ searchParams: searchParamsPr
             </div>
           ) : (
             <div className="rounded-2xl border border-dashed border-gray-300 bg-gray-50 p-5 text-sm text-gray-600">
-              Ingen publiserte aktiviteter ennå. Legg dem inn i CMS under Studentportalen → Studentaktiviteter.
+              Ingen aktiviteter enda. Siden er nå en trygg frontend-skisse mens CMS-delen kobles på igjen uten å påvirke admin.
             </div>
           )}
         </aside>
@@ -274,6 +276,70 @@ export default async function StudentportalenPage({ searchParams: searchParamsPr
     </main>
   )
 }
+
+const demoActivities: PortalActivity[] = [
+  {
+    id: '1',
+    title: 'Fadderkickoff på Lillehammer',
+    summary: 'Møt nye studenter, linjeforeninger og frivillige grupper i en uformell oppstartskveld.',
+    startAt: '2026-03-11T17:00:00+01:00',
+    endAt: '2026-03-11T20:00:00+01:00',
+    category: 'social',
+    campus: 'lillehammer',
+    featured: true,
+    organizer: 'Studentutvalget',
+    locationName: 'Studentsamfunnet',
+    locationDetails: 'Hovedsalen',
+    requiresSignup: false,
+    slug: 'fadderkickoff-lillehammer',
+  },
+  {
+    id: '2',
+    title: 'Karrierekveld med lokale arbeidsgivere',
+    summary: 'Bedrifter fra regionen presenterer internship, deltidsjobber og sommerjobber.',
+    startAt: '2026-03-14T18:00:00+01:00',
+    endAt: '2026-03-14T20:30:00+01:00',
+    category: 'career',
+    campus: 'hamar',
+    featured: true,
+    organizer: 'Karrieresenteret',
+    locationName: 'Campus Hamar',
+    locationDetails: 'Auditorium A',
+    requiresSignup: true,
+    signupUrl: '#',
+    signupLabel: 'Meld interesse',
+    slug: 'karrierekveld-hamar',
+  },
+  {
+    id: '3',
+    title: 'Åpen treningsøkt for studenter',
+    summary: 'Gratis fellesøkt med fokus på lavterskel aktivitet og sosialt fellesskap.',
+    startAt: '2026-03-18T16:30:00+01:00',
+    endAt: '2026-03-18T17:30:00+01:00',
+    category: 'sports',
+    campus: 'gjovik',
+    organizer: 'Studentsamskipnaden',
+    locationName: 'Idrettshallen',
+    requiresSignup: false,
+    slug: 'apen-treningsokt',
+  },
+  {
+    id: '4',
+    title: 'Studieteknikk og eksamensmestring',
+    summary: 'Workshop med tips til planlegging, notatteknikk og stressmestring før eksamen.',
+    startAt: '2026-03-21T12:00:00+01:00',
+    endAt: '2026-03-21T14:00:00+01:00',
+    category: 'academic',
+    campus: 'digital',
+    featured: true,
+    organizer: 'Biblioteket',
+    locationName: 'Digitalt arrangement',
+    locationDetails: 'Teams-lenke publiseres senere',
+    requiresSignup: true,
+    signupUrl: '#',
+    slug: 'studieteknikk-eksamensmestring',
+  },
+]
 
 function buildWeekdayLabels() {
   const monday = new Date(Date.UTC(2024, 0, 1))
@@ -334,8 +400,8 @@ function endOfCalendar(month: Date) {
   return end
 }
 
-function groupActivitiesByDay(activities: StudentActivity[], month: Date) {
-  const map = new Map<string, StudentActivity[]>()
+function groupActivitiesByDay(activities: PortalActivity[], month: Date) {
+  const map = new Map<string, PortalActivity[]>()
   const monthStart = new Date(month.getFullYear(), month.getMonth(), 1)
   const monthEnd = new Date(month.getFullYear(), month.getMonth() + 1, 0, 23, 59, 59, 999)
 
@@ -358,7 +424,7 @@ function groupActivitiesByDay(activities: StudentActivity[], month: Date) {
   return map
 }
 
-function overlapsMonth(activity: StudentActivity, month: Date) {
+function overlapsMonth(activity: PortalActivity, month: Date) {
   const monthStart = new Date(month.getFullYear(), month.getMonth(), 1)
   const monthEnd = new Date(month.getFullYear(), month.getMonth() + 1, 0, 23, 59, 59, 999)
   const start = toDate(activity.startAt)
@@ -367,14 +433,14 @@ function overlapsMonth(activity: StudentActivity, month: Date) {
   return start <= monthEnd && end >= monthStart
 }
 
-function isUpcomingActivity(activity: StudentActivity) {
+function isUpcomingActivity(activity: PortalActivity) {
   const now = new Date()
   const start = toDate(activity.startAt)
   const end = activity.endAt ? toDate(activity.endAt) : start
   return end >= now
 }
 
-function formatActivityDate(activity: StudentActivity) {
+function formatActivityDate(activity: PortalActivity) {
   const start = toDate(activity.startAt)
   const end = activity.endAt ? toDate(activity.endAt) : null
 
