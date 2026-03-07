@@ -5,6 +5,7 @@ import * as migration_20260123_020000_add_stikktittel_field from './20260123_020
 import * as migration_20260123_021000_add_front_editor from './20260123_021000_add_front_editor';
 import * as migration_20260127_120000_add_theme_color_field from './20260127_120000_add_theme_color_field';
 import * as migration_20260127_121000_add_front_editor_theme_color_override from './20260127_121000_add_front_editor_theme_color_override';
+import * as migration_20260307_173000_add_student_activities from './20260307_173000_add_student_activities';
 
 export const migrations = [
   {
@@ -41,5 +42,10 @@ export const migrations = [
     up: migration_20260127_121000_add_front_editor_theme_color_override.up,
     down: migration_20260127_121000_add_front_editor_theme_color_override.down,
     name: '20260127_121000_add_front_editor_theme_color_override',
+  },
+  {
+    up: migration_20260307_173000_add_student_activities.up,
+    down: migration_20260307_173000_add_student_activities.down,
+    name: '20260307_173000_add_student_activities',
   },
 ];
