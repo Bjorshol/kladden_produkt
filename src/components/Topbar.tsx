@@ -45,8 +45,8 @@ export const Topbar: React.FC = () => {
               <Link href="/kontakt" className="block px-4 py-2 text-sm text-black hover:bg-gray-100 hover:no-underline">
                 Kontakt
               </Link>
-              <Link href="/vedtekter" className="block px-4 py-2 text-sm text-black hover:bg-gray-100 hover:no-underline">
-                Vedtekter
+              <Link href="/studentportalen" className="block px-4 py-2 text-sm text-black hover:bg-gray-100 hover:no-underline">
+                Studentportalen
               </Link>
               <Link href="/search" className="block px-4 py-2 text-sm text-black hover:bg-gray-100 hover:no-underline">
                 Søk

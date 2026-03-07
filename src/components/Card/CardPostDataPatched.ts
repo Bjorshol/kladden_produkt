@@ -4,5 +4,5 @@ import type { Post } from '@/payload-types'
 import type { PostThemeColor } from '@/theme/postColorMap'
 
 export type CardPostDataPatched = Pick<Post, 'slug' | 'categories' | 'meta' | 'title'> & {
-	themeColor?: PostThemeColor
+	themeColor?: PostThemeColor | null
 }
