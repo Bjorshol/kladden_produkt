@@ -93,6 +93,9 @@
   },
   "pnpm": {
     "onlyBuiltDependencies": [
+      "bcrypt",
+      "bufferutil",
+      "utf-8-validate",
       "sharp",
       "esbuild",
       "unrs-resolver"
