@@ -2,10 +2,14 @@ import type { Metadata } from 'next'
 
 import Link from 'next/link'
 import React from 'react'
+import { draftMode } from 'next/headers'
+import { getPayload } from 'payload'
+import configPromise from '@payload-config'
 import {
   studentActivityCampusLabels,
   studentActivityCategoryLabels,
 } from '@/collections/StudentActivities/shared'
+import { SubmitTipForm } from './SubmitTipForm'
 
 export const metadata: Metadata = {
   title: 'Studentportalen',
@@ -62,7 +66,8 @@ const weekdayLabels = buildWeekdayLabels()
 export default async function StudentportalenPage({ searchParams: searchParamsPromise }: PageProps) {
   const searchParams = await searchParamsPromise
   const selectedMonth = parseMonth(searchParams.month)
-  const activities = demoActivities
+  const cmsEnabled = process.env.ENABLE_STUDENTPORTAL_CMS === 'true'
+  const activities = cmsEnabled ? await queryStudentActivities() : demoActivities
   const currentMonthActivities = activities.filter((activity) => overlapsMonth(activity, selectedMonth))
   const upcomingActivities = activities.filter(isUpcomingActivity).slice(0, 8)
   const highlightedActivities = currentMonthActivities.filter((activity) => activity.featured).slice(0, 3)
@@ -270,8 +275,108 @@ export default async function StudentportalenPage({ searchParams: searchParamsPr
           )}
         </aside>
       </section>
+
+      <section className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
+        {cmsEnabled ? (
+          <SubmitTipForm />
+        ) : (
+          <div className="rounded-3xl border border-dashed border-gray-300 bg-gray-50 p-6 text-sm text-gray-700">
+            Tips-innsending er klar i kodebasen, men ikke aktivert i dette miljøet.
+          </div>
+        )}
+
+        <aside className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
+          <p className="text-sm font-medium uppercase tracking-wide text-gray-500">Redaksjonell flyt</p>
+          <h2 className="mt-2 text-2xl font-semibold text-gray-950">Slik fungerer det</h2>
+          <ol className="mt-4 space-y-4 text-sm text-gray-700">
+            <li>
+              <span className="font-semibold text-gray-900">1.</span> Tips sendes inn via skjemaet.
+            </li>
+            <li>
+              <span className="font-semibold text-gray-900">2.</span> Tips dukker opp i CMS under Studentportalen når funksjonen er aktivert.
+            </li>
+            <li>
+              <span className="font-semibold text-gray-900">3.</span> Redaksjonen publiserer aktiviteter manuelt.
+            </li>
+          </ol>
+        </aside>
+      </section>
     </main>
   )
+}
+
+async function queryStudentActivities(): Promise<PortalActivity[]> {
+  try {
+    const { isEnabled: draft } = await draftMode()
+    const payload = await getPayload({ config: configPromise })
+    const payloadFind = payload.find as unknown as (args: {
+      collection: string
+      draft: boolean
+      limit: number
+      pagination: boolean
+      overrideAccess: boolean
+      sort: string
+    }) => Promise<{ docs?: unknown[] }>
+
+    const result = await payloadFind({
+      collection: 'student-activities',
+      draft,
+      limit: 200,
+      pagination: false,
+      overrideAccess: draft,
+      sort: 'startAt',
+    })
+
+    const docs = Array.isArray(result.docs) ? result.docs : []
+
+    return docs.flatMap((doc) => mapActivityDoc(doc))
+  } catch {
+    return []
+  }
+}
+
+function mapActivityDoc(doc: unknown): PortalActivity[] {
+  if (!doc || typeof doc !== 'object') {
+    return []
+  }
+
+  const parsed = doc as Record<string, unknown>
+  const startAt = typeof parsed.startAt === 'string' ? parsed.startAt : null
+  const title = typeof parsed.title === 'string' ? parsed.title : null
+  const summary = typeof parsed.summary === 'string' ? parsed.summary : null
+  const locationName = typeof parsed.locationName === 'string' ? parsed.locationName : null
+  const slug = typeof parsed.slug === 'string' ? parsed.slug : null
+  const category = typeof parsed.category === 'string' ? parsed.category : null
+  const campus = typeof parsed.campus === 'string' ? parsed.campus : null
+
+  if (!startAt || !title || !summary || !locationName || !slug || !category || !campus) {
+    return []
+  }
+
+  if (!(category in studentActivityCategoryLabels) || !(campus in studentActivityCampusLabels)) {
+    return []
+  }
+
+  return [
+    {
+      id: String(parsed.id ?? slug),
+      title,
+      summary,
+      startAt,
+      endAt: typeof parsed.endAt === 'string' ? parsed.endAt : undefined,
+      allDay: Boolean(parsed.allDay),
+      category: category as keyof typeof studentActivityCategoryLabels,
+      campus: campus as keyof typeof studentActivityCampusLabels,
+      featured: Boolean(parsed.featured),
+      organizer: typeof parsed.organizer === 'string' ? parsed.organizer : undefined,
+      locationName,
+      locationDetails: typeof parsed.locationDetails === 'string' ? parsed.locationDetails : undefined,
+      requiresSignup: Boolean(parsed.requiresSignup),
+      signupUrl: typeof parsed.signupUrl === 'string' ? parsed.signupUrl : undefined,
+      signupLabel: typeof parsed.signupLabel === 'string' ? parsed.signupLabel : undefined,
+      slug,
+    },
+  ]
 }
 
 const demoActivities: PortalActivity[] = [
