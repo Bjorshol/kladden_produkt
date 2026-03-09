@@ -9,8 +9,6 @@ import { Categories } from './collections/Categories'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
-import { StudentActivities } from './collections/StudentActivities'
-import { StudentActivityTips } from './collections/StudentActivityTips'
 import { Users } from './collections/Users'
 import { Header } from './Header/config'
 import { FrontEditor } from './globals/FrontEditor'
@@ -21,7 +19,6 @@ import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
-const enableStudentPortalCMS = process.env.ENABLE_STUDENTPORTAL_CMS === 'true'
 
 export default buildConfig({
   admin: {
@@ -86,7 +83,6 @@ export default buildConfig({
   collections: [
     Pages,
     Posts,
-    ...(enableStudentPortalCMS ? [StudentActivities, StudentActivityTips] : []),
     Media,
     Categories,
     Users,
