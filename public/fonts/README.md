@@ -12,3 +12,6 @@ Nye lokale fonter for sakstitler:
 
 Fontene er koblet i `src/app/(frontend)/globals.css` med `@font-face`.
 Hvis filene mangler, brukes fallback-fonter automatisk.
+
+Viktig: Adobe-kitet i prosjektet (`tqh0ecm`) leverer ikke FranklinGothic, kun andre fonter.
+Skal Franklin være identisk på desktop og mobil, maa disse lokale filene faktisk ligge i mappen.
