@@ -6,6 +6,7 @@ import React, { Fragment } from 'react'
 
 import { postColorMap } from '@/theme/postColorMap'
 import type { CardPostDataPatched } from './CardPostDataPatched'
+import { getPostTitleClassName } from '@/utilities/postTitleTypography'
 
 import { Media } from '@/components/Media'
 
@@ -32,14 +33,7 @@ export const Card: React.FC<{
   const { description, image: metaImage } = meta || {}
 
   const hasCategories = categories && Array.isArray(categories) && categories.length > 0
-  const hasItalicCategory =
-    Array.isArray(categories) &&
-    categories.some((category) => {
-      if (typeof category !== 'object' || !category?.title) return false
-
-      const normalized = category.title.trim().toLowerCase()
-      return normalized === 'debatt' || normalized === 'leder'
-    })
+  const titleTypographyClass = getPostTitleClassName(categories)
   const titleToUse = titleFromProps || title
   const sanitizedDescription = description?.replace(/\s/g, ' ') // replace non-breaking space with white space
   const href = `/${relationTo}/${slug}`
@@ -102,7 +96,7 @@ export const Card: React.FC<{
           <div className="prose">
             <h3
               className={cn('font-bold leading-tight break-words', {
-                italic: hasItalicCategory,
+                [titleTypographyClass]: true,
               })}
               style={{
                 fontSize: 'clamp(1.15rem, 5vw, 1.5rem)',

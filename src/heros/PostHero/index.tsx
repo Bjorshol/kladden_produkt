@@ -4,6 +4,8 @@ import React from 'react'
 import type { Post } from '@/payload-types'
 
 import { Media } from '@/components/Media'
+import RichText from '@/components/RichText'
+import { getPostTitleClassName } from '@/utilities/postTitleTypography'
 import { formatAuthors } from '@/utilities/formatAuthors'
 
 export const PostHero: React.FC<{
@@ -15,15 +17,9 @@ export const PostHero: React.FC<{
     populatedAuthors && populatedAuthors.length > 0 && formatAuthors(populatedAuthors) !== ''
 
   const categoryTitle = categories && categories.length > 0 && typeof categories[0] === 'object' ? categories[0].title : 'Nyheter'
-  const hasItalicCategory =
-    Array.isArray(categories) &&
-    categories.some((category) => {
-      if (typeof category !== 'object' || !category?.title) return false
-
-      const normalized = category.title.trim().toLowerCase()
-      return normalized === 'debatt' || normalized === 'leder'
-    })
+  const titleTypographyClass = getPostTitleClassName(categories)
   const ingress = post.ingress || meta?.description || ''
+  const heroCaption = heroImage && typeof heroImage === 'object' ? heroImage.caption : null
 
   return (
     <div className="pt-16 pb-8">
@@ -32,18 +28,23 @@ export const PostHero: React.FC<{
           {categoryTitle}
         </div>
         <h1
-          className={`text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-4 ${hasItalicCategory ? 'italic' : ''}`}
+          className={`text-3xl md:text-4xl lg:text-5xl leading-tight mb-4 ${titleTypographyClass}`}
         >
           {title}
         </h1>
       </div>
       {heroImage && typeof heroImage !== 'string' && (
         <div className="mb-6 flex justify-center">
-          <div className="max-w-[56rem] bg-gray-100">
+          <div className="max-w-[56rem]">
             <Media
               imgClassName="max-w-full max-h-[50vh] object-contain"
               resource={heroImage}
             />
+            {heroCaption && (
+              <div className="article-image-caption mx-1 sm:mx-0">
+                <RichText data={heroCaption} enableGutter={false} enableProse={false} />
+              </div>
+            )}
           </div>
         </div>
       )}

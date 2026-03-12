@@ -84,6 +84,47 @@
       max-width: var(--breakpoint-2xl);
     }
   }
+
+  .post-title-news {
+    font-family: 'FranklinGothiv Heavy', 'franklin-gothic-urw', 'Franklin Gothic Medium',
+      'Arial Narrow', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 800;
+  }
+
+  .post-title-opinion {
+    font-family: 'FranklinGothic URW Cond Italic', 'franklin-gothic-urw-comp',
+      'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-style: italic;
+    font-weight: 700;
+  }
+
+  .article-image-caption {
+    margin-top: 0.5rem;
+    padding-top: 0.45rem;
+    border-top: 1px solid oklch(90% 0 0deg);
+    color: oklch(45% 0 0deg);
+    font-size: 0.82rem;
+    line-height: 1.35;
+  }
+
+  .article-image-caption :where(p) {
+    margin: 0;
+  }
+
+  .payload-richtext :where(img) {
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  .payload-richtext :where(figcaption) {
+    margin-top: 0.5rem;
+    padding-top: 0.45rem;
+    border-top: 1px solid oklch(90% 0 0deg);
+    color: oklch(45% 0 0deg);
+    font-size: 0.82rem;
+    line-height: 1.35;
+  }
 }
 
  :root {

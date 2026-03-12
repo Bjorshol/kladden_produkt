@@ -5,6 +5,7 @@ import { getMediaUrl } from '@/utilities/getMediaUrl'
 import type { Post } from '@/payload-types'
 import type { PostThemeColor } from '@/theme/postColorMap'
 import { postColorMap } from '@/theme/postColorMap'
+import { getPostTitleClassName } from '@/utilities/postTitleTypography'
 
 interface SmallRowProps {
   post: Post
@@ -15,6 +16,7 @@ export const SmallRow: React.FC<SmallRowProps> = ({ post }) => {
   const stikktittel = post.stikktittel || ''
 
   const themeColor = (post as unknown as { themeColor?: PostThemeColor }).themeColor
+  const titleTypographyClass = getPostTitleClassName(post.categories)
   const isDefaultTheme = !themeColor || themeColor === 'default'
   const theme = themeColor ? postColorMap[themeColor] ?? postColorMap.default : postColorMap.default
   const themedStyle = isDefaultTheme
@@ -47,7 +49,11 @@ export const SmallRow: React.FC<SmallRowProps> = ({ post }) => {
             </div>
           )}
           <h2
-            className={isDefaultTheme ? 'font-bold leading-tight break-words text-neutral-900' : 'font-bold leading-tight break-words'}
+            className={
+              isDefaultTheme
+                ? `${titleTypographyClass} leading-tight break-words text-neutral-900`
+                : `${titleTypographyClass} leading-tight break-words`
+            }
             style={{
               fontSize: 'clamp(1.1rem, 4vw, 1.5rem)', // 17.6px-24px
               lineHeight: 1.18,

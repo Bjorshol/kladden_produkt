@@ -5,6 +5,7 @@ import { getMediaUrl } from '@/utilities/getMediaUrl'
 import type { Post } from '@/payload-types'
 import type { PostThemeColor } from '@/theme/postColorMap'
 import { postColorMap } from '@/theme/postColorMap'
+import { getPostTitleClassName } from '@/utilities/postTitleTypography'
 
 interface LargePostProps {
   post: Post
@@ -15,6 +16,7 @@ export const LargePost: React.FC<LargePostProps> = ({ post }) => {
   const stikktittel = post.stikktittel || ''
 
   const themeColor = (post as unknown as { themeColor?: PostThemeColor }).themeColor
+  const titleTypographyClass = getPostTitleClassName(post.categories)
   const isDefaultTheme = !themeColor || themeColor === 'default'
   const theme = themeColor ? postColorMap[themeColor] ?? postColorMap.default : postColorMap.default
   const themedStyle = isDefaultTheme
@@ -49,7 +51,11 @@ export const LargePost: React.FC<LargePostProps> = ({ post }) => {
             </div>
           )}
           <h2
-            className={isDefaultTheme ? 'font-bold leading-tight mb-2 break-words text-neutral-900' : 'font-bold leading-tight mb-2 break-words'}
+            className={
+              isDefaultTheme
+                ? `${titleTypographyClass} leading-tight mb-2 break-words text-neutral-900`
+                : `${titleTypographyClass} leading-tight mb-2 break-words`
+            }
             style={{
               fontSize: 'clamp(1.25rem, 5vw, 2rem)', // 20px-32px
               lineHeight: 1.15,
