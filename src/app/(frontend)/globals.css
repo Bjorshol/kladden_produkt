@@ -47,6 +47,25 @@
   --font-sans: var(--font-geist-sans);
 }
 
+/* Local post title fonts. Put the matching .woff2 files in /public/fonts. */
+@font-face {
+  font-family: 'FranklinGothic Heavy Local';
+  src: local('FranklinGothic Heavy'), local('Franklin Gothic Heavy'),
+    url('/fonts/FranklinGothic-Heavy.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'FranklinGothic Cond Italic Local';
+  src: local('FranklinGothic URW Cond Italic'), local('Franklin Gothic URW Cond Italic'),
+    url('/fonts/FranklinGothic-CondItalic.woff2') format('woff2');
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+}
+
 @layer utilities {
   .container {
     width: 100%;
@@ -86,10 +105,10 @@
   }
 
   .post-title-news {
-    font-family: 'FranklinGothiv Heavy', 'franklin-gothic-urw', 'Franklin Gothic Medium',
-      'Arial Narrow', Arial, sans-serif;
+    font-family: 'FranklinGothic Heavy Local', 'FranklinGothic Heavy', 'franklin-gothic-urw',
+      'Franklin Gothic Medium', 'Arial Narrow', 'Arial Black', Arial, sans-serif;
     font-style: normal;
-    font-weight: 800;
+    font-weight: 900;
   }
 
   .post-title-opinion {
