@@ -95,7 +95,7 @@ export const Card: React.FC<{
         {titleToUse && (
           <div className="prose">
             <h3
-              className={cn('font-bold leading-tight break-words', {
+              className={cn('leading-tight break-words', {
                 [titleTypographyClass]: true,
               })}
               style={{

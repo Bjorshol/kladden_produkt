@@ -112,10 +112,27 @@
   }
 
   .post-title-opinion {
-    font-family: 'FranklinGothic URW Cond Italic', 'franklin-gothic-urw-comp',
-      'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family: 'FranklinGothic Cond Italic Local', 'FranklinGothic URW Cond Italic',
+      'franklin-gothic-urw-comp', 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-style: italic;
     font-weight: 700;
+  }
+
+  /* Explicit mobile lock so title fonts stay consistent on phone browsers. */
+  @media (max-width: 48rem) {
+    .post-title-news {
+      font-family: 'FranklinGothic Heavy Local', 'FranklinGothic Heavy', 'franklin-gothic-urw',
+        'Franklin Gothic Medium', 'Arial Narrow', 'Arial Black', Arial, sans-serif !important;
+      font-style: normal !important;
+      font-weight: 900 !important;
+    }
+
+    .post-title-opinion {
+      font-family: 'FranklinGothic Cond Italic Local', 'FranklinGothic URW Cond Italic',
+        'franklin-gothic-urw-comp', 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif !important;
+      font-style: italic !important;
+      font-weight: 700 !important;
+    }
   }
 
   .article-image-caption {
