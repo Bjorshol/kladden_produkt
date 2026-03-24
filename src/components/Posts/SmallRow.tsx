@@ -14,6 +14,7 @@ interface SmallRowProps {
 export const SmallRow: React.FC<SmallRowProps> = ({ post }) => {
   const imageUrl = post.heroImage && typeof post.heroImage === 'object' ? getMediaUrl(post.heroImage.url) : null
   const stikktittel = post.stikktittel || ''
+  const truncatedTitle = post.title && post.title.length > 65 ? post.title.slice(0, 65) + '…' : post.title
 
   const themeColor = (post as unknown as { themeColor?: PostThemeColor }).themeColor
   const titleTypographyClass = getPostTitleClassName(post.categories)
@@ -55,8 +56,8 @@ export const SmallRow: React.FC<SmallRowProps> = ({ post }) => {
                 : `${titleTypographyClass} leading-tight break-words`
             }
             style={{
-              fontSize: 'clamp(1.1rem, 4vw, 1.5rem)', // 17.6px-24px
-              lineHeight: 1.18,
+              fontSize: 'clamp(1.35rem, 4vw, 1.9rem)',
+              lineHeight: 1.15,
               WebkitLineClamp: 2,
               WebkitBoxOrient: 'vertical',
               display: '-webkit-box',
@@ -67,7 +68,7 @@ export const SmallRow: React.FC<SmallRowProps> = ({ post }) => {
             title={post.title}
             tabIndex={-1}
           >
-            {post.title}
+            {truncatedTitle}
           </h2>
         </div>
       </div>

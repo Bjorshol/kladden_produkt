@@ -14,6 +14,7 @@ interface LargePostProps {
 export const LargePost: React.FC<LargePostProps> = ({ post }) => {
   const imageUrl = post.heroImage && typeof post.heroImage === 'object' ? getMediaUrl(post.heroImage.url) : null
   const stikktittel = post.stikktittel || ''
+  const truncatedTitle = post.title && post.title.length > 65 ? post.title.slice(0, 65) + '…' : post.title
 
   const themeColor = (post as unknown as { themeColor?: PostThemeColor }).themeColor
   const titleTypographyClass = getPostTitleClassName(post.categories)
@@ -57,8 +58,8 @@ export const LargePost: React.FC<LargePostProps> = ({ post }) => {
                 : `${titleTypographyClass} leading-tight mb-2 break-words`
             }
             style={{
-              fontSize: 'clamp(1.25rem, 5vw, 2rem)', // 20px-32px
-              lineHeight: 1.15,
+              fontSize: 'clamp(2rem, 5vw, 3rem)',
+              lineHeight: 1.1,
               WebkitLineClamp: 3,
               WebkitBoxOrient: 'vertical',
               display: '-webkit-box',
@@ -68,7 +69,7 @@ export const LargePost: React.FC<LargePostProps> = ({ post }) => {
             title={post.title}
             tabIndex={-1}
           >
-            {post.title}
+            {truncatedTitle}
           </h2>
         </div>
       </div>

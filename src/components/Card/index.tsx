@@ -34,7 +34,8 @@ export const Card: React.FC<{
 
   const hasCategories = categories && Array.isArray(categories) && categories.length > 0
   const titleTypographyClass = getPostTitleClassName(categories)
-  const titleToUse = titleFromProps || title
+  const rawTitle = titleFromProps || title
+  const titleToUse = rawTitle && rawTitle.length > 65 ? rawTitle.slice(0, 65) + '…' : rawTitle
   const sanitizedDescription = description?.replace(/\s/g, ' ') // replace non-breaking space with white space
   const href = `/${relationTo}/${slug}`
 
@@ -99,8 +100,8 @@ export const Card: React.FC<{
                 [titleTypographyClass]: true,
               })}
               style={{
-                fontSize: 'clamp(1.15rem, 5vw, 1.5rem)',
-                lineHeight: 1.18,
+                fontSize: 'clamp(1.5rem, 5vw, 2rem)',
+                lineHeight: 1.15,
                 WebkitLineClamp: 2,
                 WebkitBoxOrient: 'vertical',
                 display: '-webkit-box',
