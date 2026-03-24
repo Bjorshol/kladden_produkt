@@ -235,11 +235,22 @@ export const Posts: CollectionConfig<'posts'> = {
       type: 'relationship',
       admin: {
         position: 'sidebar',
-        description: 'Velg forfattere fra brukerliste eller fra «Forfattere»-listen.',
+        description: 'Brukere med konto i systemet.',
+      },
+      hasMany: true,
+      relationTo: 'users',
+    },
+    {
+      name: 'externalAuthors',
+      type: 'relationship',
+      label: 'Eksterne forfattere',
+      admin: {
+        position: 'sidebar',
+        description: 'Forfattere uten brukerkonto – administrer under «Forfattere» i menyen.',
       },
       hasMany: true,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      relationTo: ['users', 'authors'] as any,
+      relationTo: 'authors' as any,
     },
     // This field is only used to populate the user data via the `populateAuthors` hook
     // This is because the `user` collection has access control locked to protect user privacy
