@@ -5,7 +5,6 @@ import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
 import { fileURLToPath } from 'url'
 
-import { Authors } from './collections/Authors'
 import { Categories } from './collections/Categories'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
@@ -87,7 +86,6 @@ export default buildConfig({
     Media,
     Categories,
     Users,
-    Authors,
   ],
   cors: [getServerSideURL()].filter(Boolean),
   plugins: [

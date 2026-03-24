@@ -1,49 +1,36 @@
 import type { CollectionAfterReadHook } from 'payload'
+import { User } from 'src/payload-types'
 
 // The `user` collection has access control locked so that users are not publicly accessible
-// This means that we need to populate the authors manually here to protect user privacy.
-// Authors can come from the `users` collection OR the standalone `authors` collection (externalAuthors).
+// This means that we need to populate the authors manually here to protect user privacy
+// GraphQL will not return mutated user data that differs from the underlying schema
+// So we use an alternative `populatedAuthors` field to populate the user data, hidden from the admin UI
 export const populateAuthors: CollectionAfterReadHook = async ({ doc, req: { payload } }) => {
-  const populated: { id: string; name: string }[] = []
+  if (doc?.authors && doc?.authors?.length > 0) {
+    const authorDocs: User[] = []
 
-  // -- Users with accounts --
-  if (doc?.authors && doc.authors.length > 0) {
     for (const author of doc.authors) {
       try {
-        const id = typeof author === 'object' ? author?.id : author
-        if (!id) continue
-        const authorDoc = await payload.findByID({ id, collection: 'users', depth: 0 })
+        const authorDoc = await payload.findByID({
+          id: typeof author === 'object' ? author?.id : author,
+          collection: 'users',
+          depth: 0,
+        })
+
         if (authorDoc) {
-          populated.push({ id: String(authorDoc.id), name: authorDoc.name || '' })
+          authorDocs.push(authorDoc)
+        }
+
+        if (authorDocs.length > 0) {
+          doc.populatedAuthors = authorDocs.map((authorDoc) => ({
+            id: authorDoc.id,
+            name: authorDoc.name,
+          }))
         }
       } catch {
-        // swallow
+        // swallow error
       }
     }
-  }
-
-  // -- External authors without user accounts --
-  if (doc?.externalAuthors && doc.externalAuthors.length > 0) {
-    for (const author of doc.externalAuthors) {
-      try {
-        const id = typeof author === 'object' ? author?.id : author
-        if (!id) continue
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const authorDoc = await payload.findByID({ id, collection: 'authors' as any, depth: 0 })
-        if (authorDoc) {
-          populated.push({
-            id: String(authorDoc.id),
-            name: (authorDoc as { name?: string }).name || '',
-          })
-        }
-      } catch {
-        // swallow
-      }
-    }
-  }
-
-  if (populated.length > 0) {
-    doc.populatedAuthors = populated
   }
 
   return doc
