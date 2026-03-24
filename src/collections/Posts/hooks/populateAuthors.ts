@@ -28,7 +28,8 @@ export const populateAuthors: CollectionAfterReadHook = async ({ doc, req: { pay
 
         const authorDoc = await payload.findByID({
           id,
-          collection: relationTo as 'users' | 'authors',
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          collection: relationTo as any,
           depth: 0,
         })
 
