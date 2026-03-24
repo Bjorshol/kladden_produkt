@@ -238,7 +238,8 @@ export const Posts: CollectionConfig<'posts'> = {
         description: 'Velg forfattere fra brukerliste eller fra «Forfattere»-listen.',
       },
       hasMany: true,
-      relationTo: ['users', 'authors'],
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      relationTo: ['users', 'authors'] as any,
     },
     // This field is only used to populate the user data via the `populateAuthors` hook
     // This is because the `user` collection has access control locked to protect user privacy
