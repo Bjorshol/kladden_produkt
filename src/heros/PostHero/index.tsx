@@ -43,6 +43,10 @@ export const PostHero: React.FC<{
         >
           {title}
         </h1>
+
+        {ingress && (
+          <p className="article-ingress mb-6">{ingress}</p>
+        )}
       </div>
 
       {heroImage && typeof heroImage !== 'string' && (
@@ -59,13 +63,7 @@ export const PostHero: React.FC<{
         </figure>
       )}
 
-      {ingress && (
-        <div className="container max-w-[48rem] mx-auto px-4 mb-6">
-          <p className="article-ingress">{ingress}</p>
-        </div>
-      )}
-
-      {/* Byline – enkelt, ryddig */}
+      {/* Byline */}
       <div className="container max-w-[48rem] mx-auto px-4">
         <div
           className="flex flex-wrap items-baseline gap-x-4 gap-y-1 py-3 border-t border-b"

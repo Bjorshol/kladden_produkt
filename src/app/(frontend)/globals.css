@@ -161,7 +161,7 @@
     line-height: 1.85;
   }
 
-  /* Kortlenker – ingen underline, ingen fargeendring, ren active-state */
+  /* Kortlenker – ren, ingen underline på selve link-elementet */
   .card-link {
     display: block;
     text-decoration: none;
@@ -176,6 +176,14 @@
     text-decoration: none;
     color: inherit;
   }
+  /* Underline på tittelen ved hover */
+  .card-link:hover h2,
+  .card-link:hover h3 {
+    text-decoration: underline;
+    text-decoration-color: currentColor;
+    text-underline-offset: 0.12em;
+    text-decoration-thickness: 1.5px;
+  }
   .card-link:active {
     opacity: 0.88;
   }
@@ -187,7 +195,8 @@
   /* Bildetekstboks – hvit boks direkte under bildet */
   .image-caption-box {
     background: #fff;
-    padding: 0.4rem 0.75rem 0.5rem;
+    margin: 0;
+    padding: 0.25rem 0.5rem 0.35rem;
     font-size: 0.8rem;
     font-style: italic;
     line-height: 1.5;
