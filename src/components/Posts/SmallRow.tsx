@@ -27,7 +27,7 @@ export const SmallRow: React.FC<SmallRowProps> = ({ post }) => {
   return (
     <Link
       href={`/posts/${post.slug}`}
-      className="block bg-white border border-gray-200 overflow-hidden w-full [text-decoration-color:currentColor] hover:[text-decoration-color:currentColor] hover:[color:inherit] focus:outline-none focus-visible:ring-2 focus-visible:ring-red-600"
+      className="card-link bg-white border border-gray-200 overflow-hidden w-full"
       style={themedStyle}
     >
       <div className="flex h-20 md:h-24">

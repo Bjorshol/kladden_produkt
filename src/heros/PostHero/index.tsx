@@ -52,7 +52,7 @@ export const PostHero: React.FC<{
             resource={heroImage}
           />
           {heroCaption && (
-            <figcaption className="article-image-caption">
+            <figcaption className="image-caption-box">
               <RichText data={heroCaption} enableGutter={false} enableProse={false} />
             </figcaption>
           )}

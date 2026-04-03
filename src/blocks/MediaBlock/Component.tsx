@@ -52,7 +52,7 @@ export const MediaBlock: React.FC<Props> = (props) => {
       {caption && (
         <div
           className={cn(
-            'article-image-caption',
+            'image-caption-box',
             {
               container: !disableInnerContainer,
             },
