@@ -27,14 +27,14 @@ export const LargePost: React.FC<LargePostProps> = ({ post }) => {
   return (
     <Link
       href={`/posts/${post.slug}`}
-      className="block [text-decoration-color:currentColor] hover:[text-decoration-color:currentColor] hover:[color:inherit] focus:outline-none focus:ring-2 focus:ring-red-600"
+      className="block [text-decoration-color:currentColor] hover:[text-decoration-color:currentColor] hover:[color:inherit] focus:outline-none focus-visible:ring-2 focus-visible:ring-red-600"
     >
       <div
-        className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg hover:border-gray-300 transition-all duration-200 w-full"
+        className="bg-white border border-gray-200 overflow-hidden w-full"
         style={themedStyle}
       >
         {imageUrl && (
-          <div className="relative w-full overflow-hidden rounded-t-lg aspect-[16/9] max-h-[180px] md:max-h-[340px]">
+          <div className="relative w-full overflow-hidden aspect-[16/9] max-h-[180px] md:max-h-[340px]">
             <NextImage
               src={imageUrl}
               alt={typeof post.heroImage === 'object' ? post.heroImage?.alt || post.title : post.title}

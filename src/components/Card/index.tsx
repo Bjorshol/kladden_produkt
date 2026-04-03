@@ -56,7 +56,7 @@ export const Card: React.FC<{
   return (
     <article
       className={cn(
-        'border border-border rounded-lg overflow-hidden bg-white hover:cursor-pointer',
+        'border border-border overflow-hidden bg-white hover:cursor-pointer',
         className,
       )}
       ref={card.ref}
@@ -114,7 +114,7 @@ export const Card: React.FC<{
               tabIndex={-1}
             >
               <Link
-                className="not-prose [text-decoration-color:currentColor] hover:[text-decoration-color:currentColor] hover:[color:inherit]"
+                className="not-prose no-underline hover:no-underline focus:no-underline focus:outline-none [text-decoration-color:currentColor] hover:[text-decoration-color:currentColor] hover:[color:inherit]"
                 href={href}
                 ref={link.ref}
                 tabIndex={-1}

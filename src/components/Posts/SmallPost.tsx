@@ -27,12 +27,12 @@ export const SmallCard: React.FC<SmallCardProps> = ({ post }) => {
   return (
     <Link
       href={`/posts/${post.slug}`}
-      className="block bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg hover:border-gray-300 transition-all duration-200 w-full [text-decoration-color:currentColor] hover:[text-decoration-color:currentColor] hover:[color:inherit] focus:outline-none focus:ring-2 focus:ring-red-600"
+      className="block bg-white border border-gray-200 overflow-hidden w-full [text-decoration-color:currentColor] hover:[text-decoration-color:currentColor] hover:[color:inherit] focus:outline-none focus-visible:ring-2 focus-visible:ring-red-600"
       style={themedStyle}
     >
       <div className="flex flex-row md:flex-col h-24 md:h-auto">
         {imageUrl && (
-          <div className="w-24 md:w-full aspect-[4/3] relative flex-shrink-0 overflow-hidden rounded-t-lg md:rounded-t-lg">
+          <div className="w-24 md:w-full aspect-[4/3] relative flex-shrink-0 overflow-hidden">
             <NextImage
               src={imageUrl}
               alt={typeof post.heroImage === 'object' ? post.heroImage?.alt || post.title : post.title}
