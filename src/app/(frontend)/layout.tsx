@@ -3,7 +3,15 @@ import type { Metadata } from 'next'
 import { cn } from '@/utilities/ui'
 import { GeistMono } from 'geist/font/mono'
 import { GeistSans } from 'geist/font/sans'
+import { Lora } from 'next/font/google'
 import React from 'react'
+
+const lora = Lora({
+  variable: '--font-lora',
+  subsets: ['latin'],
+  display: 'swap',
+  style: ['normal', 'italic'],
+})
 
 import { Footer } from '@/Footer/Component'
 import { GoogleAnalytics } from '@/app/components/GoogleAnalytics'
@@ -16,7 +24,7 @@ import { getServerSideURL } from '@/utilities/getURL'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html className={cn(GeistSans.variable, GeistMono.variable)} lang="nb" data-theme="light" suppressHydrationWarning>
+    <html className={cn(GeistSans.variable, GeistMono.variable, lora.variable)} lang="nb" data-theme="light" suppressHydrationWarning>
       <head>
         <link rel="stylesheet" href="https://use.typekit.net/tqh0ecm.css" />
         <GoogleAnalytics />

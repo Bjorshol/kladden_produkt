@@ -22,51 +22,70 @@ export const PostHero: React.FC<{
   const heroCaption = heroImage && typeof heroImage === 'object' ? heroImage.caption : null
 
   return (
-    <div className="pt-16 pb-8">
-      <div className="container max-w-[48rem] mx-auto px-4">
-        <div className="text-sm uppercase tracking-wide text-gray-500 mb-2">
-          {categoryTitle}
+    <div className="pb-10">
+      <div className="container max-w-[48rem] mx-auto px-4 pt-6">
+        {/* Kategori med rød aksent */}
+        <div className="flex items-center gap-2 mb-4">
+          <span
+            className="inline-block w-5 h-0.5 shrink-0"
+            style={{ backgroundColor: 'var(--color-brand-red)' }}
+          />
+          <span
+            className="text-xs font-bold uppercase tracking-widest"
+            style={{ color: 'var(--color-brand-red)' }}
+          >
+            {categoryTitle}
+          </span>
         </div>
+
         <h1
-          className={`text-3xl md:text-4xl lg:text-5xl leading-tight mb-4 ${titleTypographyClass}`}
+          className={`text-3xl md:text-4xl lg:text-5xl leading-[1.1] mb-5 ${titleTypographyClass}`}
         >
           {title}
         </h1>
       </div>
+
       {heroImage && typeof heroImage !== 'string' && (
-        <div className="mb-6 flex justify-center">
-          <div className="max-w-[56rem]">
+        <div className="mb-6">
+          <div className="max-w-[56rem] mx-auto">
             <Media
-              imgClassName="max-w-full max-h-[50vh] object-contain"
+              imgClassName="max-w-full max-h-[55vh] object-contain"
               resource={heroImage}
             />
-            {heroCaption && (
-              <div className="article-image-caption mx-1 sm:mx-0">
+          </div>
+          {heroCaption && (
+            <div className="container max-w-[48rem] mx-auto px-4">
+              <div className="article-image-caption">
                 <RichText data={heroCaption} enableGutter={false} enableProse={false} />
               </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       )}
+
       {ingress && (
         <div className="container max-w-[48rem] mx-auto px-4 mb-6">
-          <p className="text-lg md:text-xl leading-relaxed text-gray-700">
-            {ingress}
-          </p>
+          <p className="article-ingress">{ingress}</p>
         </div>
       )}
-      <div className="container max-w-[48rem] mx-auto px-4 mb-6">
-        <hr className="border-gray-300" />
-      </div>
-      <div className="container max-w-[48rem] mx-auto px-4 mb-6">
-        <div className="text-sm text-gray-500">
-          {hasAuthors && <span>Av {formatAuthors(populatedAuthors || [])}</span>}
-          {hasAuthors && publishedAt && <span> · </span>}
-          {publishedAt && <time dateTime={publishedAt}>{formatDateTime(publishedAt)}</time>}
+
+      {/* Byline – enkelt, ryddig */}
+      <div className="container max-w-[48rem] mx-auto px-4">
+        <div
+          className="flex flex-wrap items-baseline gap-x-4 gap-y-1 py-3 border-t border-b"
+          style={{ borderColor: 'oklch(88% 0 0deg)' }}
+        >
+          {hasAuthors && (
+            <span className="text-sm font-semibold text-neutral-800">
+              {formatAuthors(populatedAuthors || [])}
+            </span>
+          )}
+          {publishedAt && (
+            <time className="text-sm text-gray-400 tabular-nums" dateTime={publishedAt}>
+              {formatDateTime(publishedAt)}
+            </time>
+          )}
         </div>
-      </div>
-      <div className="container max-w-[48rem] mx-auto px-4 mb-8">
-        <hr className="border-gray-300" />
       </div>
     </div>
   )
