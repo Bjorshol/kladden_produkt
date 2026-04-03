@@ -29,7 +29,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link rel="stylesheet" href="https://use.typekit.net/tqh0ecm.css" />
         <GoogleAnalytics />
       </head>
-      <body className="bg-white">
+      <body className="bg-background">
         <Providers>
           <Topbar />
           {children}

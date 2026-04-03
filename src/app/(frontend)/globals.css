@@ -113,11 +113,7 @@
   }
 
   .article-image-caption {
-    margin-top: 0.4rem;
-    color: oklch(42% 0 0deg);
-    font-size: 0.8rem;
-    line-height: 1.55;
-    font-style: italic;
+    margin: 0;
   }
 
   .article-image-caption :where(p) {
@@ -130,11 +126,19 @@
   }
 
   .payload-richtext :where(figcaption) {
-    margin-top: 0.4rem;
-    color: oklch(42% 0 0deg);
-    font-size: 0.8rem;
-    line-height: 1.55;
-    font-style: italic;
+    margin: 0;
+  }
+
+  /* Bilde + bildetekst wrapper – krymper til bildebredden */
+  .image-figure {
+    width: fit-content;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .image-figure :where(img) {
+    display: block;
   }
 
   /* Ingress / innledning */
@@ -192,20 +196,29 @@
     outline-offset: 1px;
   }
 
-  /* Bildetekstboks – hvit boks direkte under bildet */
+  /* Bildetekstboks – hvit boks tett under bildet, like bred som bildet */
   .image-caption-box {
     background: #fff;
     margin: 0;
-    padding: 0.25rem 0.5rem 0.35rem;
-    font-size: 0.8rem;
-    font-style: italic;
-    line-height: 1.5;
-    color: oklch(42% 0 0deg);
+    padding: 0.35rem 0.55rem 0.4rem;
+    border: 1px solid oklch(90% 0 0deg);
+    border-top: none;
+    font-family: var(--font-geist-sans, var(--font-sans, system-ui, sans-serif));
+    font-size: 0.78rem;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    line-height: 1.45;
+    color: oklch(38% 0 0deg);
+  }
+
+  .image-caption-box :where(p) {
+    margin: 0;
   }
 }
 
  :root {
-  --background: oklch(100% 0 0deg);
+  --background: oklch(98.5% 0.002 90deg);
   --foreground: oklch(14.5% 0 0deg);
   --card: oklch(96.5% 0.005 265deg);
   --card-foreground: oklch(14.5% 0 0deg);

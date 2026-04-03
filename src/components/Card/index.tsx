@@ -114,11 +114,11 @@ export const Card: React.FC<{
               tabIndex={-1}
             >
               <Link
-                className="not-prose no-underline hover:no-underline focus:no-underline focus:outline-none"
+                className="not-prose no-underline hover:underline hover:decoration-current hover:[text-underline-offset:0.12em] hover:[text-decoration-thickness:1.5px] focus:no-underline focus:outline-none"
                 href={href}
                 ref={link.ref}
                 tabIndex={-1}
-                style={{ color: 'inherit', textDecoration: 'none' }}
+                style={{ color: 'inherit' }}
               >
                 {titleToUse}
               </Link>
