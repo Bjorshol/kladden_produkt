@@ -46,21 +46,17 @@ export const PostHero: React.FC<{
       </div>
 
       {heroImage && typeof heroImage !== 'string' && (
-        <div className="mb-6">
-          <div className="max-w-[56rem] mx-auto">
-            <Media
-              imgClassName="max-w-full max-h-[55vh] object-contain"
-              resource={heroImage}
-            />
-          </div>
+        <figure className="container max-w-[48rem] mx-auto px-4 mb-6">
+          <Media
+            imgClassName="max-w-full max-h-[55vh] object-contain w-full"
+            resource={heroImage}
+          />
           {heroCaption && (
-            <div className="container max-w-[48rem] mx-auto px-4">
-              <div className="article-image-caption">
-                <RichText data={heroCaption} enableGutter={false} enableProse={false} />
-              </div>
-            </div>
+            <figcaption className="article-image-caption">
+              <RichText data={heroCaption} enableGutter={false} enableProse={false} />
+            </figcaption>
           )}
-        </div>
+        </figure>
       )}
 
       {ingress && (
