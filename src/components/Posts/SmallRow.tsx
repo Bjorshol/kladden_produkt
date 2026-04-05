@@ -52,7 +52,7 @@ export const SmallRow: React.FC<SmallRowProps> = ({ post }) => {
           <h2
             className={
               isDefaultTheme
-                ? `${titleTypographyClass} leading-tight break-words text-neutral-900`
+                ? `${titleTypographyClass} leading-tight break-words text-neutral-800`
                 : `${titleTypographyClass} leading-tight break-words`
             }
             style={{

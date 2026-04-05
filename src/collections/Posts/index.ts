@@ -68,6 +68,7 @@ export const Posts: CollectionConfig<'posts'> = {
       }),
     useAsTitle: 'title',
   },
+  defaultSort: '-publishedAt',
   fields: [
     {
       name: 'themeColor',

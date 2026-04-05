@@ -11,7 +11,7 @@ import { formatAuthors } from '@/utilities/formatAuthors'
 export const PostHero: React.FC<{
   post: Post
 }> = ({ post }) => {
-  const { categories, heroImage, populatedAuthors, publishedAt, title, meta } = post
+  const { categories, heroImage, populatedAuthors, publishedAt, updatedAt, title, meta } = post
 
   const hasAuthors =
     populatedAuthors && populatedAuthors.length > 0 && formatAuthors(populatedAuthors) !== ''
@@ -21,33 +21,19 @@ export const PostHero: React.FC<{
   const ingress = post.ingress || meta?.description || ''
   const heroCaption = heroImage && typeof heroImage === 'object' ? heroImage.caption : null
   const heroPhotographer = heroImage && typeof heroImage === 'object' ? heroImage.photographer : null
+  const publishedDateLabel = publishedAt ? formatDateTime(publishedAt) : null
+  const updatedDateLabel = updatedAt ? formatDateTime(updatedAt) : null
 
   return (
     <div className="pb-10">
       <div className="container max-w-[48rem] mx-auto px-4 pt-6">
-        {/* Kategori med rød aksent */}
-        <div className="flex items-center gap-2 mb-4">
-          <span
-            className="inline-block w-5 h-0.5 shrink-0"
-            style={{ backgroundColor: 'var(--color-brand-red)' }}
-          />
-          <span
-            className="text-xs font-bold uppercase tracking-widest"
-            style={{ color: 'var(--color-brand-red)' }}
-          >
-            {categoryTitle}
-          </span>
-        </div>
+        <p className="article-kicker mb-3">{categoryTitle}</p>
 
         <h1
-          className={`text-3xl md:text-4xl lg:text-5xl leading-[1.1] mb-5 ${titleTypographyClass}`}
+          className={`article-headline text-3xl md:text-4xl lg:text-5xl leading-[1.05] mb-4 ${titleTypographyClass}`}
         >
           {title}
         </h1>
-
-        {ingress && (
-          <p className="article-ingress mb-6">{ingress}</p>
-        )}
       </div>
 
       {heroImage && typeof heroImage !== 'string' && (
@@ -74,21 +60,34 @@ export const PostHero: React.FC<{
       {/* Byline */}
       <div className="container max-w-[48rem] mx-auto px-4">
         <div
-          className="flex flex-wrap items-baseline gap-x-4 gap-y-1 py-3 border-t border-b"
+          className="article-meta-row flex flex-wrap items-baseline gap-x-5 gap-y-1 py-3 border-t border-b"
           style={{ borderColor: 'oklch(88% 0 0deg)' }}
         >
           {hasAuthors && (
-            <span className="text-sm font-semibold text-neutral-800">
+            <span className="article-meta-author text-sm font-semibold text-neutral-800">
               {formatAuthors(populatedAuthors || [])}
             </span>
           )}
-          {publishedAt && (
-            <time className="text-sm text-gray-400 tabular-nums" dateTime={publishedAt}>
-              {formatDateTime(publishedAt)}
-            </time>
+          {publishedAt && publishedDateLabel && (
+            <span className="article-meta-item text-sm text-neutral-600 tabular-nums">
+              <span className="article-meta-label">Publisert:</span>{' '}
+              <time dateTime={publishedAt}>{publishedDateLabel}</time>
+            </span>
+          )}
+          {updatedAt && updatedDateLabel && (
+            <span className="article-meta-item text-sm text-neutral-600 tabular-nums">
+              <span className="article-meta-label">Sist endret:</span>{' '}
+              <time dateTime={updatedAt}>{updatedDateLabel}</time>
+            </span>
           )}
         </div>
       </div>
+
+      {ingress && (
+        <div className="container max-w-[48rem] mx-auto px-4 pt-5">
+          <p className="article-ingress">{ingress}</p>
+        </div>
+      )}
     </div>
   )
 }

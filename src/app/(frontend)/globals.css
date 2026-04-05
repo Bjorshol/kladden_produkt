@@ -155,15 +155,39 @@
     line-height: 0;
   }
 
-  /* Ingress / innledning */
+  .article-kicker {
+    display: inline-block;
+    font-family: var(--font-geist-sans, var(--font-sans, system-ui, sans-serif));
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: oklch(24% 0 0deg);
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+    text-decoration-thickness: 1px;
+  }
+
+  .article-headline {
+    font-family: franklin-gothic-urw, var(--font-geist-sans, var(--font-sans, system-ui, sans-serif));
+    letter-spacing: -0.015em;
+    color: oklch(16.5% 0 0deg);
+  }
+
+  .article-meta-label {
+    font-weight: 600;
+    color: oklch(30% 0 0deg);
+  }
+
+  /* Ingress / innledning under metadata */
   .article-ingress {
-    font-family: var(--font-lora, Georgia, 'Times New Roman', serif);
-    font-size: 1.2rem;
-    line-height: 1.7;
-    color: oklch(20% 0 0deg);
-    font-style: italic;
-    font-weight: 400;
+    font-family: franklin-gothic-urw, var(--font-geist-sans, var(--font-sans, system-ui, sans-serif));
+    font-size: clamp(1.45rem, 2.1vw, 1.95rem);
+    line-height: 1.25;
+    color: oklch(22% 0 0deg);
+    font-style: normal;
+    font-weight: 500;
     margin: 0;
+    max-width: 42ch;
   }
 
   /* Brødtekst i artikkel – seriff og større */

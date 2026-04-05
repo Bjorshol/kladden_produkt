@@ -52,7 +52,7 @@ export const SmallCard: React.FC<SmallCardProps> = ({ post }) => {
           <h3
             className={
               isDefaultTheme
-                ? `${titleTypographyClass} leading-tight break-words text-neutral-900`
+                ? `${titleTypographyClass} leading-tight break-words text-neutral-800`
                 : `${titleTypographyClass} leading-tight break-words`
             }
             style={{

@@ -54,7 +54,7 @@ export const LargePost: React.FC<LargePostProps> = ({ post }) => {
           <h2
             className={
               isDefaultTheme
-                ? `${titleTypographyClass} leading-tight mb-2 break-words text-neutral-900`
+                ? `${titleTypographyClass} leading-tight mb-2 break-words text-neutral-800`
                 : `${titleTypographyClass} leading-tight mb-2 break-words`
             }
             style={{
