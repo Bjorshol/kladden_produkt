@@ -129,9 +129,8 @@
     margin: 0;
   }
 
-  /* Bilde + bildetekst wrapper – krymper til bildebredden */
+  /* Bilde + bildetekst wrapper */
   .image-figure {
-    width: fit-content;
     max-width: 100%;
     margin-left: auto;
     margin-right: auto;
@@ -140,7 +139,13 @@
   .image-figure :where(img) {
     display: block;
     max-width: 100%;
+    width: 100%;
     height: auto;
+  }
+
+  .image-figure :where(picture) {
+    display: block;
+    line-height: 0;
   }
 
   /* Ingress / innledning */
@@ -198,19 +203,19 @@
     outline-offset: 1px;
   }
 
-  /* Bildetekstboks – hvit boks tett under bildet, like bred som bildet */
+  /* Bildetekstboks – tett under bildet */
   .image-caption-box {
     background: #fff;
     margin: 0;
-    padding: 0.35rem 0.55rem 0.4rem;
+    padding: 0.3rem 0.5rem;
     border: 1px solid oklch(90% 0 0deg);
     border-top: none;
     font-family: var(--font-geist-sans, var(--font-sans, system-ui, sans-serif));
-    font-size: 0.78rem;
+    font-size: 0.72rem;
     font-style: normal;
     font-weight: 400;
     letter-spacing: 0.01em;
-    line-height: 1.45;
+    line-height: 1.4;
     color: oklch(38% 0 0deg);
   }
 
@@ -222,6 +227,9 @@
   .image-caption-box .attribution {
     color: oklch(50% 0 0deg);
     white-space: nowrap;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
   }
 
   .image-caption-box .attribution strong {

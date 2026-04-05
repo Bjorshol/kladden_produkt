@@ -51,10 +51,10 @@ export const PostHero: React.FC<{
       </div>
 
       {heroImage && typeof heroImage !== 'string' && (
-        <div className="container max-w-[48rem] mx-auto px-4 mb-6">
+        <div className="max-w-[48rem] mx-auto px-0 md:px-4 mb-6">
           <figure className="image-figure">
             <Media
-              imgClassName="max-w-full max-h-[55vh]"
+              imgClassName=""
               resource={heroImage}
             />
             {(heroCaption || heroPhotographer) && (
