@@ -217,22 +217,25 @@
     padding: 0.3rem 0.5rem;
     border: 1px solid oklch(90% 0 0deg);
     border-top: none;
-    font-family: var(--font-geist-sans, var(--font-sans, system-ui, sans-serif));
-    font-size: 0.75rem;
-    font-style: normal;
+    font-family: var(--font-geist-sans, var(--font-sans, system-ui, sans-serif)) !important;
+    font-size: 0.75rem !important;
+    font-style: normal !important;
     font-weight: 400;
     letter-spacing: 0.01em;
-    line-height: 1.4;
+    line-height: 1.4 !important;
     color: oklch(38% 0 0deg);
   }
 
+  .image-caption-box * {
+    font-family: inherit !important;
+    font-size: inherit !important;
+    font-style: normal !important;
+    line-height: inherit !important;
+    margin: 0 !important;
+  }
+
   .image-caption-box :where(p) {
-    margin: 0;
     display: inline;
-    font-family: inherit;
-    font-size: inherit;
-    font-style: normal;
-    line-height: inherit;
   }
 
   .image-caption-box .attribution {
