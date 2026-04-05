@@ -301,6 +301,7 @@ export interface Media {
     };
     [k: string]: unknown;
   } | null;
+  photographer?: string | null;
   folder?: (number | null) | FolderInterface;
   updatedAt: string;
   createdAt: string;
@@ -1238,6 +1239,7 @@ export interface PostsSelect<T extends boolean = true> {
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   caption?: T;
+  photographer?: T;
   folder?: T;
   updatedAt?: T;
   createdAt?: T;

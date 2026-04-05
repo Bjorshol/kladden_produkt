@@ -139,6 +139,8 @@
 
   .image-figure :where(img) {
     display: block;
+    max-width: 100%;
+    height: auto;
   }
 
   /* Ingress / innledning */
@@ -214,6 +216,16 @@
 
   .image-caption-box :where(p) {
     margin: 0;
+    display: inline;
+  }
+
+  .image-caption-box .attribution {
+    color: oklch(50% 0 0deg);
+    white-space: nowrap;
+  }
+
+  .image-caption-box .attribution strong {
+    font-weight: 700;
   }
 }
 

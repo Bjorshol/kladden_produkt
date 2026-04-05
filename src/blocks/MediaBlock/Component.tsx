@@ -30,7 +30,11 @@ export const MediaBlock: React.FC<Props> = (props) => {
   } = props
 
   let caption
-  if (media && typeof media === 'object') caption = media.caption
+  let photographer: string | undefined
+  if (media && typeof media === 'object') {
+    caption = media.caption
+    photographer = media.photographer ?? undefined
+  }
 
   return (
     <div
@@ -50,9 +54,14 @@ export const MediaBlock: React.FC<Props> = (props) => {
             src={staticImage}
           />
         )}
-        {caption && (
+        {(caption || photographer) && (
           <figcaption className="image-caption-box">
-            <RichText data={caption} enableGutter={false} enableProse={false} />
+            {caption && <RichText data={caption} enableGutter={false} enableProse={false} />}
+            {photographer && (
+              <span className="attribution">
+                <strong>Foto:</strong> {photographer}
+              </span>
+            )}
           </figcaption>
         )}
       </figure>

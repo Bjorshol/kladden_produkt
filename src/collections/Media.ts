@@ -38,6 +38,11 @@ export const Media: CollectionConfig = {
         },
       }),
     },
+    {
+      name: 'photographer',
+      type: 'text',
+      label: 'Fotograf',
+    },
   ],
   upload: {
     // Upload to the public/media directory in Next.js making them publicly accessible even outside of Payload

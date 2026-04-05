@@ -20,6 +20,7 @@ export const PostHero: React.FC<{
   const titleTypographyClass = getPostTitleClassName(categories)
   const ingress = post.ingress || meta?.description || ''
   const heroCaption = heroImage && typeof heroImage === 'object' ? heroImage.caption : null
+  const heroPhotographer = heroImage && typeof heroImage === 'object' ? heroImage.photographer : null
 
   return (
     <div className="pb-10">
@@ -56,9 +57,14 @@ export const PostHero: React.FC<{
               imgClassName="max-w-full max-h-[55vh]"
               resource={heroImage}
             />
-            {heroCaption && (
+            {(heroCaption || heroPhotographer) && (
               <figcaption className="image-caption-box">
-                <RichText data={heroCaption} enableGutter={false} enableProse={false} />
+                {heroCaption && <RichText data={heroCaption} enableGutter={false} enableProse={false} />}
+                {heroPhotographer && (
+                  <span className="attribution">
+                    <strong>Foto:</strong> {heroPhotographer}
+                  </span>
+                )}
               </figcaption>
             )}
           </figure>
