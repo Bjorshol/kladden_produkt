@@ -214,15 +214,15 @@
   .image-caption-box {
     background: #fff;
     margin: 0;
-    padding: 0.3rem 0.5rem;
+    padding: 0.35rem 0.5rem;
     border: 1px solid oklch(90% 0 0deg);
     border-top: none;
     font-family: var(--font-geist-sans, var(--font-sans, system-ui, sans-serif)) !important;
-    font-size: 0.75rem !important;
+    font-size: 0.85rem !important;
     font-style: normal !important;
     font-weight: 400;
     letter-spacing: 0.01em;
-    line-height: 1.4 !important;
+    line-height: 1.45 !important;
     color: oklch(38% 0 0deg);
   }
 
@@ -241,7 +241,7 @@
   .image-caption-box .attribution {
     color: oklch(50% 0 0deg);
     white-space: nowrap;
-    font-size: 0.68rem;
+    font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.03em;
   }
