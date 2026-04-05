@@ -180,14 +180,14 @@
 
   /* Ingress / innledning under metadata */
   .article-ingress {
-    font-family: franklin-gothic-urw, var(--font-geist-sans, var(--font-sans, system-ui, sans-serif));
-    font-size: clamp(1.45rem, 2.1vw, 1.95rem);
-    line-height: 1.25;
-    color: oklch(22% 0 0deg);
+    font-family: var(--font-lora, Georgia, 'Times New Roman', serif);
+    font-size: clamp(1.02rem, 1.2vw, 1.18rem);
+    line-height: 1.58;
+    color: oklch(24% 0 0deg);
     font-style: normal;
-    font-weight: 500;
+    font-weight: 400;
     margin: 0;
-    max-width: 42ch;
+    max-width: 55ch;
   }
 
   /* Brødtekst i artikkel – seriff og større */

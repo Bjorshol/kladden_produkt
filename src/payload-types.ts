@@ -199,6 +199,22 @@ export interface Page {
         }[]
       | null;
     media?: (number | null) | Media;
+    caption?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    photographer?: string | null;
   };
   layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
   meta?: {
@@ -237,6 +253,22 @@ export interface Post {
   ingress?: string | null;
   size?: ('large' | 'small') | null;
   heroImage?: (number | null) | Media;
+  heroCaption?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  heroPhotographer?: string | null;
   content: {
     root: {
       type: string;
@@ -552,6 +584,22 @@ export interface ContentBlock {
  */
 export interface MediaBlock {
   media: number | Media;
+  caption?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  photographer?: string | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'mediaBlock';
@@ -1089,6 +1137,8 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
             };
         media?: T;
+        caption?: T;
+        photographer?: T;
       };
   layout?:
     | T
@@ -1169,6 +1219,8 @@ export interface ContentBlockSelect<T extends boolean = true> {
  */
 export interface MediaBlockSelect<T extends boolean = true> {
   media?: T;
+  caption?: T;
+  photographer?: T;
   id?: T;
   blockName?: T;
 }
@@ -1208,6 +1260,8 @@ export interface PostsSelect<T extends boolean = true> {
   ingress?: T;
   size?: T;
   heroImage?: T;
+  heroCaption?: T;
+  heroPhotographer?: T;
   content?: T;
   relatedPosts?: T;
   categories?: T;
