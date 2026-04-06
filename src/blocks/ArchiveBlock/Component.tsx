@@ -31,15 +31,24 @@ export const ArchiveBlock: React.FC<
       depth: 1,
       limit,
       sort: '-publishedAt,-createdAt',
-      ...(flattenedCategories && flattenedCategories.length > 0
-        ? {
-            where: {
-              categories: {
-                in: flattenedCategories,
-              },
+      where: {
+        and: [
+          {
+            _status: {
+              equals: 'published',
             },
-          }
-        : {}),
+          },
+          ...(flattenedCategories && flattenedCategories.length > 0
+            ? [
+                {
+                  categories: {
+                    in: flattenedCategories,
+                  },
+                },
+              ]
+            : []),
+        ],
+      },
     })
 
     posts = fetchedPosts.docs

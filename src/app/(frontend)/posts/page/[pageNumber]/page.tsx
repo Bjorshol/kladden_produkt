@@ -32,6 +32,11 @@ export default async function Page({ params: paramsPromise }: Args) {
     page: sanitizedPageNumber,
     overrideAccess: false,
     sort: '-publishedAt,-createdAt',
+    where: {
+      _status: {
+        equals: 'published',
+      },
+    },
   })
 
   return (

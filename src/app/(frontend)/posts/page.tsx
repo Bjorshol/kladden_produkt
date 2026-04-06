@@ -21,6 +21,11 @@ export default async function Page() {
       limit: 12,
       overrideAccess: false,
       sort: '-publishedAt,-createdAt',
+      where: {
+        _status: {
+          equals: 'published',
+        },
+      },
       select: {
         title: true,
         slug: true,

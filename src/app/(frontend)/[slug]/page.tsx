@@ -191,9 +191,22 @@ const queryPageBySlug = async ({ slug }: { slug: string }) => {
     pagination: false,
     overrideAccess: draft,
     where: {
-      slug: {
-        equals: slug,
-      },
+      and: [
+        {
+          slug: {
+            equals: slug,
+          },
+        },
+        ...(draft
+          ? []
+          : [
+              {
+                _status: {
+                  equals: 'published',
+                },
+              },
+            ]),
+      ],
     },
   })
 
@@ -231,9 +244,22 @@ const queryPosts = async (): Promise<Post[]> => {
         draft,
         overrideAccess: draft,
         where: {
-          id: {
-            in: featuredIds,
-          },
+          and: [
+            {
+              id: {
+                in: featuredIds,
+              },
+            },
+            ...(draft
+              ? []
+              : [
+                  {
+                    _status: {
+                      equals: 'published',
+                    },
+                  },
+                ]),
+          ],
         },
       })
     } catch (_error) {
@@ -274,9 +300,22 @@ const queryPosts = async (): Promise<Post[]> => {
         overrideAccess: draft,
         sort: '-publishedAt,-createdAt',
         where: {
-          id: {
-            not_in: featuredIds,
-          },
+          and: [
+            {
+              id: {
+                not_in: featuredIds,
+              },
+            },
+            ...(draft
+              ? []
+              : [
+                  {
+                    _status: {
+                      equals: 'published',
+                    },
+                  },
+                ]),
+          ],
         },
       })
     } catch (_error) {
@@ -294,6 +333,15 @@ const queryPosts = async (): Promise<Post[]> => {
         pagination: false,
         overrideAccess: draft,
         sort: '-publishedAt,-createdAt',
+        ...(draft
+          ? {}
+          : {
+              where: {
+                _status: {
+                  equals: 'published',
+                },
+              },
+            }),
       })
       posts = result.docs
     } catch (_error) {
