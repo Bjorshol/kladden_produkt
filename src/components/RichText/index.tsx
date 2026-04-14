@@ -17,6 +17,7 @@ import { CodeBlock, CodeBlockProps } from '@/blocks/Code/Component'
 import type {
   BannerBlock as BannerBlockProps,
   CallToActionBlock as CTABlockProps,
+  Media as MediaType,
   MediaBlock as MediaBlockProps,
 } from '@/payload-types'
 import { BannerBlock } from '@/blocks/Banner/Component'
@@ -53,11 +54,21 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
         disableInnerContainer={true}
       />
     ),
-    introduksjon: ({ node }) => (
+    introduksjon: ({
+      node,
+    }: {
+      node: {
+        fields: {
+          description?: unknown
+          media?: unknown
+          name?: unknown
+        }
+      }
+    }) => (
       <IntroduksjonBlock
         className="col-start-2 mb-4"
         description={String(node.fields.description || '')}
-        media={node.fields.media as number | string | Record<string, unknown>}
+        media={node.fields.media as MediaType | number | string | null}
         name={String(node.fields.name || '')}
         enableGutter={false}
         disableInnerContainer={true}

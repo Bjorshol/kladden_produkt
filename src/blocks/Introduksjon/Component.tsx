@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { Media } from '@/components/Media'
+import type { Media as MediaType } from '@/payload-types'
 import { cn } from '@/utilities/ui'
 
 type IntroduksjonProps = {
@@ -8,7 +9,7 @@ type IntroduksjonProps = {
   description: string
   disableInnerContainer?: boolean
   enableGutter?: boolean
-  media: number | string | Record<string, unknown>
+  media: MediaType | number | string | null
   name: string
 }
 
