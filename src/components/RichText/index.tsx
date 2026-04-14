@@ -1,4 +1,5 @@
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
+import { IntroduksjonBlock } from '@/blocks/Introduksjon/Component'
 import {
   DefaultNodeTypes,
   SerializedBlockNode,
@@ -24,7 +25,9 @@ import { cn } from '@/utilities/ui'
 
 type NodeTypes =
   | DefaultNodeTypes
-  | SerializedBlockNode<CTABlockProps | MediaBlockProps | BannerBlockProps | CodeBlockProps>
+  | SerializedBlockNode<
+      CTABlockProps | MediaBlockProps | BannerBlockProps | CodeBlockProps | Record<string, unknown>
+    >
 
 const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
   const { value, relationTo } = linkNode.fields.doc!
@@ -46,6 +49,16 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
         imgClassName="m-0"
         {...node.fields}
         captionClassName="mx-auto max-w-[48rem]"
+        enableGutter={false}
+        disableInnerContainer={true}
+      />
+    ),
+    introduksjon: ({ node }) => (
+      <IntroduksjonBlock
+        className="col-start-2 mb-4"
+        description={String(node.fields.description || '')}
+        media={node.fields.media as number | string | Record<string, unknown>}
+        name={String(node.fields.name || '')}
         enableGutter={false}
         disableInnerContainer={true}
       />
