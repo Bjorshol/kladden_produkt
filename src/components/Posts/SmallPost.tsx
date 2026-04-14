@@ -38,7 +38,8 @@ export const SmallCard: React.FC<SmallCardProps> = ({ post }) => {
               alt={typeof post.heroImage === 'object' ? post.heroImage?.alt || post.title : post.title}
               fill
               className="object-cover object-center"
-              sizes="(max-width: 768px) 100vw, 50vw"
+              sizes="(max-width: 768px) 96px, 33vw"
+              quality={90}
               priority
             />
           </div>

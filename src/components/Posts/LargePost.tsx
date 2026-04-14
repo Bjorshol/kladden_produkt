@@ -40,7 +40,8 @@ export const LargePost: React.FC<LargePostProps> = ({ post }) => {
               alt={typeof post.heroImage === 'object' ? post.heroImage?.alt || post.title : post.title}
               fill
               className="object-cover object-center"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 66vw"
+              quality={90}
               priority
             />
           </div>

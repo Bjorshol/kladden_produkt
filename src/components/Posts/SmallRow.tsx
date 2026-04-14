@@ -38,7 +38,8 @@ export const SmallRow: React.FC<SmallRowProps> = ({ post }) => {
               alt={typeof post.heroImage === 'object' ? post.heroImage?.alt || post.title : post.title}
               fill
               className="object-cover object-center"
-              sizes="80px"
+              sizes="(max-width: 767px) 80px, 112px"
+              quality={90}
               priority
             />
           </div>
