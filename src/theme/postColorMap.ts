@@ -22,6 +22,10 @@ export const postColorMap = {
     bg: '#ffeb58',
     text: '#2a2a2a',
   },
+  red: {
+    bg: '#c9252c',
+    text: '#ffffff',
+  },
   black: {
     bg: '#292827',
     text: '#ffffff',

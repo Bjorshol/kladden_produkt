@@ -81,6 +81,7 @@ export const Posts: CollectionConfig<'posts'> = {
         { label: 'Blå', value: 'blue' },
         { label: 'Grå', value: 'gray' },
         { label: 'Gul', value: 'yellow' },
+        { label: 'Rød (avis)', value: 'red' },
         { label: 'Sort', value: 'black' },
       ],
       defaultValue: 'default',

@@ -241,7 +241,7 @@ export interface Page {
  */
 export interface Post {
   id: number;
-  themeColor?: ('default' | 'beige' | 'blue' | 'gray' | 'yellow' | 'black') | null;
+  themeColor?: ('default' | 'beige' | 'blue' | 'gray' | 'yellow' | 'red' | 'black') | null;
   title: string;
   /**
    * Kort stikktittel som vises øverst på kortet (valgfritt)
@@ -1743,7 +1743,7 @@ export interface FrontEditor {
         /**
          * Valgfritt: Overstyr fargen på kortet på forsiden. Default = bruk sakens egen farge.
          */
-        themeColorOverride?: ('default' | 'beige' | 'blue' | 'gray' | 'yellow' | 'black') | null;
+        themeColorOverride?: ('default' | 'beige' | 'blue' | 'gray' | 'yellow' | 'red' | 'black') | null;
         /**
          * Overstyr størrelsen for denne saken på forsiden.
          */
